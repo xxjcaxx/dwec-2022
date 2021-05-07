@@ -1,3 +1,13 @@
+import { Model } from "./models/model.js";
+import { View } from "./views/view.js";
+import { Controller } from "./controllers/controller.js";
+import { Product, ProductList} from "./models/model_product.js";
+import { ProductView, ProductListView } from "./views/product_view.js";
+import { Page } from "./pages/page.js";
+import { PageHome } from "./pages/home.js";
+import { PageProductos } from "./pages/productos.js";
+//import { Service } from "./services/service.js";
+
 (() => {
     "use strict";
 
@@ -7,110 +17,65 @@
     /////////// La part de les classes genèriques de model vista controlador ////////////////
 
 
-    class Model {
-        static nombre;
-        constructor(id) {
-            this.id = id;
-        }
-        assign(plainObject) {   // El que vinga del servidor cal asignar-ho a la classe actual
-            Object.assign(this, plainObject);
-        }
-        load() {  //Carregar del servidor
-            fetch(`${app.url}${this.constructor.nombre}/${this.id}.json`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    this.assign(data);
-                });
-        }
-        loadDetails() {    // En cas de tindre que fer consultes posteriors per carregar detalls
-
-        }
-
-        static create(data) {  // Es fa estàtica per a poder ser invocada desde la classe
-
-        }
-        
-
-        delete() {
-
-        }
-        update() {
-
-        }
-    }
-
-    class View {
-        constructor() {
-
-        }
-    }
-
-    class Controller {
-        constructor(model,view) {
-
-        }
-    }
-
-
-    class Page {    ///////// Cada una de les pàgines de la web
-        constructor(name, clase){ this.name = name; this.clase = clase; }
-        populate(container){
-            fetch(`${app.url}${this.clase.nombre}.json?shallow=true`)   // shllow true és per descarregar sols els id
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Page home',data);
-                    for (let key in data){
-                        let item = new this.clase(key)
-                        item.load();
+    function cargarListas() {
+        fetch('https://dwec-daw-default-rtdb.firebaseio.com/listas.json')
+        .then(response => response.json())
+        .then(datos => {
+            let container = document.querySelector('#container')
+            for (let lista in datos){
+                let divLista = document.createElement('div');
+                divLista.innerHTML = `<h2>${lista}</h2>`
+                let datosLista = datos[lista].productos;
+                for(let producto of datosLista){
+                    let divProducto = document.createElement('div');
+                    divProducto.innerHTML = `<h3>${producto}</h3>
+                    <p>Marca</p>
+                        <p>Referencia</p>
+                        <p>Precio</p>
+                    `;
+                    divLista.append(divProducto);
+                    fetch(`https://dwec-daw-default-rtdb.firebaseio.com/productos/${producto}.json`)
+                    .then(response => response.json())
+                    .then(datosProducto => {
+                        divProducto.innerHTML = `<h3>${producto}</h3>
+                        <img src="data:image/png;base64, ${datosProducto.foto}"/>
+                        <p>${datosProducto.marca}</p>
+                        <p>${datosProducto.referencia}</p>
+                        <p>${datosProducto.precio}</p>
+                        `;
                         
-                       // console.log('Item:',item.constructor.nombre,item);
-                    }
-                });
-        }
+                    });
+
+                    
+                }
+                container.append(divLista);
+            }
+        })
     }
 
-
-    ///////////// Els models que anem a utilitzar
-    class Product extends Model {
-        constructor(id) {
-            super(id);
-        }
-        static nombre = 'productos'
+    function cargarHome(){
+        app.home.populate(app.container);
     }
-
-    class ProductList extends Model {
-        constructor(id) {
-            super( id);
-        }
-        static nombre = 'listas'
-    }
-
-    ///////// Les vistes que anem a utilitzar
-
-    class ProductView extends View {
-        constructor(){ super();}
-    }
-    class ProductListView extends View {
-        constructor(){ super();}
-    }
-
-    //// Els controladors 
-
-    class ProductController extends Controller {
-        constructor(model,view){ super(model,view);}
-    }
-    class ProductListController extends Controller {
-        constructor(model,view){ super(model,view);}
+    function cargarProductos(){
+        app.productos.populate(app.container);
     }
 
     //// Les pàgines
 
-    app.home = new Page('home',Product);
+    app.home = new PageHome('home');
+    app.productos = new PageProductos('Productos')
 
     ///////////// MAIN
     document.addEventListener("DOMContentLoaded", function () {
         app.container = document.querySelector('#container');
-        app.home.populate(app.container);
+        cargarHome();
+
+        //cargarListas();
+        document.querySelector('#menuHome').addEventListener('click', cargarHome);
+        document.querySelector('#menuListas').addEventListener('click', cargarListas);
+        document.querySelector('#menuProductos').addEventListener('click', cargarProductos);
+
+
+
     });
 })();

@@ -11,7 +11,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
         crossorigin="anonymous"></script>
-   <script src="script.js"></script>
+   <script  type ="module" src="models/model.js"></script>
+   <script  type ="module" src="views/view.js"></script>
+   <script  type ="module" src="controllers/controller.js"></script>
+   <script  type ="module" src="services/service.js"></script>
+   <script  type ="module" src="script.js"></script>
 
 </head>
 
@@ -19,7 +23,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Navbar</a>
+                <a class="navbar-brand" href="#">MVC</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -28,13 +32,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active" id="menuHome" aria-current="page" href="#">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Todos los productos</a>
+                            <a class="nav-link" id="menuProductos" href="#">Todos los productos</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            <a class="nav-link dropdown-toggle" href="#" id="menuListas" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                 Listas
                             </a>
@@ -55,7 +59,7 @@
     </header>
     <main>
         <section>
-            <div id="container">
+            <div class="container" id="container">
 
             </div>
         </section>
