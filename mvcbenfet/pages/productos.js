@@ -13,6 +13,7 @@ class PageProductos extends Page {
 
     populate(container){
         container.innerHTML = `<h1>Productos</h1>`
-        let productController = new ProductController(new ProductService(), new ProductView(container))
+        // sols creant el controlador ja invoques a la creació del servici/model i de la vista
+        let productController = new ProductController(new ProductService(), new ProductView(container));
     }
 }

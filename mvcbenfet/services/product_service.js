@@ -3,7 +3,7 @@ export { ProductService }
 
 class ProductService extends Service {
 	constructor() {
-		super(`https://dwec-daw-default-rtdb.firebaseio.com/productos.json`);
+		super(`${app.url}productos`);
 	
 	}
 }
@@ -11,7 +11,7 @@ class ProductService extends Service {
 
 class ListaService extends Service {
 	constructor() {
-		super(`https://dwec-daw-default-rtdb.firebaseio.com/listas.json`);
+		super(`${app.url}/listas.json`);
 	
 	}
 }

@@ -8,6 +8,9 @@ export { Product, ProductList }
         static nombre = 'productos'
     }
 
+
+
+    
     class ProductList extends Model {
         constructor(id) {
             super( id);
