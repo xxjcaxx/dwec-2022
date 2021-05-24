@@ -1,5 +1,5 @@
  
- import { Controller } from "/controllers/controller.js";
+ import { Controller } from "../controllers/controller.js";
  export { ProductController }
  
  //// Els controladors 

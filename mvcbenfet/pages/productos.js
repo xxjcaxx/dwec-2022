@@ -1,5 +1,5 @@
 import { Page } from "./page.js"
-import { ProductController } from "/controllers/product_controller.js"
+import { ProductController } from "../controllers/product_controller.js"
 import { Product } from "../models/model_product.js";
 import { ProductView } from "../views/product_view.js";
 import { ProductService } from "../services/product_service.js";
