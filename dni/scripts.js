@@ -1,6 +1,7 @@
 (function () {
   "use strict";
-  let lletres = "TRWAGMYFPDXBNJZSQVHLCKET".split("");
+  const lletres = "TRWAGMYFPDXBNJZSQVHLCKET".split("");
+  const arrayDNIs = ["124312", "12345678", "sadf21123", "11111111", "22222222"];
 
   function validar(dni) {
     if (!isNaN(dni) && dni.length == 8) {
@@ -23,6 +24,22 @@
     console.log(dni);
     if (validar(dni)) {
       console.log(lletra(dni));
+    } else {
+      console.log("El DNI no és vàlid");
+    }
+  }
+
+  for (let d of arrayDNIs) {
+    if (validar(d)) {
+      console.log(`DNI: ${d}${lletra(d)}`);
+    } else {
+      console.log("El DNI no és vàlid");
+    }
+  }
+
+  for (let i = 0; i < arrayDNIs.length; i++) {
+    if (validar(arrayDNIs[i])) {
+      console.log(`DNI: ${d}${lletra(arrayDNIs[i])}`);
     } else {
       console.log("El DNI no és vàlid");
     }
