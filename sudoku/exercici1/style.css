@@ -1,0 +1,45 @@
+table {
+    border-collapse: collapse;
+}
+
+table.mal {
+    background-color: #faa;
+}
+table.bien {
+    background-color: #afa;
+}
+
+td {
+    width: 50px;
+    height: 50px;
+    padding: 0px;
+    border: 1px solid #000;
+    text-align: center; 
+    vertical-align: middle;
+    font-size: 2em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+td span[contenteditable="true"] {
+    background-color: #ddd;
+    display: grid;
+    align-items: center;
+    height: 100%;
+}
+
+td.mal span{
+    background-color: #f00;
+}
+td.mal {
+    background-color: #f00;
+}
+td.regular span{
+    background-color: #fa0;
+}
+
+td.separador {
+    border-right: 3px solid #000;
+}
+tr.separador {
+    border-bottom: 3px solid #000;
+}
