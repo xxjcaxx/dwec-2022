@@ -7,10 +7,13 @@ import { Home } from "./pages/home.js";
     let l = new Home();
     l.renderHome(container);
   }
-
   function login(container) {
     let l = new Login();
     l.renderLogin(container);
+  }
+  function map(container) {
+    let map = new Map();
+    map.renderMap(container);
   }
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -19,10 +22,9 @@ import { Home } from "./pages/home.js";
     document
       .querySelector("#home_link")
       .addEventListener("click", (e) => frontPage(container));
-    document.querySelector("#map_link").addEventListener("click", (e) => {
-      let map = new Map();
-      map.renderMap(container);
-    });
+    document
+      .querySelector("#map_link")
+      .addEventListener("click", (e) => map(container));
     document
       .querySelector("#login_link")
       .addEventListener("click", (e) => login(container));
