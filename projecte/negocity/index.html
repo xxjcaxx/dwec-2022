@@ -16,6 +16,7 @@
       integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
       crossorigin="anonymous"
     ></script>
+    <script type="module" src="scripts.js"></script>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -35,10 +36,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              <a
+                class="nav-link active"
+                id="home_link"
+                aria-current="page"
+                href="#"
+                >Home</a
+              >
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="map.html">Map</a>
+              <a class="nav-link" id="map_link" href="#">Map</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="login_link" href="#">Login</a>
             </li>
             <li class="nav-item dropdown">
               <a
@@ -78,60 +88,6 @@
         </div>
       </div>
     </nav>
-    <div class="container">
-      <div class="row">
-        <div class="col" id="survivors">
-          <h2>Survivors</h2>
-          <div class="card" style="width: 18rem">
-            <img src="img/s1.png" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title">Jonhy Blood Sack</h5>
-              <p class="card-text">Lorem ipsum dolor sit amerum?</p>
-              <a href="#" class="btn btn-primary">Details</a>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <h2>Vehicles</h2>
-          <div class="card" style="width: 18rem">
-            <img
-              src="img/vehicles/basic_car.jpg"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title">Basic car</h5>
-              <p class="card-text"><ul>
-                <li>Oil Consumption: 5</li>
-                <li>Gas Tank: 50</li>
-                <li>Passengers: 2</li>
-                <li>Junk Level: 90%</li>
-                <li>Damage: 200</li>
-              </ul></p>
-              <a href="#" class="btn btn-primary">Details</a>
-            </div>
-          </div>
-          <div class="card" style="width: 18rem">
-            <img
-              src="img/vehicles/wasteland_truck.jpg"
-              class="card-img-top"
-              alt="..."
-            />
-            <div class="card-body">
-              <h5 class="card-title">Wasteland Truck</h5>
-              <p class="card-text"><ul>
-                <li>Oil Consumption: 15</li>
-                <li>Gas Tank: 10000</li>
-                <li>Passengers: 2</li>
-                <li>Junk Level: 50%</li>
-                <li>Damage: 20000</li>
-              </ul></p>
-              <a href="#" class="btn btn-primary">Details</a>
-            </div>
-          </div>
-        </div>
-        <div class="col">Column</div>
-      </div>
-    </div>
+    <div class="container" id="container"></div>
   </body>
 </html>
