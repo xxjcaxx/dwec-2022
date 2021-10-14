@@ -1,8 +1,9 @@
 import { Map } from "./pages/map.js";
 import { Login } from "./pages/login.js";
 import { Home } from "./pages/home.js";
+import { menu } from "./components/menu.js";
 
-(() => {
+(function autoinvocada() {
   function frontPage(container) {
     let l = new Home();
     l.renderHome(container);
@@ -16,9 +17,11 @@ import { Home } from "./pages/home.js";
     map.renderMap(container);
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function domLoad() {
     let container = document.querySelector("#container");
+    document.querySelector("body").prepend(menu());
     frontPage(container);
+
     document
       .querySelector("#home_link")
       .addEventListener("click", (e) => frontPage(container));
@@ -30,3 +33,4 @@ import { Home } from "./pages/home.js";
       .addEventListener("click", (e) => login(container));
   });
 })();
+
