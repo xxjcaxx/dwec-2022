@@ -36,6 +36,10 @@
           });
       });
 
+
+      /// Login  //////////////
+
+      
     document
       .querySelector("#formLogin")
       .addEventListener("submit", function (event) {
@@ -62,6 +66,7 @@
           .then((response) => response.json())
           .then((datos) => {
             resultats.innerHTML = JSON.stringify(datos);
+            localStorage.setItem('idToken',datos.idToken)
             console.log(datos);
           })
           .catch(error=>{
@@ -69,5 +74,13 @@
             resultats.innerHTML = error;
           });
       });
-  });
+
+      document.querySelector('#obtindre').addEventListener('click',()=>{
+        fetch("https://dwec-daw-default-rtdb.firebaseio.com/productos.json")
+        .then(response => { return response.json();})
+        .then(data =>  resultats.innerHTML = JSON.stringify(data));
+      });
+
+
+  });  //del load
 })();
