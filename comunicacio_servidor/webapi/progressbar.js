@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     do {
       i++;
       progress.innerHTML = i;
-    } while (i % 1e3 != 0);
+    } while (i % 1e7 != 0);
 
     if (i < 1e7) {
       setTimeout(count);

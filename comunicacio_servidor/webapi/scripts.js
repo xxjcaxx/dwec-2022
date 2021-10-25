@@ -53,13 +53,13 @@
     console.log("tasca costosa feta en: " + (Date.now() - start) + "ms");
   }
 
-  // count();
+  //count();
 
   ///////////// Fi de tasca constosa en fil principal
 
   // tasca costosa en un timeout
 
-  //setTimeout(count,0);
+  setTimeout(count, 0);
 
   console.log("Tercer", x);
   x++;

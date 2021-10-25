@@ -1,6 +1,12 @@
 (() => {
   document.addEventListener("DOMContentLoaded", () => {
     let resultats = document.querySelector("#resultats");
+    let user = document.querySelector("#user");
+
+    if (localStorage.getItem("idToken")) {
+      user.innerHTML = `Logged: ${localStorage.getItem("email")}`;
+    }
+
     // Enviar registre d'usuaris
     document
       .querySelector("#formRegistre")
@@ -25,21 +31,28 @@
             body: datos,
           }
         )
-          .then((response) => response.json())
+          .then((response) => {
+            if (response.ok) return response.json();
+            // else throw Error(response.statusText);
+            else {
+              return response.json().then((text) => {
+                console.log(text);
+                throw new Error(text.error.message);
+              });
+            }
+          })
           .then((datos) => {
             resultats.innerHTML = JSON.stringify(datos);
             console.log(datos);
           })
-          .catch(error=>{
-            console.log('Error;',error);
+          .catch((error) => {
+            console.error("Error;", error);
             resultats.innerHTML = error;
           });
       });
 
+    /// Login  //////////////
 
-      /// Login  //////////////
-
-      
     document
       .querySelector("#formLogin")
       .addEventListener("submit", function (event) {
@@ -63,24 +76,40 @@
             body: datos,
           }
         )
-          .then((response) => response.json())
+          .then((response) => {
+            if (response.ok) return response.json();
+            // else throw Error(response.statusText);
+            else {
+              return response.json().then((text) => {
+                console.log(text);
+                throw new Error(text.error.message);
+              });
+            }
+          })
           .then((datos) => {
             resultats.innerHTML = JSON.stringify(datos);
-            localStorage.setItem('idToken',datos.idToken)
+            user.innerHTML = `Login: ${datos.email}`;
+
+            localStorage.setItem("idToken", datos.idToken);
+            localStorage.setItem("email", datos.email);
+
             console.log(datos);
           })
-          .catch(error=>{
-            console.log('Error;',error);
+          .catch((error) => {
+            console.error("Error;", error);
             resultats.innerHTML = error;
           });
       });
 
-      document.querySelector('#obtindre').addEventListener('click',()=>{
-        fetch("https://dwec-daw-default-rtdb.firebaseio.com/productos.json")
-        .then(response => { return response.json();})
-        .then(data =>  resultats.innerHTML = JSON.stringify(data));
-      });
-
-
-  });  //del load
+    document.querySelector("#obtindre").addEventListener("click", () => {
+      let token = localStorage.getItem("idToken");
+      fetch(
+        `https://dwec-daw-default-rtdb.firebaseio.com/productos.json?auth=${token}`
+      )
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => (resultats.innerHTML = JSON.stringify(data)));
+    });
+  }); //del load
 })();
