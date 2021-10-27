@@ -63,6 +63,7 @@
     }
 
     p3.addEventListener("click", function click(event) {
+      p3.innerHTML = "";
       /*  let arrayPromeses = [promesa3N(1), promesa3N(2), promesa3N(3)];
       Promise.all(arrayPromeses).then((n) => {
         console.log(n);
