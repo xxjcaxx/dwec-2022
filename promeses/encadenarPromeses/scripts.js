@@ -1,8 +1,8 @@
 (() => {
   document.addEventListener("DOMContentLoaded", () => {
     /// En timeouts
-
-    /*  setTimeout(() => {
+    /*
+    setTimeout(() => {
       console.log(1);
     }, Math.random() * 1000);
 
@@ -16,13 +16,13 @@
 
     setTimeout(() => {
       console.log(4);
-    }, Math.random() * 1000);*/
-
+    }, Math.random() * 1000);
+*/
     // Fer que escriga 1, 2, 3 ,4
 
     //////////// En callbacks
 
-    /*logTimeout = () => {
+    logTimeout = () => {
       setTimeout(() => {
         console.log(1);
         setTimeout(() => {
@@ -37,7 +37,7 @@
       }, Math.random() * 1000);
     };
 
-    logTimeout();*/
+    logTimeout();
 
     //// En promeses  https://javascript.info/promise-chaining
 

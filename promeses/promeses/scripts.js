@@ -1,13 +1,12 @@
 (() => {
   document.addEventListener("DOMContentLoaded", () => {
-
-
     console.log("abans promesa");
 
     const promise = new Promise((resolve, reject) => {
       // Funció executor
       console.log("dins funcio executora");
-       setTimeout(() => {    /// Provar a comentar el stetimeout
+      ///setTimeout(() => {
+      /// Provar a comentar el stetimeout
       console.log("timeout");
       if (Math.random() > 0.5) {
         console.log("funciona");
@@ -16,7 +15,7 @@
         console.log("no funciona");
         reject("Rejecting an asynchronous request!");
       }
-        }, 0);
+      // }, 0);
     });
     console.log("despres promesa");
     promise
@@ -30,19 +29,4 @@
       });
     console.log("despres cridada promesa");
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
 })();
