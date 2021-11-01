@@ -51,3 +51,29 @@ Tenim que importar mocha-es2018 perquè és el que webpack pot empaquetar, ja qu
 L'exemple el teniu en fibonacciWP. 
 
 En cas de no voler fer tests, sols cal llevar la línia de importació del fitxer de tests.
+
+## Tests en Mocha+Chai+Webpack en CLI
+
+Per a que funcione, necessitem el paquet instant-mocha (https://github.com/privatenumber/instant-mocha), que és una versió més moderna de mocha-webpack. 
+
+```bash
+npm install --save-dev instant-mocha --legacy-peer-deps
+```
+
+Cal ficar l'opció de ---legacy-peer-deps per un conflict de versions, no obstant, funciona.
+
+Els tests el ficarem en un fitxer anomenat test.js i en ell importarem tant chai com els mòduls que estem fent en .src.
+
+Per executar:
+
+```bash
+instant-mocha ---webpack-config webpack.config.js
+```
+
+En cas de tindre DOM:
+
+```bash
+npx instant-mocha --webpack-config webpack.config.js -r jsdom-global/register './src/test.js' 
+```
+
+L'exemple està en el directori de fibonacciWPCLI.
