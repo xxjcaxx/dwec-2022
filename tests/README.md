@@ -1,8 +1,8 @@
 # Tests en Mocha
 
-## Tests en Mocha+Chai en el navegador
-
 La combinació de Mocha+Chai per a fer tests en JS és una de les més utilitzades. En el cas del desenvolupament web en la part de client, tenim moltes opcions. En aquest manual amb exemples, anem a veure algunes de les opcions.
+
+## Tests en Mocha+Chai en el navegador
 
 La primera i més fàcil és executar mocha.js en el navegador dirèctament. Cal afegir els .js i .css corresponents i els tests. Aquest exemple el tenim en el directori de fibonnaci.
 
@@ -20,7 +20,11 @@ I executar mocha amb:
 mocha -r jsdom-global/register
 ```
 
-Als fitxers de tests cal importar chai: import chai from 'chai';
+Als fitxers de tests cal importar chai:
+
+```javascript
+import chai from 'chai';
+```
 
 ## Tests en Mocha+Chai+Webpack en el navegador
 
@@ -42,4 +46,8 @@ import mocha from "mocha/mocha-es2018";
 import chai from  'chai';
 ```
 
-L'exemple el teniu en fibonacciWP
+Tenim que importar mocha-es2018 perquè és el que webpack pot empaquetar, ja que té sintaxi de mòduls com ES6. 
+
+L'exemple el teniu en fibonacciWP. 
+
+En cas de no voler fer tests, sols cal llevar la línia de importació del fitxer de tests.
