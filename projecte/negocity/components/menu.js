@@ -1,9 +1,9 @@
-export {menu};
+export { menu };
 
-function menu(){
-    let navMenu = document.createElement('nav');
-    navMenu.classList.add('navbar', 'navbar-expand-lg', 'navbar-dark', 'bg-dark');
-    navMenu.innerHTML =  ` <div class="container-fluid">
+function menu() {
+  let navMenu = document.createElement("nav");
+  navMenu.classList.add("navbar", "navbar-expand-lg", "navbar-dark", "bg-dark");
+  navMenu.innerHTML = ` <div class="container-fluid">
       <a class="navbar-brand" href="#">Negocity</a>
       <button
         class="navbar-toggler"
@@ -26,6 +26,9 @@ function menu(){
               href="#"
               >Home</a
             >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="survivors_link" href="#">Survivors</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="map_link" href="#">Map</a>
@@ -70,6 +73,5 @@ function menu(){
         </form>
       </div>
     </div>`;
-    return navMenu;
-
+  return navMenu;
 }

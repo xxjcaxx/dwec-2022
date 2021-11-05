@@ -177,5 +177,40 @@
       }
     });
     /// Fes el que fa p3 amb async/await
+
+    let p6 = document.querySelector("#p6");
+    p6.innerHTML = ` P6
+    <img src="loading.gif" alt="">`;
+
+    let array6 = [1, 2, 3, 4, 5, 6, 7];
+
+    async function promeses6() {
+      function getPromise(numero) {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve();
+          }, Math.random() * 1000);
+        }).then(() => {
+          let n = document.createElement("p");
+          n.innerHTML = numero;
+          p6.append(n);
+        });
+      }
+
+      for (let i of array6) {
+        await getPromise(i);
+      }
+
+      /* array6.reduce(async (anterior, actual) => {
+        // console.log(anterior);
+        await getPromise(anterior, actual);
+      }, 0);
+      */
+    }
+
+    p6.addEventListener("click", () => {
+      p6.innerHTML = "";
+      promeses6();
+    });
   });
 })();
