@@ -93,6 +93,7 @@
         let liComic = document.createElement("li");
         liComic.classList.add("list-group-item");
         liComic.innerHTML = `
+        <img class="img-fluid" src="${c.thumbnail.path}/standard_fantastic.${c.thumbnail.extension}">
         <h6>${c.title}</h6>
         <p>${c.description}</p>
         `;
