@@ -1,15 +1,17 @@
 (() => {
-  let charactersList = [];
+  let charactersList = {};
+  let charactersDatabase = {};
   let pagines = 0;
   let off = 0;
   let lim = 20;
 
   async function allCharacters(container, offset, limit) {
     container.innerHTML = "";
-    // if (charactersList.length == 0) {
-    charactersList = await getCharacters(offset, limit);
-    //}
-    charactersList.map((c) => {
+    console.log(charactersList);
+    if (charactersList[off].length == 0) {
+      charactersList[off] = await getCharacters(offset, limit);
+    }
+    charactersList[off].map((c) => {
       c.renderCard(container);
     });
 
@@ -44,6 +46,8 @@
       Object.assign(this, dades);
       this.comicsDetails = [];
       this.thumbnail = `${this.thumbnail.path}/standard_fantastic.${this.thumbnail.extension}`;
+      this.completed = false;
+      charactersDatabase[this.id] = this;
     }
     renderCard(container) {
       let divCharacter = document.createElement("div");
@@ -102,9 +106,16 @@
   }
 
   async function getCharacters(offset, limit) {
-    let response = await fetch(
-      `https://gateway.marvel.com:443/v1/public/characters?limit=${limit}&offset=${offset}&apikey=09186f978ec0616e9dba9c4ac4b0c4bb`
-    );
+    let response;
+    try {
+      response = await fetch(
+        `https://gateway.marvel.com:443/v1/public/characters?limit=${limit}&offset=${offset}&apikey=09186f978ec0616e9dba9c4ac4b0c4bb`
+      );
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
+
     let data = await response.json();
 
     /* fetch(
@@ -119,27 +130,35 @@
 
     let total = data.data.total;
     pagines = total / 20;
+    for (i = 0; i < pagines; i++) {
+      if (!(i * 20 in charactersList)) charactersList[i * 20] = [];
+    }
 
     return data.data.results.map((c) => new Character(c));
   }
 
   async function getCharacterDetail(id) {
-    let response = await fetch(
-      `https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=09186f978ec0616e9dba9c4ac4b0c4bb`
-    );
-    let data = await response.json();
-    console.log(data);
-    let character = new Character(data.data.results[0]);
-    let comics = character.comics.items.map((c) =>
-      fetch(`${c.resourceURI}?apikey=09186f978ec0616e9dba9c4ac4b0c4bb`)
-    );
+    /* let response = await fetch(
+       `https://gateway.marvel.com:443/v1/public/characters/${id}?apikey=09186f978ec0616e9dba9c4ac4b0c4bb`
+     );
+     let data = await response.json();
+     console.log(data);*/
 
-    let comicResponses = await Promise.all(comics);
-    let comicList = await Promise.all(comicResponses.map((c) => c.json()));
+    // let character = new Character(data.data.results[0]);
+    let character = charactersDatabase[id];
+    if (!character.completed) {
+      let comics = character.comics.items.map((c) =>
+        fetch(`${c.resourceURI}?apikey=09186f978ec0616e9dba9c4ac4b0c4bb`)
+      );
 
-    comicList.map((c) => {
-      character.comicsDetails.push(c.data.results[0]);
-    });
+      let comicResponses = await Promise.all(comics);
+      let comicList = await Promise.all(comicResponses.map((c) => c.json()));
+
+      comicList.map((c) => {
+        character.comicsDetails.push(c.data.results[0]);
+      });
+    }
+
 
     /* Promise.all(comics)
       .then((comicResponses) => {
@@ -153,6 +172,7 @@
         );
       });*/
     //console.log(character);
+    character.completed = true;
     return character;
   }
 
@@ -161,6 +181,7 @@
       console.log(characters);
     });*/
     const container = document.querySelector("#container");
+    await getCharacters(off, 1);  // per a plenar l'objecte 
     allCharacters(container, off, lim);
   });
 })();
