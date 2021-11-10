@@ -7,11 +7,11 @@
 
   async function allCharacters(container, offset, limit) {
     container.innerHTML = "";
-    console.log(charactersList);
-    if (charactersList[off].length == 0) {
-      charactersList[off] = await getCharacters(offset, limit);
+    //console.log(charactersList);
+    if (charactersList[offset].length == 0) {
+      charactersList[offset] = await getCharacters(offset, limit);
     }
-    charactersList[off].map((c) => {
+    charactersList[offset].map((c) => {
       c.renderCard(container);
     });
 
@@ -160,7 +160,6 @@
       });
     }
 
-
     /* Promise.all(comics)
       .then((comicResponses) => {
         return comicResponses.map((c) => c.json());
@@ -182,7 +181,7 @@
       console.log(characters);
     });*/
     const container = document.querySelector("#container");
-    await getCharacters(off, 1);  // per a plenar l'objecte 
+    await getCharacters(off, 1); // per a plenar l'objecte
     allCharacters(container, off, lim);
   });
 })();
