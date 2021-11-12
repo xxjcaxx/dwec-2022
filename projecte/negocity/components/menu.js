@@ -31,6 +31,9 @@ function menu() {
             <a class="nav-link" id="survivors_link" href="#">Survivors</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" id="cities_link" href="#">Cities</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" id="map_link" href="#">Map</a>
           </li>
           <li class="nav-item">

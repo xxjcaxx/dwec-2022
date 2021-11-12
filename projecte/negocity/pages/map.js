@@ -11,6 +11,7 @@ class Map {
       // console.log(c);
       ctx.fillStyle = "rgb(200, 0, 0)";
       ctx.fillRect(c.position_x * 20, c.position_y * 20, 10, 10);
+      ctx.fillText(c.name, c.position_x * 20, c.position_y * 20 + 20); 
     }
   }
   renderRoads(roads, ctx) {
@@ -27,8 +28,8 @@ class Map {
       ctx.stroke();
     }
   }
-  renderMap(container) {
-    container.innerHTML = `<div class="row">
+  renderMap() {
+    app.container.innerHTML = `<div class="row">
      <div class="col" id="map"></div>
    </div>`;
     let canvas = document.createElement("canvas");

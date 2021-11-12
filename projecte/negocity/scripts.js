@@ -3,6 +3,7 @@ import { Login } from "./pages/login.js";
 import { Home } from "./pages/home.js";
 import { menu } from "./components/menu.js";
 import { Survivors } from "./pages/survivors.js";
+import { Cities } from "./pages/cities.js";
 
 window.app = {};
 app.url = "http://10.100.23.100:8069";
@@ -19,6 +20,10 @@ app.url = "http://10.100.23.100:8069";
   app.survivors = function () {
     let survivors = new Survivors();
     survivors.renderSurvivors();
+  };
+  app.cities = function () {
+    let cities = new Cities();
+    cities.renderCities();
   };
   app.map = function () {
     let map = new Map();
@@ -52,5 +57,9 @@ app.url = "http://10.100.23.100:8069";
     document
       .querySelector("#survivors_link")
       .addEventListener("click", (e) => app.survivors());
+    document
+      .querySelector("#cities_link")
+      .addEventListener("click", (e) => app.cities());
   });
+
 })();
