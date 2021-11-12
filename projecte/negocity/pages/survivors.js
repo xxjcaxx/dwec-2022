@@ -6,7 +6,32 @@ class Survivor {
   }
   render() {
     let divSurvivor = document.createElement("div");
-    divSurvivor.innerHTML = `<h2>${this.name}</h2><p>Illness: ${this.illness}</p>`;
+    divSurvivor.id = `survivor-${this.id}`;
+    divSurvivor.classList.add("col");
+    divSurvivor.innerHTML = ` 
+    <div class="card text-dark" style="width: 10rem">
+    <img src="data:image/jpeg;base64,${
+      this.avatar
+    }" class="card-img-top" alt="${this.name}" />
+    <div class="card-body">
+      <h5 class="card-title">${this.name}</h5>
+    </div>
+    <ul class="list-group list-group-flush" >
+    <li class="list-group-item list-group-item-dark">Illnes: ${this.illnes}</li>
+    <li class="list-group-item list-group-item-dark">Desperation: ${
+      this.desperation
+    }</li>
+    <li class="list-group-item list-group-item-dark">Mutations: ${
+      this.mutations
+    }</li>
+    <li class="list-group-item list-group-item-dark">City: ${
+      this.city[1] || "Traveling"
+    }</li>
+    </ul>
+    <a href="#" class="btn btn-primary">Details</a>
+  </div>
+ 
+    `;
     return divSurvivor;
   }
 }
@@ -15,18 +40,20 @@ class Survivors {
   constructor() {}
 
   async renderSurvivors(container) {
-    container.innerHTML = `<div class="row">
-     <div class="col" id="survivors">SURVIVORS</div>
+    app.container.innerHTML = `<div class="row" id="survivors">
+     
    </div>`;
 
-    let response = await fetch("datos/survivors.json");
+    let response = await fetch(
+      app.url + "/negocity/api/survivor/" + localStorage.getItem("id")
+    );
     let datos = await response.json();
-    datos = datos.survivors;
+    //datos = datos.survivors;
     for (let s of datos) {
       console.log(s);
       let survivor = new Survivor(s);
       let divSurvivor = survivor.render();
-      container.querySelector("#survivors").append(divSurvivor);
+      app.container.querySelector("#survivors").append(divSurvivor);
     }
   }
 }

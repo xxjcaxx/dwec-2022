@@ -1,15 +1,18 @@
+import { Home } from "./home.js";
 export { Login };
 
 class Login {
-  constructor() {}
-  renderLogin(container) {
-    container.innerHTML = `<div class="row">
-    <div class="col" id="login">
-      <form onsubmit="return false;" class="bg-dark text-light">
+  constructor() {
+    this.password = "";
+  }
+  renderLogin() {
+    app.container.innerHTML = `<div class="row ">
+    <div class="col " id="login">
+      <form onsubmit="return false;" class="">
         <div class="form-group">
           <label for="exampleInputEmail1">Email address</label>
           <input
-            type="email"
+            type="text"
             class="form-control"
             id="InputEmail"
             aria-describedby="emailHelp"
@@ -36,5 +39,30 @@ class Login {
       </form>
     </div>
   </div>`;
+    container.querySelector("#btn-login").addEventListener("click", () => {
+      app.user = app.container.querySelector("#InputEmail").value;
+      this.password = app.container.querySelector("#InputPassword").value;
+      this.login();
+    });
+  }
+
+  login() {
+    let body = {
+      jsonrpc: "2.0",
+      method: "call",
+      params: { user: app.user, password: this.password },
+    };
+    fetch(app.url + "/negocity/login", {
+      method: "post",
+      headers: { "Content-type": "application/json; charset=UTF-8" },
+      body: JSON.stringify(body),
+    })
+      .then((response) => response.json())
+      .then((datos) => {
+        localStorage.setItem("user", this.user);
+        localStorage.setItem("id", datos.result.id);
+        localStorage.setItem("name", datos.result.name);
+        app.frontPage();
+      });
   }
 }

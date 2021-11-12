@@ -36,6 +36,9 @@ function menu() {
           <li class="nav-item">
             <a class="nav-link" id="login_link" href="#">Login</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" id="logout_link" href="#">Logout</a>
+          </li>
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"

@@ -2,8 +2,16 @@ export { Home };
 
 class Home {
   constructor() {}
-  renderHome(container) {
-    container.innerHTML = `<div class="row">
+  renderHome() {
+    app.container.innerHTML = `<div>
+    <img class="img-fluid" src="./img/main.jpg"/>
+    </div>`;
+  }
+}
+
+/*
+
+`<div class="row">
         <div class="col" id="survivors">
           <h2>Survivors</h2>
           <div class="card" style="width: 18rem">
@@ -63,6 +71,4 @@ class Home {
           </div>
         </div>
         <div class="col">Column</div>
-      </div>`;
-  }
-}
+      </div>`*/
