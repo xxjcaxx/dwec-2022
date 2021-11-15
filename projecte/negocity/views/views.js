@@ -6,17 +6,14 @@ class View {
         this.container = container;
         this.divRow = document.createElement('div');
     }
+
+    
     mostrarItems(Items) {
-        this.Items = Items;
-        this.container.innerHTML = '';
-        this.divRow.innerHTML = '';
-        this.divRow.classList.add('row', 'row-cols-1', 'row-cols-md-3', 'g-4');
-        this.container.append(this.divRow);
-        for (let key of Items) {
-            this.render(key);
-        }
-        this.mostrarFormulario();
+   
     }
+
+ 
+
     render(Item) {  // Esta funció serà sobreescrita per cada vista
 
     }

@@ -27,6 +27,7 @@ D'aquesta manera, la vista i els servici no es relacionen dirèctament i pot ser
         }
         onCambioItems = Items => {  // es te que fer el fletxa per a que agafe el this de la classe
             this.view.mostrarItems(Items);
+            //console.log('oncambioItems del controlador',Items);
         }
         handleAddSurvivor = (survivor) =>{
             this.service.add(survivor);

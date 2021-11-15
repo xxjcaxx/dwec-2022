@@ -1,25 +1,23 @@
 import { SurvivorController } from "../controllers/survivors_controller.js";
-import { Survivor } from "../models/survivors_model.js";
+import { Survivor, SurvivorList } from "../models/survivors_model.js";
 import { SurvivorView } from "../views/survivors_view.js";
 
 export { SurvivorsPage };
 
-
-
 class SurvivorsPage {
-
-  constructor(name){
+  constructor(name) {
     this.name = name;
   }
 
-  render(container){
-    container.innerHTML = `<h1>Survivors</h1>`
-    let survivorController = new SurvivorController(new Survivor(), new SurvivorView(container));
+  render(container) {
+   // console.log("Render survivors");
+    container.innerHTML = `<h1>Survivors</h1>`;
+    let survivorController = new SurvivorController(
+      new SurvivorList(),
+      new SurvivorView(container)
+    );
   }
-
 }
-
-
 
 /*
 class Survivor {

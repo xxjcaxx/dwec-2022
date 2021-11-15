@@ -1,4 +1,27 @@
-export { Cities };
+
+import { CityController } from "../controllers/cities_controller.js";
+import { City,CityList } from "../models/cities_model.js";
+import { CityView } from "../views/cities_views.js";
+
+export { CitiesPage };
+
+class CitiesPage {
+  constructor(name) {
+    this.name = name;
+  }
+
+  render(container) {
+   // console.log("Render survivors");
+    container.innerHTML = `<h1>Cities</h1>`;
+    let cityController = new CityController(
+      new CityList(),
+      new CityView(container,'list')
+    );
+  }
+}
+
+
+/* export { Cities };
 
 class City {
     constructor(datos) {
@@ -52,3 +75,4 @@ class Cities {
         }
     }
 }
+  */

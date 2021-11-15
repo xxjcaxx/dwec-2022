@@ -1,4 +1,3 @@
-import { Home } from "./home.js";
 export { Login };
 
 class Login {

@@ -1,11 +1,18 @@
 export { Home };
+import { CityController } from "../controllers/cities_controller.js";
+import { City,CityList } from "../models/cities_model.js";
+import { CityView } from "../views/cities_views.js";
 
 class Home {
   constructor() {}
   renderHome() {
-    app.container.innerHTML = `<div>
-    <img class="img-fluid" src="./img/main.jpg"/>
-    </div>`;
+
+    // En el home anem a veure una visió general de totes les ciutats
+    app.container.innerHTML = `<h2>Cities</h2>`;
+    let cityController = new CityController(
+      new CityList(),
+      new CityView(container,'resume')
+    );
   }
 }
 

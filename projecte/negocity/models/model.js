@@ -19,16 +19,15 @@ class Model {
 class Service {
     constructor(url) {
         this.url = url;
-        this.Items = {};
-        this.read();
+        this.Items = [];
+      
     }
 
-    read() {
-        fetch(this.url + '.json')
+    async read() {
+       return await fetch(this.url)
             .then(response => response.json())
             .then(datosItems => {
                 this.Items = Object.entries(datosItems).map(entrie => entrie[1]);
-
                 this.onCambioItems(this.Items); // cridem al callback de la vista associat per el cotrolador amb notificarcambios
             });
     }

@@ -44,14 +44,14 @@ class Map {
     let fetchOptions = {
       method: "get",
     };
-    fetch("http://10.100.23.100:8069/negocity/api/city", fetchOptions)
+    fetch(app.url+"/negocity/api/city", fetchOptions)
       .then(json)
       .then((cities) => {
         this.renderCities(cities, ctx);
       })
       .then(() => {
         return fetch(
-          "http://10.100.23.100:8069/negocity/api/road",
+          app.url+"/negocity/api/road",
           fetchOptions
         );
       })

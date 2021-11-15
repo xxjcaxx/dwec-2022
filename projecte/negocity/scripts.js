@@ -1,12 +1,12 @@
 import { Map } from "./pages/map.js";
-import { Login } from "./pages/login.js";
+import { Login } from "./components/login.js";
 import { Home } from "./pages/home.js";
 import { menu } from "./components/menu.js";
 import { SurvivorsPage } from "./pages/survivors.js";
-import { Cities } from "./pages/cities.js";
+import { CitiesPage } from "./pages/cities.js";
 
 window.app = {};
-app.url = "http://10.100.23.100:8069";
+app.url = "http://192.168.88.15:8069";
 
 (function autoinvocada() {
   app.frontPage = function () {
@@ -22,8 +22,8 @@ app.url = "http://10.100.23.100:8069";
     survivors.render(app.container);
   };
   app.cities = function () {
-    let cities = new Cities();
-    cities.renderCities();
+    let cities = new CitiesPage();
+    cities.render(app.container);
   };
   app.map = function () {
     let map = new Map();

@@ -10,8 +10,10 @@ export { Survivor, SurvivorList }
 
 
     class SurvivorList extends Model {
-        constructor(id) {
-            super( id);
+        constructor() {
+            super(0,app.url+'/negocity/api/survivors/'+ localStorage.getItem("id"));
+           // console.log(this);
+           this.service.read();
         }
         static nombre = 'survivorLists'
     }

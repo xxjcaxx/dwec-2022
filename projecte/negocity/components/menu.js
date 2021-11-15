@@ -2,7 +2,7 @@ export { menu };
 
 function menu() {
   let navMenu = document.createElement("nav");
-  navMenu.classList.add("navbar", "navbar-expand-lg", "navbar-dark", "bg-dark");
+  navMenu.classList.add("navbar", "navbar-expand-lg", "navbar-dark", "bg-negocity");
   navMenu.innerHTML = ` <div class="container-fluid">
       <a class="navbar-brand" href="#">Negocity</a>
       <button
