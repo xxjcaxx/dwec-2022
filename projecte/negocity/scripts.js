@@ -2,7 +2,7 @@ import { Map } from "./pages/map.js";
 import { Login } from "./pages/login.js";
 import { Home } from "./pages/home.js";
 import { menu } from "./components/menu.js";
-import { Survivors } from "./pages/survivors.js";
+import { SurvivorsPage } from "./pages/survivors.js";
 import { Cities } from "./pages/cities.js";
 
 window.app = {};
@@ -18,8 +18,8 @@ app.url = "http://10.100.23.100:8069";
     l.renderLogin();
   };
   app.survivors = function () {
-    let survivors = new Survivors();
-    survivors.renderSurvivors();
+    let survivors = new SurvivorsPage();
+    survivors.render(app.container);
   };
   app.cities = function () {
     let cities = new Cities();
