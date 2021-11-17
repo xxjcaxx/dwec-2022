@@ -3,8 +3,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
-  mode: "development",
-  entry: "./src/index.js",
+  mode: "development", // o production
+  entry: "./src/scripts.js",
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
@@ -18,13 +18,17 @@ module.exports = {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
       },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        type: "asset/resource",
+      },
     ],
   },
   plugins: [
     new CleanWebpackPlugin(),
 
     new HtmlWebpackPlugin({
-      title: "Webpack inicial",
+      title: "Negocity",
       filename: "index.html",
       template: "src/index.html",
     }),

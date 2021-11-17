@@ -1,8 +1,0 @@
-{
-    "survivors": [
-        {"id":"1", "name":"Jonhy Blood Sack","illness":"50"},
-        {"id":"2", "name":"Mad Max","illness":"10"},
-        {"id":"3", "name":"Imperator Furiosa","illness":"30"},
-        {"id":"4", "name":"Maestro Golpeador","illness":"20"}
-    ]
-}

@@ -1,16 +1,19 @@
-import { View } from "./views.js"
+import { View } from "./views.js";
 
 export { CitiesListView, CityView };
 
 class CityView extends View {
-  constructor(container,type) { super(container); this.type=type; }
+  constructor(container, type) {
+    super(container);
+    this.type = type;
+  }
 
   render(city) {
     let divCity = document.createElement("div");
-        divCity.id = `city-${city.id}`;
-        divCity.classList.add("col");
-        // prettier-ignore
-        divCity.innerHTML = ` 
+    divCity.id = `city-${city.id}`;
+    divCity.classList.add("col");
+    // prettier-ignore
+    divCity.innerHTML = ` 
     <div class="card text-dark" style="width: 10rem">
     <div class="card-body">
       <h5 class="card-title">${city.name}</h5>
@@ -28,81 +31,69 @@ class CityView extends View {
   </div>
  
     `;
-        return divCity;
+    return divCity;
   }
 
-  renderResume(city){
+  renderResume(city) {
     let divCity = document.createElement("div");
     divCity.id = `city-${city.id}`;
-    divCity.classList.add("window");
+    divCity.classList.add("window", "container");
     // prettier-ignore
     divCity.innerHTML = ` 
     
-    <h3>${city.name}</h3>
-    <div class="buildings"><h4>Buildings</h4></div>
-    <div class="survivors"><h4>Survivors</h4>${city.survivors_player}</div>
-    <div class="vehicles"><h4>Vehicles</h4>${city.vehicles_player}</div>
-    `;
+    <div class="row"><h3>${city.name}</h3></div>
+    <div class="row">
+    <div class="buildings col"><h4>Buildings</h4></div>
+    <div class="survivors col"><h4>Survivors</h4>${city.survivors_player}</div>
+    <div class="vehicles col"><h4>Vehicles</h4>${city.vehicles_player}</div>
+</div>`;
 
-    let buildingsDiv = divCity.querySelector('.buildings');
-    city.buildings.forEach(b =>{
-      let bDiv = document.createElement('div');
-      bDiv.classList.add('resumeImg');
-      bDiv.innerHTML= b;
+    let buildingsDiv = divCity.querySelector(".buildings");
+    city.buildings.forEach((b) => {
+      let bDiv = document.createElement("div");
+      bDiv.classList.add("resumeImg");
+      bDiv.innerHTML = b;
       buildingsDiv.append(bDiv);
     });
 
     return divCity;
-
   }
 
-
-  mostrarItems(Items){
-    if (this.type == 'list'){
+  mostrarItems(Items) {
+    if (this.type == "list") {
       this.Items = Items;
-      this.container.innerHTML = '<h2>Cities</h2>';
-      this.divRow.innerHTML = '';
-      this.divRow.classList.add('row', 'row-cols-1', 'row-cols-md-3', 'g-4');
+      this.container.innerHTML = "<h2>Cities</h2>";
+      this.divRow.innerHTML = "";
+      this.divRow.classList.add("row", "row-cols-1", "row-cols-md-3", "g-4");
       this.container.append(this.divRow);
       for (let key of Items) {
-          this.divRow.append(this.render(key));
+        this.divRow.append(this.render(key));
       }
-    } else {
+    } else if (this.type == "resume") {
       this.Items = Items;
-      this.container.innerHTML = '<h2>Cities</h2>';
+      this.container.innerHTML = "<h2>Cities</h2>";
       for (let key of Items) {
-          this.container.append(this.renderResume(key));
+        this.container.append(this.renderResume(key));
       }
     }
   }
 
+  bindAddcity(handler) {}
 
-
-
-  bindAddcity(handler){
-   
-  }
-
-
-  bindRemovecity(handler){
+  bindRemovecity(handler) {
     this.removeItem = handler;
   }
 
-  bindEditcity(handler){
-    this.updateItem = handler;  // associem l'edició del city a la funció que diga el controlador
+  bindEditcity(handler) {
+    this.updateItem = handler; // associem l'edició del city a la funció que diga el controlador
     // aquesta rebrà el producte a modificar
   }
 
-  updateItemEnviar(Item,divItem){
-
+  updateItemEnviar(Item, divItem) {}
 }
-
-
-}
-
-
-
 
 class CitiesListView extends View {
-  constructor() { super(); }
+  constructor() {
+    super();
+  }
 }
