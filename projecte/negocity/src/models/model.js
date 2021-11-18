@@ -14,12 +14,11 @@ class Model {
 }
 
 
-
-
 class Service {
     constructor(url) {
         this.url = url;
         this.Items = [];
+        this.onCambioItems = ()=>{};  // En el constructor, a falta de
       
     }
 

@@ -17,7 +17,7 @@ export { City, CityList }
             this.service.read().then(()=>{
                 console.log('cities loaded');
                 this.service.Items.forEach(i=>{
-                    i.buildings = i.buildings.map(b=> new Building(b,app.url+'/negocity/api/building/?id='+b))
+                    i.buildings = i.buildings.map(b => new Building(b,app.url+'/negocity/api/building/?id='+b))
                     i.buildings = i.buildings.map(b => b.service.read())
                 });
             });

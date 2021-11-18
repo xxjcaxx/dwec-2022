@@ -17,14 +17,24 @@ body {
 .window {
   color: rgb(244, 163, 12);
   border: 2px solid rgb(244, 163, 12);
-  border-radius: 10px;
+ 
   margin: 10px;
 }
 
 .window > div {
-  border: 2px solid rgb(244, 163, 12);
-  border-radius: 10px;
+
 }
+
+.window h3 {
+  font-size: 16px;
+  font-weight: bolder;
+}
+
+.window h4 {
+  font-size: 15px;
+  font-weight: bolder;
+}
+
 
 .resumeImg {
   width: 100px;

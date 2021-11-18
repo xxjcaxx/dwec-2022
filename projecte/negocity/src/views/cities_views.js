@@ -62,7 +62,7 @@ class CityView extends View {
   mostrarItems(Items) {
     if (this.type == "list") {
       this.Items = Items;
-      this.container.innerHTML = "<h2>Cities</h2>";
+      this.container.innerHTML = "";
       this.divRow.innerHTML = "";
       this.divRow.classList.add("row", "row-cols-1", "row-cols-md-3", "g-4");
       this.container.append(this.divRow);
@@ -71,7 +71,7 @@ class CityView extends View {
       }
     } else if (this.type == "resume") {
       this.Items = Items;
-      this.container.innerHTML = "<h2>Cities</h2>";
+      this.container.innerHTML = "";
       for (let key of Items) {
         this.container.append(this.renderResume(key));
       }
