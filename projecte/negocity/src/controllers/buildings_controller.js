@@ -1,6 +1,6 @@
  
  import { Controller } from "./controller.js";
- export { CityController,cityListController }
+ export { BuildingController,BuildingListController }
  
  //// Els controladors 
 /*
@@ -17,18 +17,20 @@ funció crida a una altra del servici.
 D'aquesta manera, la vista i els servici no es relacionen dirèctament i pot ser més fàcil de programar per separat.
 
 */ 
-    class CityController extends Controller {
+    class BuildingController extends Controller {
         constructor(model,view){ 
             super(model,view);
             this.model.service.notificarCambios(this.onCambioItems); // Associar la funció de la vista amb el service
+          
         }
         onCambioItems = Items => {  // es te que fer el fletxa per a que agafe el this de la classe
             this.view.mostrarItems(Items);
             //console.log('oncambioItems del controlador',Items);
         }
+   
     }
 
 
-    class cityListController extends Controller {
+    class BuildingListController extends Controller {
         constructor(service,view){ super(service,view);}
     }

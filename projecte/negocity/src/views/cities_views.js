@@ -1,4 +1,7 @@
 import { View } from "./views.js";
+import { BuildingController } from "../controllers/buildings_controller.js";
+import { BuildingList,Building } from "../models/buildings_model.js";
+import { BuildingView } from "./buildings_views.js";
 
 export { CitiesListView, CityView };
 
@@ -41,7 +44,7 @@ class CityView extends View {
     // prettier-ignore
     divCity.innerHTML = ` 
     
-    <div class="row"><h3>${city.name}</h3></div>
+    <div class="row name"><h3>${city.name}</h3></div>
     <div class="row">
     <div class="buildings col"><h4>Buildings</h4></div>
     <div class="survivors col"><h4>Survivors</h4>${city.survivors_player}</div>
@@ -49,11 +52,12 @@ class CityView extends View {
 </div>`;
 
     let buildingsDiv = divCity.querySelector(".buildings");
+
     city.buildings.forEach((b) => {
-      let bDiv = document.createElement("div");
-      bDiv.classList.add("resumeImg");
-      bDiv.innerHTML = b;
-      buildingsDiv.append(bDiv);
+      let buildingController = new BuildingController(
+        new Building(b.id),
+        new BuildingView(buildingsDiv,'mini')
+      );
     });
 
     return divCity;
@@ -78,18 +82,7 @@ class CityView extends View {
     }
   }
 
-  bindAddcity(handler) {}
 
-  bindRemovecity(handler) {
-    this.removeItem = handler;
-  }
-
-  bindEditcity(handler) {
-    this.updateItem = handler; // associem l'edició del city a la funció que diga el controlador
-    // aquesta rebrà el producte a modificar
-  }
-
-  updateItemEnviar(Item, divItem) {}
 }
 
 class CitiesListView extends View {

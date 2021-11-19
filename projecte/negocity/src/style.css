@@ -21,9 +21,19 @@ body {
   margin: 10px;
 }
 
-.window > div {
-
+.window > div.row {
+  
+  border-bottom: 2px solid rgb(244, 163, 12);
+  background-color: rgb(26, 19, 8);
 }
+
+.window > div.name {
+  padding-top: 5px;
+  border-bottom: 2px solid rgb(244, 163, 12);
+  background-color: rgb(244, 163, 12);
+  color: rgb(26, 19, 8);
+}
+
 
 .window h3 {
   font-size: 16px;
@@ -35,7 +45,18 @@ body {
   font-weight: bolder;
 }
 
-
+.buildings{
+  padding-top: 5px;
+  border-right: 2px solid rgb(244, 163, 12);
+}
+.survivors{
+  padding-top: 5px;
+  border-right: 2px solid rgb(244, 163, 12);
+}
+.vehicles{
+  padding-top: 5px;
+  
+}
 .resumeImg {
   width: 100px;
   height: 100px;

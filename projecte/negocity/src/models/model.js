@@ -4,6 +4,7 @@ export { Service };
 class Model {
     static nombre;
     constructor(id,url) {
+        console.log();
         this.id = id;
         this.url = url;
         this.service = new Service(url);
