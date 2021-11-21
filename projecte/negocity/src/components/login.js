@@ -1,3 +1,5 @@
+import { router } from "../router/router";
+
 export { Login };
 
 class Login {
@@ -61,7 +63,7 @@ class Login {
         localStorage.setItem("user", this.user);
         localStorage.setItem("id", datos.result.id);
         localStorage.setItem("name", datos.result.name);
-        app.frontPage();
+        router('#/');
       });
   }
 }

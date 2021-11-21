@@ -1,7 +1,7 @@
 export { Home };
-import { CityController } from "../controllers/cities_controller.js";
-import { City,CityList } from "../models/cities_model.js";
 import { CityView } from "../views/cities_views.js";
+import {Controller } from "../controllers/controller.js"
+import { Model } from "../models/model.js";
 
 class Home {
   constructor() {}
@@ -9,9 +9,9 @@ class Home {
 
     // En el home anem a veure una visió general de totes les ciutats
     app.container.innerHTML = ``;
-    let cityController = new CityController(
-      new CityList(),
-      new CityView(container,'resume')
+    let cityController = new Controller(
+      new Model(0,app.url+'/negocity/api/cities/'+ localStorage.getItem("id")),
+      new CityView(app.container,'resume')
     );
   }
 }

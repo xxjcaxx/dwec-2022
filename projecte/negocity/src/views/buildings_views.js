@@ -11,31 +11,30 @@ class BuildingView extends View {
   render(building) {
     let divbuilding = document.createElement("div");
     divbuilding.id = `building-${building.id}`;
-    divbuilding.classList.add("col");
+    divbuilding.classList.add("col-5","m-1","item");
     // prettier-ignore
     divbuilding.innerHTML = ` 
-    <div class="card text-dark" style="width: 10rem">
-    <div class="card-body">
-      <h5 class="card-title">${building.name}</h5>
-    </div>
-    <ul class="list-group list-group-flush" >
-    
-    </ul>
-    <a href="#" class="btn btn-primary">Details</a>
-  </div>
- 
+    <img class="" src="data:image/jpeg;base64,${
+      building.image
+    }" />
+    <div class="itemName">${building.name}</div>
     `;
     return divbuilding;
   }
 
   
   mostrarItems(Items) {
-      console.log(Items);
+     // console.log(Items);
       this.Items = Items;
       this.container.innerHTML = "";
       for (let key of Items) {
         this.container.append(this.render(key));
       }
+  }
+
+  mostrarItem(Item){
+  //  console.log(Item);
+    this.container.append(this.render(Item[0]));
   }
 
 
