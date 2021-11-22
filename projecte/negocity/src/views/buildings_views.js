@@ -17,20 +17,23 @@ class BuildingView extends View {
     <img class="" src="data:image/jpeg;base64,${ building.image}" />
     `;
     if (this.type == "mini") {
-      divbuilding.classList.add("col-5");
+     // divbuilding.classList.add("col-5");
       content += `<div class="itemName">${building.name}</div>`;
     }
     if (this.type == "details") {
-      divbuilding.classList.add("col-1", "details");
-      content += `<div class="itemName">${building.name}</div>
-      <div class="">Level: ${building.level}</div>
-      <div class="">Ruined: ${building.ruined}</div>
-      <div class="">Energy: ${building.energy}</div>
-      <div class="">Oil: ${building.oil}</div>
-      <div class="">Food: ${building.food}</div>
-      <div class="">Water: ${building.water}</div>
-      <div class="">Despair: ${building.despair}</div>
-      <div class="">Junk: ${building.junk}</div>
+    //  divbuilding.classList.add("col-1");
+      divbuilding.classList.add("details");
+      content += `<div class="itemName">
+      <span class="nameDetails">${building.name}</span>
+      <span class="">Level: ${building.level}</span>
+      <span class="">Ruined: ${building.ruined}</span>
+      <span class="">Energy: ${building.energy}</span>
+      <span class="">Oil: ${building.oil}</span>
+      <span class="">Food: ${building.food}</span>
+      <span class="">Water: ${building.water}</span>
+      <span class="">Despair: ${building.despair}</span>
+      <span class="">Junk: ${building.junk}</span> 
+      </div>
       `;
     }
 

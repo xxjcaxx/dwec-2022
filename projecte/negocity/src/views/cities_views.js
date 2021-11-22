@@ -63,10 +63,10 @@ class CityView extends View {
     BuildingList(buildingsDiv, city.buildings, "mini");
 
     let survivorsDiv = divCity.querySelector(".survivors .row");
-    SurvivorList(survivorsDiv, city.survivors);
+    SurvivorList(survivorsDiv, city.survivors,"mini");
 
     let vehiclesDiv = divCity.querySelector(".vehicles .row");
-    VehicleList(vehiclesDiv, city.all_vehicles);
+    VehicleList(vehiclesDiv, city.all_vehicles,"mini");
 
     divCity.querySelector(".cityName").addEventListener("click", () => {
       window.location.hash = "#/city/" + city.id;
@@ -93,10 +93,10 @@ class CityView extends View {
     BuildingList(buildingsDiv, city.buildings, "details");
 
     let survivorsDiv = divCity.querySelector(".survivors .row");
-    SurvivorList(survivorsDiv, city.survivors);
+    SurvivorList(survivorsDiv, city.survivors,"details");
 
     let vehiclesDiv = divCity.querySelector(".vehicles .row");
-    VehicleList(vehiclesDiv, city.all_vehicles);
+    VehicleList(vehiclesDiv, city.all_vehicles,"details");
 
     divCity.querySelector(".cityName").addEventListener("click", () => {
       window.location.hash = "#/city/" + city.id;

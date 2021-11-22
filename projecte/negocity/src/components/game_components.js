@@ -15,20 +15,20 @@ function BuildingList(container, ids, mode) {
   });
 }
 
-function SurvivorList(container, ids) {
+function SurvivorList(container, ids, mode) {
   ids.forEach((b) => {
     let survivorController = new Controller(
       new Model(b, app.url + "/negocity/api/survivor/?id=" + b),
-      new SurvivorView(container, "mini")
+      new SurvivorView(container, mode)
     );
   });
 }
 
-function VehicleList(container, ids) {
+function VehicleList(container, ids,mode) {
   ids.forEach((b) => {
     let vehicleController = new Controller(
       new Model(b, app.url + "/negocity/api/vehicle/?id=" + b),
-      new VehicleView(container, "mini")
+      new VehicleView(container, mode)
     );
   });
 }
