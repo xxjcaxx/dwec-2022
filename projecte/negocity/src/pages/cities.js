@@ -1,7 +1,6 @@
-
-import { CityController } from "../controllers/cities_controller.js";
-import { City,CityList } from "../models/cities_model.js";
+import { Model } from "../models/model.js";
 import { CityView } from "../views/cities_views.js";
+import { Controller } from "../controllers/controller.js";
 
 export { CitiesPage };
 
@@ -13,8 +12,8 @@ class CitiesPage {
   render(container) {
    // console.log("Render survivors");
     container.innerHTML = `<h1>Cities</h1>`;
-    let cityController = new CityController(
-      new CityList(),
+    let cityListController = new Controller(
+      new Model(0,app.url+'/negocity/api/cities/'+ localStorage.getItem("id")),
       new CityView(container,'list')
     );
   }

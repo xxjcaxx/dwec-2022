@@ -1,4 +1,15 @@
 import { View } from "./views.js";
+import { BuildingView } from "./buildings_views.js";
+
+import { SurvivorView } from "./survivors_view.js";
+import { Controller } from "../controllers/controller.js";
+import { Model } from "../models/model.js";
+import {
+  BuildingList,
+  SurvivorList,
+  VehicleList,
+} from "../components/game_components.js";
+import { CityDetails } from "../pages/city_details.js";
 
 export { CitiesListView, CityView };
 
@@ -41,25 +52,60 @@ class CityView extends View {
     // prettier-ignore
     divCity.innerHTML = ` 
     
-    <div class="row"><h3>${city.name}</h3></div>
+    <div class="row name"><h3 class="cityName">${city.name}</h3></div>
     <div class="row">
-    <div class="buildings col"><h4>Buildings</h4></div>
-    <div class="survivors col"><h4>Survivors</h4>${city.survivors_player}</div>
-    <div class="vehicles col"><h4>Vehicles</h4>${city.vehicles_player}</div>
+    <div class="buildings col g-0"><h4>Buildings</h4><div class="row g-0"></div></div>
+    <div class="survivors col g-0"><h4>Survivors</h4><div class="row g-0"></div></div>
+    <div class="vehicles col g-0"><h4>Vehicles</h4><div class="row g-0"></div></div>
 </div>`;
 
-    let buildingsDiv = divCity.querySelector(".buildings");
-    city.buildings.forEach((b) => {
-      let bDiv = document.createElement("div");
-      bDiv.classList.add("resumeImg");
-      bDiv.innerHTML = b;
-      buildingsDiv.append(bDiv);
+    let buildingsDiv = divCity.querySelector(".buildings .row");
+    BuildingList(buildingsDiv, city.buildings, "mini");
+
+    let survivorsDiv = divCity.querySelector(".survivors .row");
+    SurvivorList(survivorsDiv, city.survivors);
+
+    let vehiclesDiv = divCity.querySelector(".vehicles .row");
+    VehicleList(vehiclesDiv, city.all_vehicles);
+
+    divCity.querySelector(".cityName").addEventListener("click", () => {
+      window.location.hash = "#/city/" + city.id;
     });
 
     return divCity;
   }
 
-  mostrarItems(Items) {
+  renderDetail(city) {
+    let divCity = document.createElement("div");
+    divCity.id = `city-${city.id}`;
+    divCity.classList.add("window", "container");
+    // prettier-ignore
+    divCity.innerHTML = ` 
+    
+    <div class="row name"><h3 class="cityName">${city.name}</h3></div>
+    <div class="row">
+    <div class="buildings col g-0"><h4>Buildings</h4><div class="row g-0"></div></div>
+    <div class="survivors col g-0"><h4>Survivors</h4><div class="row g-0"></div></div>
+    <div class="vehicles col g-0"><h4>Vehicles</h4><div class="row g-0"></div></div>
+</div>`;
+
+    let buildingsDiv = divCity.querySelector(".buildings .row");
+    BuildingList(buildingsDiv, city.buildings, "details");
+
+    let survivorsDiv = divCity.querySelector(".survivors .row");
+    SurvivorList(survivorsDiv, city.survivors);
+
+    let vehiclesDiv = divCity.querySelector(".vehicles .row");
+    VehicleList(vehiclesDiv, city.all_vehicles);
+
+    divCity.querySelector(".cityName").addEventListener("click", () => {
+      window.location.hash = "#/city/" + city.id;
+    });
+
+    return divCity;
+  }
+
+  mostrarItem(Items) {
     if (this.type == "list") {
       this.Items = Items;
       this.container.innerHTML = "";
@@ -71,25 +117,18 @@ class CityView extends View {
       }
     } else if (this.type == "resume") {
       this.Items = Items;
+      //console.log(Items);
       this.container.innerHTML = "";
       for (let key of Items) {
         this.container.append(this.renderResume(key));
       }
+    } else if (this.type == "details") {
+      this.Items = Items;
+      //console.log(Items);
+      this.container.innerHTML = "";
+      this.container.append(this.renderDetail(Items[0]));
     }
   }
-
-  bindAddcity(handler) {}
-
-  bindRemovecity(handler) {
-    this.removeItem = handler;
-  }
-
-  bindEditcity(handler) {
-    this.updateItem = handler; // associem l'edició del city a la funció que diga el controlador
-    // aquesta rebrà el producte a modificar
-  }
-
-  updateItemEnviar(Item, divItem) {}
 }
 
 class CitiesListView extends View {
