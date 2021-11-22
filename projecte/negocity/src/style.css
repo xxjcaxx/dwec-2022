@@ -17,12 +17,11 @@ body {
 .window {
   color: rgb(244, 163, 12);
   border: 2px solid rgb(244, 163, 12);
- 
+
   margin: 10px;
 }
 
 .window > div {
-
 }
 
 .window h3 {
@@ -34,7 +33,6 @@ body {
   font-size: 15px;
   font-weight: bolder;
 }
-
 
 .resumeImg {
   width: 100px;
