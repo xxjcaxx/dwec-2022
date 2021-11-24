@@ -19,6 +19,20 @@ class CityView extends View {
     this.type = type;
   }
 
+  renderTitle(city) {
+    return `<div class="row name"><h3 class="cityName">${city.name}</h3>
+    <div class="resourcesIcons">
+    ⚡ ${parseFloat(city.energy).toFixed(2)} 🛢 ${parseFloat(city.oil).toFixed(
+      2
+    )} 🍎 ${parseFloat(city.food).toFixed(2)} 🚰 ${parseFloat(
+      city.water
+    ).toFixed(2)} 😵 ${parseFloat(city.despair).toFixed(2)} ☢️  ${parseFloat(
+      city.radiation
+    ).toFixed(2)}
+    </div>
+    </div>`;
+  }
+
   render(city) {
     let divCity = document.createElement("div");
     divCity.id = `city-${city.id}`;
@@ -52,7 +66,7 @@ class CityView extends View {
     // prettier-ignore
     divCity.innerHTML = ` 
     
-    <div class="row name"><h3 class="cityName">${city.name}</h3></div>
+    ${this.renderTitle(city)}
     <div class="row">
     <div class="buildings col g-0"><h4>Buildings</h4><div class="row g-0"></div></div>
     <div class="survivors col g-0"><h4>Survivors</h4><div class="row g-0"></div></div>
@@ -63,10 +77,10 @@ class CityView extends View {
     BuildingList(buildingsDiv, city.buildings, "mini");
 
     let survivorsDiv = divCity.querySelector(".survivors .row");
-    SurvivorList(survivorsDiv, city.survivors,"mini");
+    SurvivorList(survivorsDiv, city.survivors, "mini");
 
     let vehiclesDiv = divCity.querySelector(".vehicles .row");
-    VehicleList(vehiclesDiv, city.all_vehicles,"mini");
+    VehicleList(vehiclesDiv, city.all_vehicles, "mini");
 
     divCity.querySelector(".cityName").addEventListener("click", () => {
       window.location.hash = "#/city/" + city.id;
@@ -93,10 +107,10 @@ class CityView extends View {
     BuildingList(buildingsDiv, city.buildings, "details");
 
     let survivorsDiv = divCity.querySelector(".survivors .row");
-    SurvivorList(survivorsDiv, city.survivors,"details");
+    SurvivorList(survivorsDiv, city.survivors, "details");
 
     let vehiclesDiv = divCity.querySelector(".vehicles .row");
-    VehicleList(vehiclesDiv, city.all_vehicles,"details");
+    VehicleList(vehiclesDiv, city.all_vehicles, "details");
 
     divCity.querySelector(".cityName").addEventListener("click", () => {
       window.location.hash = "#/city/" + city.id;

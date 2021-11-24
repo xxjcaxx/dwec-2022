@@ -1,14 +1,17 @@
-import { View } from "./views.js"
+import { View } from "./views.js";
 
 export { VehiclesListView, VehicleView };
 
 class VehicleView extends View {
-  constructor(container,type) { super(container); this.type = type; }
+  constructor(container, type) {
+    super(container);
+    this.type = type;
+  }
 
   render(vehicle) {
     let divVehicle = document.createElement("div");
     divVehicle.id = `vehicle-${vehicle.id}`;
-    divVehicle.classList.add("col-5","m-1","item");
+    divVehicle.classList.add("col-5", "m-1", "item");
     // prettier-ignore
     let content =  ` 
     <img class="" src="data:image/jpeg;base64,${ vehicle.img_computed}" />
@@ -33,16 +36,14 @@ class VehicleView extends View {
     return divVehicle;
   }
 
-  mostrarItem(Item){
-    console.log(Item);
+  mostrarItem(Item) {
+    // console.log(Item);
     this.container.append(this.render(Item[0]));
   }
-
 }
 
-
-
-
 class VehiclesListView extends View {
-  constructor() { super(); }
+  constructor() {
+    super();
+  }
 }
