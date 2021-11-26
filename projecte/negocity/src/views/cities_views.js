@@ -20,15 +20,15 @@ class CityView extends View {
   }
 
   renderTitle(city) {
-    return `<div class="row name"><h3 class="cityName">${city.name}</h3>
-    <div class="resourcesIcons">
-    ⚡ ${parseFloat(city.energy).toFixed(2)} 🛢 ${parseFloat(city.oil).toFixed(
-      2
-    )} 🍎 ${parseFloat(city.food).toFixed(2)} 🚰 ${parseFloat(
-      city.water
-    ).toFixed(2)} 😵 ${parseFloat(city.despair).toFixed(2)} ☢️  ${parseFloat(
-      city.radiation
-    ).toFixed(2)}
+    return `<div class="row name"><h3 class="cityName col">${city.name}</h3>
+    <div class="resourcesIcons col">
+
+    <span>⚡ ${parseFloat(city.energy).toFixed(2)}</span>
+    <span>🛢 ${parseFloat(city.oil).toFixed(2)}</span> 
+    <span>🍎 ${parseFloat(city.food).toFixed(2)} </span>
+    <span>🚰 ${parseFloat(city.water).toFixed(2)} </span>
+    <span>😵 ${parseFloat(city.despair).toFixed(2)} </span>
+    <span>☢️  ${parseFloat(city.radiation).toFixed(2)}</span>
     </div>
     </div>`;
   }
