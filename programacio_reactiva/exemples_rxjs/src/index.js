@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
 /*
+https://enriqueoriol.com/blog/2019/09/aprende-rxjs-4.html
 https://swirly.dev/
 
 -Hello,world-|

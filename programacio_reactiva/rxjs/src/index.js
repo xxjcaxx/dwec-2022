@@ -1,4 +1,4 @@
-import { of } from "rxjs";
+import { from, of } from "rxjs";
 import { map, filter, reduce, buffer, throttleTime, throttle, debounceTime } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { interval } from "rxjs";
@@ -20,17 +20,24 @@ document.addEventListener("DOMContentLoaded", () => {
   /////////// Exemple de crear un observable amb interval
 
   const arrayNumeros = [1, 2, 3, 4, 5, 6, 7, "a", [11, 22, 33], { a: 5 }];
-
+  // Versió funcional
   const resultat = arrayNumeros
     .map((n) => parseInt(n))
     .filter((n) => !isNaN(n));
   const suma = resultat.reduce((x, y) => x + y);
   console.log(resultat, suma);
+  // Versió reactiva
+  const instantSum = from(arrayNumeros).pipe(
+    map((n) => parseInt(n)),
+    filter((n) => !isNaN(n)),
+    reduce((x, y) => x + y)
+  ).subscribe(n=> console.log(n))
 
   const source = interval(500).pipe(
     /// Declara un Observable que emet 0,1,2,3,4... cada 500 ms
-    take(10), // amb pipe afegim 2 operadors: take per quedar-se en els 10 primers
-    map((i) => arrayNumeros[i]) // map per mapejar cada numero
+    map((i) => arrayNumeros[i]), // map per mapejar cada numero
+    map((n) => parseInt(n)),
+    filter((n) => !isNaN(n)),   
   );
 
   // Per treure els elements cada cert temps
