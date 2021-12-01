@@ -20,7 +20,7 @@ class CityView extends View {
   }
 
   renderTitle(city) {
-    return `<div class="row name"><h3 class="cityName col">${city.name}</h3>
+    return `<div class="row name"><h3 class="cityName col-5">${city.name}</h3>
     <div class="resourcesIcons col">
 
     <span>⚡ ${parseFloat(city.energy).toFixed(2)}</span>
@@ -96,7 +96,22 @@ class CityView extends View {
     // prettier-ignore
     divCity.innerHTML = ` 
     
-    <div class="row name"><h3 class="cityName">${city.name}</h3></div>
+    ${this.renderTitle(city)}
+    <div class="row">
+    <div class="connections col-3 g-0">
+    <h4>Connections</h4>
+    <div class="connection">Remote Dunghill</div>
+    <div class="connection">Remote Sands</div>
+    <div class="connection">Broken Junk</div>
+    </div>
+    <div class="travels col g-0">
+    <h4>Travels</h4>
+    <table>
+        <tr><td>Origin</td><td>Date End</td><td>Progress</td><td>Player</td><td>Vehicle</td></tr>
+        <tr><td>Unpleasant Junk</td><td>30/11/2021 15:46:16</td><td>69</td><td>Antonio Alcantara</td><td>Armored Turism</td></tr>
+    </table>
+    </div>
+    </div>
     <div class="row">
     <div class="buildings col g-0"><h4>Buildings</h4><div class="row g-0"></div></div>
     <div class="survivors col g-0"><h4>Survivors</h4><div class="row g-0"></div></div>

@@ -7,8 +7,7 @@ let data = {
     document.querySelector("#doble").value = this.numero * 2;
   },
 
-
- /// Manera de no tindre que implementar sempre els esdeveniments
+  /// Manera de no tindre que implementar sempre els esdeveniments
   __numeroAutomatic__: 40,
   __dobleAutomatic__: 80,
 
@@ -32,14 +31,12 @@ let data = {
     input.value = this[variable];
     console.log(variable, this[variable]);
   },
-
 };
 
 document.addEventListener("DOMContentLoaded", () => {
   data.setData(30);
 
   document.querySelector("#numero").addEventListener("keyup", function () {
-    // console.log('keyup');
     data.setData(this.value);
   });
 

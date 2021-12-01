@@ -1,9 +1,8 @@
 import "./style.css";
 
-import {doTests} from './test.js'
+import { doTests } from "./test.js";
 
-
-export {obtenerNumeros,validarGrupo}
+export { obtenerNumeros, validarGrupo };
 
 // La funció autoinvocada ja no és necessària perquè estem en mòdul i aquests ja són privats
 //(() => {
@@ -73,18 +72,20 @@ function obtenerNumeros() {
   for (let i = 0; i < files.length; i++) {
     let columnes = files[i].querySelectorAll("span");
     for (let j = 0; j < columnes.length; j++) {
-        let numero = parseInt(columnes[j].innerText);
-        if (!isNaN(numero)){numeros.push(numero);}
-        else {numeros.push(0);}
-      
+      let numero = parseInt(columnes[j].innerText);
+      if (!isNaN(numero)) {
+        numeros.push(numero);
+      } else {
+        numeros.push(0);
+      }
     }
   }
   //console.log(numeros);
   return numeros;
 }
 
-function validarGrupo(grupo){
-    return grupo.size == 9;
+function validarGrupo(grupo) {
+  return grupo.size == 9;
 }
 
 function validar(actual) {
@@ -97,7 +98,7 @@ function validar(actual) {
 
   let valid = true;
   let numeros = obtenerNumeros();
-      console.log(numeros);
+  console.log(numeros);
   // Comprovar files
   for (let i = 0; i < 9; i++) {
     // cada fila
@@ -126,7 +127,7 @@ function validar(actual) {
     let columna = new Set();
     for (let j = 0; j < 9; j++) {
       const element = numeros[j * 9 + i];
-      element > 0  && columna.add(element);
+      element > 0 && columna.add(element);
     }
     let valida = validarGrupo(columna);
 
@@ -159,7 +160,7 @@ function validar(actual) {
           // j és el desplaçament en eixa fila per columnes que són de 3
           // l és el desplaçament en files dins de la fila de quadrats, files de 9
           // m és el desplaçament dins del quadrat
-          element > 0  && quadrat.add(element);
+          element > 0 && quadrat.add(element);
         }
       }
       let valida = validarGrupo(quadrat);
@@ -213,11 +214,10 @@ function validar(actual) {
 
 document.addEventListener("DOMContentLoaded", function () {
   descargarSudokus() // És asíncrono
-  .then(()=>{
+    .then(() => {
       doTests();
-  })
+    });
   //obtenerNumeros();
-  
 
   //  document.querySelector('#generar').addEventListener('click',generar);
 

@@ -6,6 +6,11 @@ import { SurvivorsPage } from "./pages/survivors.js";
 import { CitiesPage } from "./pages/cities.js";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import {
+  isInLE,
+  inicializarUsuario,
+  checkUsuario,
+} from "./utils/local_storage.js";
 
 import "./style.css";
 import { router } from "./router/router.js";
@@ -19,11 +24,7 @@ app.url = "http://10.100.23.100:8069";
     app.container = document.querySelector("#container");
     document.querySelector("body").prepend(menu());
 
-    if (localStorage.getItem("user")) {
-      app.datosUsuario = {};
-    } else {
-      router("#/login");
-    }
+    checkUsuario("#/login");
 
     router(window.location.hash);
   });

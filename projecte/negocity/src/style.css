@@ -61,7 +61,7 @@ body {
 }
 
 .buildings div div.details {
-  width: 200px;
+  width: 100px;
   height: 350px;
 }
 
@@ -131,7 +131,7 @@ div.item img:hover {
 }
 
 .survivors div div.details {
-  width: 200px;
+  width: 100px;
   height: unset;
 }
 
@@ -145,7 +145,7 @@ div.item img:hover {
 }
 
 .vehicles div div.details {
-  width: 200px;
+  width: 100px;
   height: unset;
 }
 
@@ -170,4 +170,14 @@ div.item img:hover {
   margin-left: 20px;
   padding-left: 5px;
   border-left: 1px solid #241b0cff;
+}
+
+.connections {
+  padding-top: 5px;
+  border-right: 2px solid rgb(244, 163, 12);
+  align-items: flex-start;
+}
+.connection {
+  margin-left: 10px;
+  font-size: 10px;
 }
