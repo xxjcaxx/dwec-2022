@@ -180,8 +180,8 @@ title=tap-switchmap-tap
 title=FetchedStates
 */
 
-  const scrollObservable = fromEvent(document, "scroll").pipe;
-  throttleTime(100)();
+  const scrollObservable = fromEvent(document, "scroll").pipe(
+  throttleTime(100)());
   // Necessitem fer throttle per no tindre massa events seguits i saturar la CPU
 
   scrollObservable.subscribe((e) => {
