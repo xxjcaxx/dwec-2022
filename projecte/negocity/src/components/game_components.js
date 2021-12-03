@@ -24,11 +24,20 @@ function SurvivorList(container, ids, mode) {
   });
 }
 
-function VehicleList(container, ids,mode) {
+function VehicleList(container, ids, mode) {
   ids.forEach((b) => {
     let vehicleController = new Controller(
       new Model(b, app.url + "/negocity/api/vehicle/?id=" + b),
       new VehicleView(container, mode)
     );
   });
+
+  function ConnectionsList(container, ids, mode) {
+    ids.forEach((c) => {
+      let connectionController = new Controller(
+        new Model(c, app.url + "/negocity/api/road/?id=" + c),
+        new ConnectionView(container, mode)
+      );
+    });
+  }
 }
