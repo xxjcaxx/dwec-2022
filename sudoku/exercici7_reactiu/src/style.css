@@ -1,0 +1,115 @@
+table {
+    border-collapse: collapse;
+}
+
+table.mal {
+    background-color: #faa;
+}
+table.bien {
+    background-color: #afa;
+}
+
+td {
+    width: 50px;
+    height: 50px;
+    padding: 0px;
+    border: 1px solid #000;
+    text-align: center; 
+    vertical-align: middle;
+    font-size: 2em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+td span[contenteditable="true"] {
+    background-color: #ddd;
+    display: grid;
+    align-items: center;
+    height: 100%;
+}
+
+
+td.malfila {
+    background-color: #f66;
+}
+
+td.malcolumna{
+    background-color: #f66;
+}
+
+td.malquadrat {
+    background-color: #f66;
+}
+
+td.malfila.malquadrat {
+    background-color: #c22;
+}
+td.malcolumna.malquadrat {
+    background-color: #c22;
+}
+td.malfila.malcolumna {
+    background-color: #c22;
+}
+td.malfila.malquadrat.malcolumna {
+    background-color: #a00;
+}
+
+
+td.mall {
+    background-color: rgb(225, 0, 255);
+}
+td.regular span{
+    background-color: #fa0;
+}
+
+td.separador {
+    border-right: 3px solid #000;
+}
+tr.separador {
+    border-bottom: 3px solid #000;
+}
+
+.editable{
+    color: #ccc;
+}
+
+.teclado {
+    position: absolute;
+    width: 80px;
+    height: 110px;
+    background-color: #ddd;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+    display: flex;
+    flex-wrap: wrap;
+}
+.teclado span {
+    display: inline-block;
+    padding: 0 4px 0 4px;
+    font-size: 26px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    margin: 0px;
+}
+
+#partidas {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.partida{
+    width: 100px;
+    height: 50px;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.partida input{
+    width: 80px;
+}
+
+.titulo {
+    width: 100%;
+}
