@@ -6,7 +6,9 @@ import { Controller } from "../controllers/controller.js";
 import { Model } from "../models/model.js";
 import {
   BuildingList,
+  ConnectionsList,
   SurvivorList,
+  TravelsList,
   VehicleList,
 } from "../components/game_components.js";
 import { CityDetails } from "../pages/city_details.js";
@@ -100,15 +102,15 @@ class CityView extends View {
     <div class="row">
     <div class="connections col-3 g-0">
     <h4>Connections</h4>
-    <div class="connection">Remote Dunghill</div>
-    <div class="connection">Remote Sands</div>
-    <div class="connection">Broken Junk</div>
+    <table class="table table-bordered table-dark table-hover">
+    <tr><th>City1</th><th>City2</th><th>Distance</th><tr>
+    </table>
     </div>
     <div class="travels col g-0">
     <h4>Travels</h4>
-    <table>
-        <tr><td>Origin</td><td>Date End</td><td>Progress</td><td>Player</td><td>Vehicle</td></tr>
-        <tr><td>Unpleasant Junk</td><td>30/11/2021 15:46:16</td><td>69</td><td>Antonio Alcantara</td><td>Armored Turism</td></tr>
+    <table class="table table-bordered table-dark table-hover">
+        <tr><th>Origin</th><th>Date End</th><th>Progress</th><th>Player</th><th>Vehicle</th></tr>
+       
     </table>
     </div>
     </div>
@@ -126,6 +128,12 @@ class CityView extends View {
 
     let vehiclesDiv = divCity.querySelector(".vehicles .row");
     VehicleList(vehiclesDiv, city.all_vehicles, "details");
+
+    let connectionsTable = divCity.querySelector(".connections table tbody");
+    ConnectionsList(connectionsTable, city.roads, "default");
+
+    let travelsTable = divCity.querySelector(".travels table tbody");
+    TravelsList(travelsTable, city.travels_coming, "default");
 
     divCity.querySelector(".cityName").addEventListener("click", () => {
       window.location.hash = "#/city/" + city.id;
