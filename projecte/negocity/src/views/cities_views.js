@@ -103,14 +103,19 @@ class CityView extends View {
     <div class="connections col-3 g-0">
     <h4>Connections</h4>
     <table class="table table-bordered table-dark table-hover">
-    <tr><th>City1</th><th>City2</th><th>Distance</th><tr>
+    <tr><th>Destiny</th><th>Distance</th><th>Actions</th><tr>
     </table>
     </div>
     <div class="travels col g-0">
-    <h4>Travels</h4>
-    <table class="table table-bordered table-dark table-hover">
+    <h4>Travels Coming</h4>
+    <table class="coming table table-bordered table-dark table-hover">
         <tr><th>Origin</th><th>Date End</th><th>Progress</th><th>Player</th><th>Vehicle</th></tr>
-       
+        
+    </table>
+    <h4>Travels Going</h4>
+    <table class="going table table-bordered table-dark table-hover">
+    <tr><th>Destiny</th><th>Date End</th><th>Progress</th><th>Player</th><th>Vehicle</th></tr>
+    
     </table>
     </div>
     </div>
@@ -130,10 +135,13 @@ class CityView extends View {
     VehicleList(vehiclesDiv, city.all_vehicles, "details");
 
     let connectionsTable = divCity.querySelector(".connections table tbody");
-    ConnectionsList(connectionsTable, city.roads, "default");
+    ConnectionsList(connectionsTable, city.roads, "default", city);  // Este component necessita saber la city
 
-    let travelsTable = divCity.querySelector(".travels table tbody");
-    TravelsList(travelsTable, city.travels_coming, "default");
+    let travelsTable = divCity.querySelector(".travels .coming tbody");
+    TravelsList(travelsTable, city.travels_coming, "coming");
+
+    let travelsgoingTable = divCity.querySelector(".travels .going tbody");
+    TravelsList(travelsgoingTable, city.travels_going, "going");
 
     divCity.querySelector(".cityName").addEventListener("click", () => {
       window.location.hash = "#/city/" + city.id;

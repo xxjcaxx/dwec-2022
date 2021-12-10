@@ -41,11 +41,11 @@ function VehicleList(container, ids, mode) {
   });
 }
 
-function ConnectionsList(container, ids, mode) {
+function ConnectionsList(container, ids, mode, city) {
   ids.forEach((c) => {
     let connectionController = new Controller(
       new Model(c, app.url + "/negocity/api/road/?id=" + c),
-      new ConnectionView(container, mode)
+      new ConnectionView(container, mode, city)
     );
   });
 }

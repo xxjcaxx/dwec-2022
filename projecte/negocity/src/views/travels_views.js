@@ -12,9 +12,14 @@ class TravelView extends View {
     let elementTravel = document.createElement("tr");
     elementTravel.classList.add("travel");
     console.log(travel);
-    elementTravel.innerHTML = `<td>${travel.origin[1]}</td>
+    elementTravel.innerHTML = `<td>${this.type == 'coming' ? travel.origin[1] : travel.destiny[1]}</td>
 <td>${travel.date_end}</td>
-<td>${travel.progress}</td>
+<td>
+<div class="progress">
+  <div class="progress-bar" role="progressbar" style="width: ${travel.progress}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">${travel.progress}%</div>
+</div>
+
+</td>
 <td>${travel.player[1]}</td>
 <td>${travel.vehicle[1]}</td>
 `;

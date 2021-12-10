@@ -176,21 +176,31 @@ div.item img:hover {
   padding-top: 5px;
   border-right: 2px solid rgb(244, 163, 12);
   align-items: flex-start;
+  padding: 10px;
 }
 
 table.table {
   border: 1px solid rgb(244, 163, 12);
   color: rgb(244, 163, 12);
+
 }
 table.table td {
   background-color: rgb(26, 19, 8);
-}
-.connection {
-  margin-left: 10px;
   font-size: 10px;
+}
+table.table th {
+  background-color: rgb(244, 163, 12);
+  font-size: 12px;
+  color: rgb(26, 19, 8);
+  border-right-color:  rgb(26, 19, 8);
+}
+table.table td .progress-bar {
+  background-color: rgb(244, 163, 12);
+  
 }
 
 .travels {
+  padding: 10px;
   padding-top: 5px;
   border-right: 2px solid rgb(244, 163, 12);
   align-items: flex-start;

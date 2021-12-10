@@ -1,31 +1,37 @@
+import { map, Observable } from "rxjs";
+
 export { Model };
-export { Service };
+
 
 class Model {
-  //static nombre;
+ 
   constructor(id, url) {
-    /// Creem els datos bàsics i li asociem un service per al CRUD del model en el servidor
     this.id = id; // identificador en cas de ser un element únic
     this.url = url;
-    this.service = new Service(url);
-    this.service.read().then(() => {});
-    //console.log(id,url);
   }
-  assign(plainObject) {
+
+    ///////// En observables
+    read() {
+      return new Observable(async (observer) => {
+        try {
+          const response = await fetch(this.url);
+          const data = await response.json();
+          observer.next(data);
+          observer.complete();
+        } catch (err) {
+          observer.error(err);
+        }
+      }); 
+      
+    }
+ /* assign(plainObject) {
     // El que vinga del servidor cal asignar-ho a la classe actual
     Object.assign(this, plainObject);
-  }
-  notificarCambios(callback) {
-    // Funció per a que el controlador associe els canvis amb la vista
-    this.service.onCambioItems = callback; // callback serà una funció de la vista
-    //  console.log(callback);
-  }
-  notificarError(callback) {
-    this.service.onError = callback;
-  }
+  }*/
+
 }
 
-class Service {
+/*class Service {
   constructor(url) {
     this.url = url;
     this.Items = [];
@@ -34,9 +40,10 @@ class Service {
     this.onError = (error) => {
       console.log(error);
     };
-  }
+  }*/
 
-  async read() {
+ /*  En promeses 
+ async read() {
     return await fetch(this.url)
       .then((response) => response.json())
       .then((datosItems) => {
@@ -47,7 +54,8 @@ class Service {
       .catch((error) => {
         this.onError(error);
       });
-  }
+  }*/
+
 
   /*
     add(Item) {
@@ -81,4 +89,4 @@ class Service {
                 this.read();
             });
     }*/
-}
+//}
