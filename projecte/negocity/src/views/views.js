@@ -8,6 +8,7 @@ class View {
   }
 
   mostrarItems(Items) {}
+  anyadirDetalles(Detalles) {}
   mostrarError(error) {
     this.container.append(error);
   }

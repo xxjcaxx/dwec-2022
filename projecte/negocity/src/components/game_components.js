@@ -12,6 +12,7 @@ export {
   VehicleList,
   ConnectionsList,
   TravelsList,
+  VehicleListTravel
 };
 
 function BuildingList(container, ids, mode) {
@@ -38,6 +39,32 @@ function VehicleList(container, ids, mode) {
       new Model(b, app.url + "/negocity/api/vehicle/?id=" + b),
       new VehicleView(container, mode)
     );
+  });
+}
+
+function VehicleListTravel(container, ids, mode, road) {
+  ids.forEach((b) => {
+    const vehicheView = new VehicleView(container, mode);
+
+
+    // En aquest cas, el component fa de controller per demanar més coses
+   
+
+
+    const vehicleModel = new Model(b, app.url + "/negocity/api/vehicle/?id=" + b);
+    const travelQueryModel = new Model(b, `${app.url}/negocity/api/travel-query/?vehicle=${b}&road=${road}`);
+
+    vehicleModel.read().subscribe({
+      next: (item) => { vehicheView.mostrarItem(item); 
+        travelQueryModel.read().subscribe({
+          next: (detalles) => { detalles.vehicle = item[0]; vehicheView.anyadirDetalles(detalles) },
+          error: (error) => { vehicheView.mostrarError(error); }
+        });
+      },
+      error: (error) => { vehicheView.mostrarError(error); }
+    });
+   
+
   });
 }
 

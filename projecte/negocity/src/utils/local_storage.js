@@ -1,15 +1,8 @@
-export { isInLE, inicializarUsuario, checkUsuario };
+export { isInLE, checkUsuario };
+import { router } from "../router/router";
 
 const isInLE = (item) => (localStorage.getItem(item) ? true : false);
 
-const inicializarUsuario = () => {
-  app.datosUsuario = {};
-};
-
-const checkUsuario = (rutaLogin) => {
-  if (isInLE("user")) {
-    inicializarUsuario();
-  } else {
-    router(rutaLogin);
-  }
+const checkUsuario = () => {
+  return isInLE("user"); 
 };
