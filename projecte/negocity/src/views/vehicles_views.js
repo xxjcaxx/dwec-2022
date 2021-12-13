@@ -1,5 +1,5 @@
-import '@fortawesome/fontawesome-free/js/all.js';
-import '@fortawesome/fontawesome-free/css/all.css';
+import "@fortawesome/fontawesome-free/js/all.js";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 import { View } from "./views.js";
 
@@ -35,7 +35,7 @@ class VehicleView extends View {
       </div>
       `;
     }
-    if (this.type == "choose" ) {
+    if (this.type == "choose") {
       divVehicle.classList.add("col-1", "details");
       content += `<div class="itemName">
       <span class="nameDetails">${vehicle.name}</span>
@@ -48,26 +48,31 @@ class VehicleView extends View {
       <button type="button" class="btn btn-dark">Choose</button>
       </div>
       `;
-     
     }
     divVehicle.innerHTML = content;
     return divVehicle;
   }
 
   mostrarItem(Item) {
-     console.log(Item);
+    console.log(Item);
     this.container.append(this.render(Item[0]));
   }
 
   anyadirDetalles(Detalles) {
     console.log(Detalles);
-    this.container.querySelector('#time-'+Detalles.vehicle.id).innerHTML=`<i class="fas fa-stopwatch"></i>: ${Detalles.time}`;
-    this.container.querySelector('#oil-'+Detalles.vehicle.id).innerHTML=`<i class="fas fa-gas-pump"></i>: ${Detalles.oil_required}`;
-    if (Detalles.oil_required > Detalles.vehicle.gas_tank_level ) {
-    this.container.querySelector('#gas-level-'+Detalles.vehicle.id).classList.add('warning');
+    this.container.querySelector(
+      "#time-" + Detalles.vehicle.id
+    ).innerHTML = `<i class="fas fa-stopwatch"></i>: ${Detalles.time}`;
+    this.container.querySelector(
+      "#oil-" + Detalles.vehicle.id
+    ).innerHTML = `<i class="fas fa-gas-pump"></i>: ${Detalles.oil_required}`;
+    if (Detalles.oil_required > Detalles.vehicle.gas_tank_level) {
+      this.container
+        .querySelector("#gas-level-" + Detalles.vehicle.id)
+        .classList.add("warning");
     }
-  // this.container.append(this.render(Item[0]));
- }
+    // this.container.append(this.render(Item[0]));
+  }
 }
 
 class VehiclesListView extends View {
