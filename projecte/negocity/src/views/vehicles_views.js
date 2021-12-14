@@ -12,7 +12,7 @@ class VehicleView extends View {
   }
 
   render(vehicle) {
-    let divVehicle = document.createElement("div");
+    let divVehicle = this.content;
     divVehicle.id = `vehicle-${vehicle.id}`;
     divVehicle.classList.add("col-5", "m-1", "item");
     // prettier-ignore
@@ -50,16 +50,29 @@ class VehicleView extends View {
       `;
     }
     divVehicle.innerHTML = content;
+    
     return divVehicle;
   }
 
-  mostrarItem(Item) {
-    console.log(Item);
-    this.container.append(this.render(Item[0]));
+  mostrarItem() {
+   // console.log(Item);
+    this.container.append(this.render({}));
+  }
+
+  rellenarItem(Item){
+    this.render(Item);
+    if('id' in Item) { 
+     // console.log('id');
+      if('detallesTravel' in Item) {
+       // console.log('detallesTravel');
+        if('time' in Item.detallesTravel) this.anyadirDetalles(Item.detallesTravel);
+      }
+  } 
+   
   }
 
   anyadirDetalles(Detalles) {
-    console.log(Detalles);
+   // console.log(Detalles.vehicle.id);
     this.container.querySelector(
       "#time-" + Detalles.vehicle.id
     ).innerHTML = `<i class="fas fa-stopwatch"></i>: ${Detalles.time}`;

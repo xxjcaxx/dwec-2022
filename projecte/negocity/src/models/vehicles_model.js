@@ -1,4 +1,4 @@
-import { map, Observable, Subject } from "rxjs";
+import { map, Observable, skip, Subject } from "rxjs";
 import { Model } from "./model";
 
 export { VehicleModel };
@@ -15,16 +15,14 @@ class VehicleModel extends Model {
       this.id,
       `${app.url}/negocity/api/travel-query/?vehicle=${this.id}&road=${road}`
     );
-    travelQueryModel.read().subscribe({
-      next: (detalles) => {
-        detalles.vehicle = this;
-        this.dataSubject.next({...this.dataSubject.getValue(),detallesTravel: detalles})
-       // console.log(this);
-      },
-      error: (error) => {
-       
-      },
-    });
+    travelQueryModel.dataSubject.subscribe((detalles) => {
+     // console.log('DETALLES',detalles);
+      detalles.vehicle = this;
+     // console.log(this);
+      this.dataSubject.next({...this.dataSubject.getValue(),detallesTravel: detalles});
+      });
+
+    travelQueryModel.read();
   }
 
    read() {
@@ -32,8 +30,4 @@ class VehicleModel extends Model {
      return  super.read();
    }
   
-  /* assign(plainObject) {
-    // El que vinga del servidor cal asignar-ho a la classe actual
-    Object.assign(this, plainObject);
-  }*/
 }
