@@ -5,6 +5,8 @@ import { SurvivorView } from "../views/survivors_view.js";
 import { VehicleView } from "../views/vehicles_views.js";
 import { ConnectionView } from "../views/roads_views.js";
 import { TravelView } from "../views/travels_views.js";
+import { VehicleModel } from "../models/vehicles_model.js";
+import { filter } from "rxjs";
 
 export {
   BuildingList,
@@ -46,18 +48,20 @@ function VehicleListTravel(container, ids, mode, road) {
   ids.forEach((b) => {
     const vehicheView = new VehicleView(container, mode);
     // En aquest cas, el component fa de controller per demanar més coses
-    const vehicleModel = new Model(
+    const vehicleModel = new VehicleModel(
       b,
       app.url + "/negocity/api/vehicle/?id=" + b
     );
-    /*  const travelQueryModel = new Model(
-      b,
-      `${app.url}/negocity/api/travel-query/?vehicle=${b}&road=${road}`
-    );*/
+  
 
     vehicleModel.read().subscribe({
       next: (item) => {
         vehicheView.mostrarItem(item);
+        vehicleModel.travelQuery(road);
+        vehicleModel.dataSubject.pipe(filter((v)=> 'detallesTravel' in v )).subscribe((vehicleData)=>{
+          console.log(vehicleData);
+          vehicheView.anyadirDetalles(vehicleData.detallesTravel);
+        });
       },
       error: (error) => {
         vehicheView.mostrarError(error);

@@ -6,6 +6,7 @@ export { VehicleModel };
 class VehicleModel extends Model {
   constructor(id, url) {
     super(id, url);
+   // console.log('vehicle');
   }
   ///////// En observables
 
@@ -17,26 +18,20 @@ class VehicleModel extends Model {
     travelQueryModel.read().subscribe({
       next: (detalles) => {
         detalles.vehicle = this;
-        vehicheView.anyadirDetalles(detalles);
+        this.dataSubject.next({...this.dataSubject.getValue(),detallesTravel: detalles})
+       // console.log(this);
       },
       error: (error) => {
-        vehicheView.mostrarError(error);
+       
       },
     });
   }
 
-  /* read() {
-    return new Observable(async (observer) => {
-      try {
-        const response = await fetch(this.url);
-        const data = await response.json();
-        observer.next(data);
-        observer.complete();
-      } catch (err) {
-        observer.error(err);
-      }
-    });
-  }*/
+   read() {
+
+     return  super.read();
+   }
+  
   /* assign(plainObject) {
     // El que vinga del servidor cal asignar-ho a la classe actual
     Object.assign(this, plainObject);

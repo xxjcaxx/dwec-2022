@@ -1,4 +1,4 @@
-import { map, Observable, Subject } from "rxjs";
+import { BehaviorSubject, map, Observable, Subject } from "rxjs";
 
 export { Model };
 
@@ -6,6 +6,7 @@ class Model {
   constructor(id, url) {
     this.id = id; // identificador en cas de ser un element únic
     this.url = url;
+    this.dataSubject = new BehaviorSubject({});
   }
 
   ///////// En observables
@@ -15,6 +16,7 @@ class Model {
         const response = await fetch(this.url);
         const data = await response.json();
         Object.assign(this, data[0]);
+        this.dataSubject.next(data[0])
         // console.log(this);
         observer.next(data);
         observer.complete();
