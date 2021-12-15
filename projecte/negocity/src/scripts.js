@@ -24,7 +24,7 @@ app.url = "http://192.168.88.60:8069";
     router(window.location.hash);
   });
 
-  window.addEventListener("hashchange", () => {
+ window.addEventListener("hashchange", () => {
     router(window.location.hash);
   });
 })();

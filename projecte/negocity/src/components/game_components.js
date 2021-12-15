@@ -5,6 +5,8 @@ import { SurvivorView } from "../views/survivors_view.js";
 import { VehicleView } from "../views/vehicles_views.js";
 import { ConnectionView } from "../views/roads_views.js";
 import { TravelView } from "../views/travels_views.js";
+import { VehicleModel } from "../models/vehicles_model.js";
+import { filter, skip } from "rxjs";
 
 export {
   BuildingList,
@@ -43,26 +45,37 @@ function VehicleList(container, ids, mode) {
 }
 
 function VehicleListTravel(container, ids, mode, road) {
-  ids.forEach((b) => {
-    const vehicheView = new VehicleView(container, mode);
+  ids.forEach((vehicleId) => {   // Aquest component conté una llista de vehicles
+    let vehicheView = new VehicleView(container, mode);
+    vehicheView.mostrarItem();
     // En aquest cas, el component fa de controller per demanar més coses
-    const vehicleModel = new Model(
-      b,
-      app.url + "/negocity/api/vehicle/?id=" + b
+    let vehicleModel = new VehicleModel(
+      vehicleId,
+      app.url + "/negocity/api/vehicle/?id=" + vehicleId
     );
-    /*  const travelQueryModel = new Model(
-      b,
-      `${app.url}/negocity/api/travel-query/?vehicle=${b}&road=${road}`
-    );*/
+    
+    vehicleModel.dataSubject.subscribe((item) => {
+    //  console.log(item);
+      vehicheView.rellenarItem(item);
+    });
 
-    vehicleModel.read().subscribe({
+    vehicleModel.read();
+
+    vehicleModel.travelQuery(road);
+
+
+ /*   vehicleModel.read().subscribe({
       next: (item) => {
         vehicheView.mostrarItem(item);
+        vehicleModel.travelQuery(road);
+        vehicleModel.dataSubject.pipe(filter((v) => 'detallesTravel' in v)).subscribe((vehicleData) => {
+          vehicheView.anyadirDetalles(vehicleData.detallesTravel);
+        });
       },
       error: (error) => {
         vehicheView.mostrarError(error);
       },
-    });
+    });*/
   });
 }
 

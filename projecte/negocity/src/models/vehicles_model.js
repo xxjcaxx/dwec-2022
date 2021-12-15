@@ -1,4 +1,4 @@
-import { map, Observable, Subject } from "rxjs";
+import { map, Observable, skip, Subject } from "rxjs";
 import { Model } from "./model";
 
 export { VehicleModel };
@@ -6,6 +6,7 @@ export { VehicleModel };
 class VehicleModel extends Model {
   constructor(id, url) {
     super(id, url);
+   // console.log('vehicle');
   }
   ///////// En observables
 
@@ -14,31 +15,19 @@ class VehicleModel extends Model {
       this.id,
       `${app.url}/negocity/api/travel-query/?vehicle=${this.id}&road=${road}`
     );
-    travelQueryModel.read().subscribe({
-      next: (detalles) => {
-        detalles.vehicle = this;
-        vehicheView.anyadirDetalles(detalles);
-      },
-      error: (error) => {
-        vehicheView.mostrarError(error);
-      },
-    });
+    travelQueryModel.dataSubject.subscribe((detalles) => {
+     // console.log('DETALLES',detalles);
+      detalles.vehicle = this;
+     // console.log(this);
+      this.dataSubject.next({...this.dataSubject.getValue(),detallesTravel: detalles});
+      });
+
+    travelQueryModel.read();
   }
 
-  /* read() {
-    return new Observable(async (observer) => {
-      try {
-        const response = await fetch(this.url);
-        const data = await response.json();
-        observer.next(data);
-        observer.complete();
-      } catch (err) {
-        observer.error(err);
-      }
-    });
-  }*/
-  /* assign(plainObject) {
-    // El que vinga del servidor cal asignar-ho a la classe actual
-    Object.assign(this, plainObject);
-  }*/
+   read() {
+
+     return  super.read();
+   }
+  
 }

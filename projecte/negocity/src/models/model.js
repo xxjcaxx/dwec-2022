@@ -1,4 +1,4 @@
-import { map, Observable, Subject } from "rxjs";
+import { BehaviorSubject, map, Observable, skip, Subject } from "rxjs";
 
 export { Model };
 
@@ -6,15 +6,24 @@ class Model {
   constructor(id, url) {
     this.id = id; // identificador en cas de ser un element únic
     this.url = url;
+    this.dataSubject = new BehaviorSubject({random: Math.random()});  //Evitarem el primer perquè està buit
   }
 
   ///////// En observables
   read() {
-    return new Observable(async (observer) => {
+    const readObservable = new Observable(async (observer) => {
       try {
         const response = await fetch(this.url);
         const data = await response.json();
-        Object.assign(this, data[0]);
+        if (Array.isArray(data)) {
+          Object.assign(this, data[0]);
+          this.dataSubject.next({...this.dataSubject.getValue(),...data[0]} )
+        }
+        else {
+          Object.assign(this, data);
+        this.dataSubject.next({...this.dataSubject.getValue(),...data} )
+        }
+        
         // console.log(this);
         observer.next(data);
         observer.complete();
@@ -22,9 +31,10 @@ class Model {
         observer.error(err);
       }
     });
+
+    readObservable.subscribe();
+
+    return readObservable;
   }
-  /* assign(plainObject) {
-    // El que vinga del servidor cal asignar-ho a la classe actual
-    Object.assign(this, plainObject);
-  }*/
+ 
 }

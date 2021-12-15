@@ -4,6 +4,7 @@ class View {
   Items = [];
   constructor(container) {
     this.container = container;
+    this.content = document.createElement('div');
     this.divRow = document.createElement("div");
   }
 

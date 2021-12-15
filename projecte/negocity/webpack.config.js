@@ -8,7 +8,9 @@ module.exports = {
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
+    //sourceMapFilename: "[name].js.map"
   },
+  devtool: "source-map",
   devServer: {
     static: "./dist",
   },
@@ -19,13 +21,10 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(png|svg|jpg|gif)$/,
+        test: /\.(png|svg|jpg|gif|eot|woff|woff2|ttf)$/,
         type: "asset/resource",
       },
-      {
-        test: /\.(svg|eot|woff|woff2|ttf)$/,
-        use: ['file-loader']
-    }
+     
     ],
   },
   plugins: [
