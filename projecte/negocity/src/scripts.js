@@ -7,8 +7,8 @@ import "./style.css";
 import { router } from "./router/router.js";
 
 window.app = {};
-app.url = "http://10.100.23.100:8069";
-//app.url = "http://192.168.88.60:8069";
+//app.url = "http://10.100.23.100:8069";
+app.url = "http://192.168.88.60:8069";
 
 (function autoinvocada() {
   document.addEventListener("DOMContentLoaded", function domLoad() {
