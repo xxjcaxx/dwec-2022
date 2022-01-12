@@ -1,0 +1,12 @@
+<table>
+  <tr *ngFor="let punto of datos.features">
+    <td>
+      <img [src]="punto.properties.foto" class="foto"/>
+
+    </td>
+    <td>
+      <a [href]="punto.properties.web_turismo">{{punto.properties.descripcio}}</a>
+    </td>
+
+  </tr>
+</table>
