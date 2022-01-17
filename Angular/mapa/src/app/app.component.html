@@ -9,7 +9,7 @@
       <th>PDF</th>
     </tr>
     <tr
-      *ngFor="let punto of datos.features; let parell = even"
+      *ngFor="let punto of datos; let parell = even"
       [ngClass]="{ parell: parell }"
     >
       <td>
