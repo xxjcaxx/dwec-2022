@@ -9,20 +9,10 @@
       <th (click)="ordenar('nom')">Nom</th>
       <th>PDF</th>
     </tr>
-    <tr
+    <app-edifici
       *ngFor="let punto of datos; let parell = even"
       [ngClass]="{ parell: parell }"
-    >
-      <td>
-        <img [src]="punto.properties.foto" class="foto" />
-      </td>
-      <td>
-        <app-edifici></app-edifici>
-        <a [href]="punto.properties.web_turismo">{{
-          punto.properties.descripcio
-        }}</a>
-      </td>
-      <td [innerHTML]="punto.properties.pdf"></td>
-    </tr>
+      [punto]="punto"
+    ></app-edifici>
   </table>
 </div>

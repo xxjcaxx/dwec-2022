@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { IEdifici } from 'src/app/interfaces/i-edifici';
 
 @Component({
   selector: 'app-edifici',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EdificiComponent implements OnInit {
 
-  constructor() { }
+  @Input() punto!: IEdifici;
+
+  constructor() {
+    
+   }
 
   ngOnInit(): void {
   }

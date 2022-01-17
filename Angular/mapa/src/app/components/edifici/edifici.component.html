@@ -1,1 +1,11 @@
-<p>edifici works!</p>
+<tr>
+  <td>
+    <img [src]="punto.properties.foto" class="foto" />
+  </td>
+  <td>
+    <a [href]="punto.properties.web_turismo">{{
+      punto.properties.descripcio
+    }}</a>
+  </td>
+  <td [innerHTML]="punto.properties.pdf"></td>
+</tr>
