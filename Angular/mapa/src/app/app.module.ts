@@ -4,10 +4,12 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { EdificiComponent } from './components/edifici/edifici.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EdificiComponent
   ],
   imports: [
     BrowserModule,
