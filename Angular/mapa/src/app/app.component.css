@@ -9,20 +9,6 @@
   width: 100%;
 }
 
-#container table td,
-#container table th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-#container table tr.parell {
-  background-color: #eee;
-}
-
-#container table tr:hover {
-  background-color: #ddd;
-}
-
 #container table th {
   padding-top: 12px;
   padding-bottom: 12px;
@@ -31,8 +17,16 @@
   color: white;
 }
 
-.foto {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
+
+td,
+th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tr.parell {
+  background-color: #eee;
+}
+tr:hover {
+  background-color: #ddd;
 }

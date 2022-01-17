@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { datos } from './datos';
+import { IEdifici } from './interfaces/i-edifici';
 import { EdificisService } from './services/edificis.service';
-import { Edifici } from './edifici';
-
 
 @Component({
   selector: 'app-root',
@@ -10,8 +10,8 @@ import { Edifici } from './edifici';
 })
 export class AppComponent {
   title = 'mapa';
-  datos: Edifici[];
-  datos_original: Edifici[];
+  datos: IEdifici[] = datos.features;
+  datos_original: IEdifici[] = [...datos.features];
   filtre='';
 
   constructor(edificisServici: EdificisService){

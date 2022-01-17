@@ -1,6 +1,7 @@
 <div id="container">
   <div id="search">
     Filtrar: <input type="text" [(ngModel)]="filtre" (change)="filtrar()" />
+    <span>{{ filtre }}</span>
   </div>
   <table>
     <tr>
@@ -8,19 +9,10 @@
       <th (click)="ordenar('nom')">Nom</th>
       <th>PDF</th>
     </tr>
-    <tr
+    <tr app-edifici
       *ngFor="let punto of datos; let parell = even"
       [ngClass]="{ parell: parell }"
-    >
-      <td>
-        <img [src]="punto.properties.foto" class="foto" />
-      </td>
-      <td>
-        <a [href]="punto.properties.web_turismo">{{
-          punto.properties.descripcio
-        }}</a>
-      </td>
-      <td [innerHTML]="punto.properties.pdf"></td>
-    </tr>
+      [punto]="punto"
+    ></tr>
   </table>
 </div>
