@@ -15,7 +15,9 @@
       *ngFor="let punto of datos; let parell = even"
       [ngClass]="{ parell: parell }"
       [punto]="punto"
+      [ratting]="punto.properties.ratting"
       (nameChanged)="canviarNom($event, punto)"
+      (rattingChanged)="canviarRatting($event, punto)"
     ></tr>
   </table>
 </div>

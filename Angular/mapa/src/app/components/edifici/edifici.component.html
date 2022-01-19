@@ -10,7 +10,14 @@
 </td>
 <td [innerHTML]="punto?.properties?.pdf"></td>
 <td>
-  <span *ngFor="let estrella of [1, 2, 3, 4, 5]">
-    {{ estrella <= ratting ? "★" : "☆" }}
+  <span
+    *ngFor="let estrella of [1, 2, 3, 4, 5]"
+    (mouseenter)="ratting_aux = estrella"
+    (mouseleave)="ratting_aux = ratting!"
+    (click)="canviarRattingAux(ratting_aux)"
+  >
+    {{ estrella <= ratting_aux ? "★" : "☆" }}
   </span>
+  <input type="text" [(ngModel)]="ratting_input" />
+  <button (click)="canviarRatting()">Canviar</button>
 </td>

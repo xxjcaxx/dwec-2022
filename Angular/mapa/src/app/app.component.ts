@@ -41,4 +41,8 @@ export class AppComponent implements OnInit{
   canviarNom($event: string,punto: IEdifici){
     punto.properties.descripcio = $event;
   }
+
+  canviarRatting($event: number,punto: IEdifici){
+    punto.properties.ratting = $event;
+  }
 }
