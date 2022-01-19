@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { datos } from '../datos';
-import { Edifici } from '../edifici';
+import { IEdifici } from '../interfaces/i-edifici';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ export class EdificisService {
 
   constructor() { }
 
-  getEdificis():Edifici[]{
+  getEdificis():IEdifici[]{
     return datos.features;
   }
 }

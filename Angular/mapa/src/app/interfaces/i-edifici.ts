@@ -11,6 +11,7 @@ export interface IEdifici {
         como_llegar: string;
         como_llegarw: string;
         id: number;
+        ratting?: number;
     };
     geometry: {
         type: string;

@@ -8,11 +8,14 @@
       <th (click)="ordenar('id')">Foto</th>
       <th (click)="ordenar('nom')">Nom</th>
       <th>PDF</th>
+      <th>Puntuacio</th>
     </tr>
-    <tr app-edifici
+    <tr
+      app-edifici
       *ngFor="let punto of datos; let parell = even"
       [ngClass]="{ parell: parell }"
       [punto]="punto"
+      (nameChanged)="canviarNom($event, punto)"
     ></tr>
   </table>
 </div>

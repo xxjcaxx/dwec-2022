@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { datos } from './datos';
 import { IEdifici } from './interfaces/i-edifici';
 import { EdificisService } from './services/edificis.service';
@@ -8,17 +8,21 @@ import { EdificisService } from './services/edificis.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'mapa';
   datos: IEdifici[] = datos.features;
   datos_original: IEdifici[] = [...datos.features];
   filtre='';
 
   constructor(edificisServici: EdificisService){
+    this.datos = edificisServici.getEdificis();
+    this.datos_original =[...this.datos];
+  }
 
-  this.datos = edificisServici.getEdificis();
-  this.datos_original =[...this.datos];
-
+  ngOnInit(): void {
+   for(let dato of this.datos){
+      dato.properties.ratting = Math.round(Math.random()*5)
+   }
   }
 
   filtrar = ()=>{
@@ -32,5 +36,9 @@ export class AppComponent {
     if(criteri=='id'){
       this.datos = this.datos.sort((a,b)=>{return a.properties.id > b.properties.id ? 1: -1})
     }
+  }
+
+  canviarNom($event: string,punto: IEdifici){
+    punto.properties.descripcio = $event;
   }
 }
