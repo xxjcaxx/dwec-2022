@@ -1,18 +1,23 @@
-<div class="search">
- <span>Filtrar:</span> <input type="text"/>
-</div>
-<div class="container">
-<table>
-  <tr><th>Foto</th><th>Enllaç</th></tr>
-  <tr *ngFor="let punto of datos.features; let parell = even" [ngClass]="{'parell': parell}">
-    <td>
-      <img [src]="punto.properties.foto" class="foto"/>
-
-    </td>
-    <td>
-      <a [href]="punto.properties.web_turismo">{{punto.properties.descripcio}}</a>
-    </td>
-
-  </tr>
-</table>
+<div id="container">
+  <div id="search">
+    Filtrar: <input type="text" [(ngModel)]="filtre" (change)="filtrar()" />
+    <span>{{ filtre }}</span>
+  </div>
+  <table>
+    <tr>
+      <th (click)="ordenar('id')">Foto</th>
+      <th (click)="ordenar('nom')">Nom</th>
+      <th>PDF</th>
+      <th>Puntuacio</th>
+    </tr>
+    <tr
+      app-edifici
+      *ngFor="let punto of datos; let parell = even"
+      [ngClass]="{ parell: parell }"
+      [punto]="punto"
+      [ratting]="punto.properties.ratting"
+      (nameChanged)="canviarNom($event, punto)"
+      (rattingChanged)="canviarRatting($event, punto)"
+    ></tr>
+  </table>
 </div>
