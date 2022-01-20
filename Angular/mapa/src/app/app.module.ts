@@ -5,11 +5,16 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EdificiComponent } from './components/edifici/edifici.component';
+import { EdificiDetailComponent } from './components/edifici-detail/edifici-detail.component';
+import { EdificiListComponent } from './components/edifici-list/edifici-list.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    EdificiComponent
+    EdificiComponent,
+    EdificiDetailComponent,
+    EdificiListComponent
   ],
   imports: [
     BrowserModule,

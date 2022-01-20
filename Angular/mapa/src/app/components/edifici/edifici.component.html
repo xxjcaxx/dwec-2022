@@ -21,3 +21,6 @@
   <input type="text" [(ngModel)]="ratting_input" />
   <button (click)="canviarRatting()">Canviar</button>
 </td>
+<td>
+  <a [routerLink]="['/edifici',punto?.properties?.id]">Mapa</a>
+</td>

@@ -1,0 +1,21 @@
+<div id="search">
+    Filtrar: <input type="text" [(ngModel)]="filtre" (change)="filtrar()" />
+    <span>{{ filtre }}</span>
+  </div>
+  <table>
+    <tr>
+      <th (click)="ordenar('id')">Foto</th>
+      <th (click)="ordenar('nom')">Nom</th>
+      <th>PDF</th>
+      <th>Puntuacio</th>
+    </tr>
+    <tr
+      app-edifici
+      *ngFor="let punto of datos; let parell = even"
+      [ngClass]="{ parell: parell }"
+      [punto]="punto"
+      [ratting]="punto.properties.ratting"
+      (nameChanged)="canviarNom($event, punto)"
+      (rattingChanged)="canviarRatting($event, punto)"
+    ></tr>
+  </table>
