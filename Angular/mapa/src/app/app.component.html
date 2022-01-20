@@ -1,5 +1,10 @@
+<div class="search">
+ <span>Filtrar:</span> <input type="text"/>
+</div>
+<div class="container">
 <table>
-  <tr *ngFor="let punto of datos.features">
+  <tr><th>Foto</th><th>Enllaç</th></tr>
+  <tr *ngFor="let punto of datos.features; let parell = even" [ngClass]="{'parell': parell}">
     <td>
       <img [src]="punto.properties.foto" class="foto"/>
 
@@ -10,3 +15,4 @@
 
   </tr>
 </table>
+</div>
