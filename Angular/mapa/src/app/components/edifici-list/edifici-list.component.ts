@@ -29,15 +29,15 @@ export class EdificiListComponent implements OnInit {
       i++;
    }
 
-   this.rutes.params.subscribe( params => { 
+   this.rutes.params.subscribe( params => {
      if ('criteri' in params){
       // console.log(this.datos_original);
-       
+
        this.datos = this.datos_original.filter(d=>
           d.properties.descripcio.includes(params['criteri'])
        );
       // console.log(this.datos);
-       
+
      }
    })
   }
@@ -67,19 +67,13 @@ export class EdificiListComponent implements OnInit {
   }
 
   canviarPosicio($event: number, punto: IEdifici){
-    
-      if ($event == 1){
-        let posterior = this.datos.find(d=>{ d.listPosition == punto.listPosition!+1});
-        console.log(posterior);
-        
-        posterior!.listPosition! = punto.listPosition!;
-        punto.listPosition = punto.listPosition!+1;
-      }
-      if ($event == -1){
-        let anterior = this.datos.find(d=>{ d.listPosition == punto.listPosition!-1});
-        anterior!.listPosition! = punto.listPosition!;
-        punto.listPosition = punto.listPosition!+1;
-      }
+
+
+    let other = this.datos.find(d=> d.listPosition == punto.listPosition!+$event);
+    other!.listPosition! = punto.listPosition!;
+    punto.listPosition = punto.listPosition!+$event;
+
+
       this.ordenar('posicio');
 
   }
