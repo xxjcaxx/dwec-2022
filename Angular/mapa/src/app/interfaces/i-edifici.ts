@@ -1,5 +1,6 @@
 export interface IEdifici {
     type: string;
+    listPosition?: number;
     properties: {
         descripcio: string;
         orden: number;

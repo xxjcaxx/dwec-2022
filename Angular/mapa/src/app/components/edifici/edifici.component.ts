@@ -13,6 +13,7 @@ export class EdificiComponent implements OnInit {
   @Input() ratting: number | undefined;
   @Output() nameChanged = new EventEmitter<string>();
   @Output() rattingChanged = new EventEmitter<number>();
+  @Output() positionChanged = new EventEmitter<number>();
   name : string;
   ratting_input : number = 0;
   ratting_aux : number = 0;
@@ -61,4 +62,7 @@ export class EdificiComponent implements OnInit {
     this.rattingChanged.emit(r);
   }
 
+  canviarPosicio(n: number){
+    this.positionChanged.emit(n);
+  }
 }

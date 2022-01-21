@@ -8,6 +8,7 @@ import OSM from 'ol/source/OSM';
 import * as olProj from 'ol/proj';
 import TileLayer from 'ol/layer/Tile';
 import Feature from 'ol/Feature';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-edifici-detail',
@@ -17,8 +18,9 @@ import Feature from 'ol/Feature';
 export class EdificiDetailComponent implements OnInit {
 
  map! : Map;
+ id : number = 0;
 
-  constructor() { }
+  constructor(private rutes: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.map = new Map({
@@ -34,7 +36,9 @@ export class EdificiDetailComponent implements OnInit {
       })
     });
 
- 
+
+    this.rutes.params.subscribe( params => { this.id = params['id']})
+
 
   }
 

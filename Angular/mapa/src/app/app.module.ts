@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { EdificiComponent } from './components/edifici/edifici.component';
 import { EdificiDetailComponent } from './components/edifici-detail/edifici-detail.component';
 import { EdificiListComponent } from './components/edifici-list/edifici-list.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { HomeComponent } from './components/home/home.component';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { EdificiListComponent } from './components/edifici-list/edifici-list.com
     AppComponent,
     EdificiComponent,
     EdificiDetailComponent,
-    EdificiListComponent
+    EdificiListComponent,
+    MenuComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

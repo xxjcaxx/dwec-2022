@@ -1,9 +1,15 @@
 <td>
+  <div class="fletxes">
+    <span (click)="canviarPosicio(-1)">↑</span
+    ><span (click)="canviarPosicio(1)">↓</span>
+  </div>
+</td>
+<td>
   <img [src]="punto?.properties?.foto" class="foto" />
 </td>
 <td>
   <input type="text" [(ngModel)]="name" />
-  <button (click)="canviarNom()">Canviar</button>
+  <button class="btn btn-dark" (click)="canviarNom()">Canviar</button>
   <a [href]="punto?.properties?.web_turismo">{{
     punto?.properties?.descripcio
   }}</a>
@@ -19,8 +25,8 @@
     {{ estrella <= ratting_aux ? "★" : "☆" }}
   </span>
   <input type="text" [(ngModel)]="ratting_input" />
-  <button (click)="canviarRatting()">Canviar</button>
+  <button class="btn btn-dark" (click)="canviarRatting()">Canviar</button>
 </td>
 <td>
-  <a [routerLink]="['/edifici',punto?.properties?.id]">Mapa</a>
+  <a [routerLink]="['/edifici', punto?.properties?.id]">Mapa</a>
 </td>
