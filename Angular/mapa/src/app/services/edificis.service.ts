@@ -12,4 +12,8 @@ export class EdificisService {
   getEdificis():IEdifici[]{
     return datos.features;
   }
+
+  getEdifici(id:number):IEdifici | undefined{
+    return datos.features.find(d=> d.properties.id == id);
+  }
 }
