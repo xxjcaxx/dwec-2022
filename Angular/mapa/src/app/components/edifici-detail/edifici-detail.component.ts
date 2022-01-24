@@ -14,7 +14,7 @@ import Point from 'ol/geom/Point';
 import { EdificisService } from '../../services/edificis.service';
 import { IEdifici } from '../../interfaces/i-edifici';
 import Overlay from 'ol/Overlay';
-import * as bootstrap from 'bootstrap';
+//import * as bootstrap from 'bootstrap';
 
 
 @Component({

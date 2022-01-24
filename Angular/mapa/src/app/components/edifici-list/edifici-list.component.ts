@@ -16,30 +16,40 @@ export class EdificiListComponent implements OnInit {
   datos_original: IEdifici[] = [...datos.features];
   filtre='';
 
-  constructor(edificisServici: EdificisService,  private rutes: ActivatedRoute ){
-    this.datos = edificisServici.getEdificis();
-    this.datos_original =[...this.datos];
+  constructor(private edificisServici: EdificisService,  private rutes: ActivatedRoute ){
   }
 
   ngOnInit(): void {
-    let i = 0;
-    for(let dato of this.datos){
-      dato.properties.ratting = Math.round(Math.random()*5)
-      dato.listPosition = i;
-      i++;
-   }
 
-   this.rutes.params.subscribe( params => {
-     if ('criteri' in params){
-      // console.log(this.datos_original);
+    this.edificisServici.getFeatures().subscribe(datos=>{
+    
+     this.datos = datos;
+     this.datos_original =[...this.datos]; 
 
-       this.datos = this.datos_original.filter(d=>
-          d.properties.descripcio.includes(params['criteri'])
-       );
-      // console.log(this.datos);
-
+      let i = 0;
+      for(let dato of this.datos){
+        dato.properties.ratting = Math.round(Math.random()*5)
+        dato.listPosition = i;
+        i++;
      }
-   })
+
+     this.rutes.params.subscribe( params => {
+      if ('criteri' in params){
+       // console.log(this.datos_original);
+ 
+        this.datos = this.datos_original.filter(d=>
+           d.properties.descripcio.includes(params['criteri'])
+        );
+       // console.log(this.datos);
+ 
+      }
+    })
+
+    });
+
+   
+
+
   }
 
   filtrar = ()=>{

@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
 import { datos } from '../datos';
 import { IEdifici } from '../interfaces/i-edifici';
 
@@ -7,7 +9,24 @@ import { IEdifici } from '../interfaces/i-edifici';
 })
 export class EdificisService {
 
-  constructor() { }
+  urlEdificis = '/assets/ruta-modernista.geojson.json';
+
+  constructor(private http: HttpClient) { }
+
+
+  getFeatures():Observable<IEdifici[]>{
+    const datos = this.http.get<{features : IEdifici[]}>(this.urlEdificis)
+    .pipe(map(dato => dato.features));
+    //datos.subscribe(d=> console.log(d));
+    return datos;
+  }
+
+
+
+
+
+
+
 
   getEdificis():IEdifici[]{
     return datos.features;
