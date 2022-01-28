@@ -22,13 +22,17 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
+import { SurvivorListComponent } from './components/survivors/survivor-list/survivor-list.component';
+import { SurvivorItemComponent } from './components/survivors/survivor-item/survivor-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     GlobalComponent,
-    LoginComponent
+    LoginComponent,
+    SurvivorListComponent,
+    SurvivorItemComponent
   ],
   imports: [
     BrowserModule,

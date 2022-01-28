@@ -1,0 +1,6 @@
+ <button mat-button color="accent" (click)="createRandom()">Create Random</button>
+
+  <div class="card-wrapper">
+  <app-survivor-item *ngFor="let survivor of survivors" [survivor]="survivor"></app-survivor-item>
+</div>
+
