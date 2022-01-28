@@ -1,5 +1,5 @@
 <div id="search">
-  Filtrar: <input type="text" [(ngModel)]="filtre" (change)="filtrar()" />
+  Filtrar: <input type="text" [(ngModel)]="filtre" />
   <span>{{ filtre }}</span>
 </div>
 <table>
@@ -13,7 +13,7 @@
   </tr>
   <tr
     app-edifici
-    *ngFor="let punto of datos; let parell = even"
+    *ngFor="let punto of datos | filtreEdificis: filtre; let parell = even"
     [ngClass]="{ parell: parell }"
     [punto]="punto"
     [ratting]="punto.properties.ratting"

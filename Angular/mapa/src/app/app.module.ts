@@ -10,6 +10,7 @@ import { EdificiListComponent } from './components/edifici-list/edifici-list.com
 import { MenuComponent } from './components/menu/menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FiltreEdificisPipe } from './pipes/filtre-edificis.pipe';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     EdificiDetailComponent,
     EdificiListComponent,
     MenuComponent,
-    HomeComponent
+    HomeComponent,
+    FiltreEdificisPipe
   ],
   imports: [
     BrowserModule,

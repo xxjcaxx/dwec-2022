@@ -21,7 +21,7 @@ export class SurvivorListComponent implements OnInit {
   createRandom(){
     //console.log('random');
 
-    this.sService.createRandomSurvivor().subscribe(()=>{})
+    this.sService.createRandomSurvivor().subscribe(s => this.survivors = s);
   }
 
 }
