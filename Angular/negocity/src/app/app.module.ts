@@ -9,7 +9,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import { GlobalComponent } from './components/global/global.component';
-import { LoginComponent } from './components/login/login.component'; 
+import { LoginComponent } from './components/login/login.component';
 
 import { FormsModule } from '@angular/forms';
 
@@ -21,9 +21,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SurvivorListComponent } from './components/survivors/survivor-list/survivor-list.component';
 import { SurvivorItemComponent } from './components/survivors/survivor-item/survivor-item.component';
+import { CitiesListComponent } from './components/cities/cities-list/cities-list.component';
+import { CitiesItemComponent } from './components/cities/cities-item/cities-item.component';
+import { RegistrerComponent } from './components/registrer/registrer.component';
+import { AuthInterceptorService } from './auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +36,10 @@ import { SurvivorItemComponent } from './components/survivors/survivor-item/surv
     GlobalComponent,
     LoginComponent,
     SurvivorListComponent,
-    SurvivorItemComponent
+    SurvivorItemComponent,
+    CitiesListComponent,
+    CitiesItemComponent,
+    RegistrerComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +59,12 @@ import { SurvivorItemComponent } from './components/survivors/survivor-item/surv
     MatOptionModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true,
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

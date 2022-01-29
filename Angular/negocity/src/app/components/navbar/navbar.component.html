@@ -10,7 +10,9 @@
 
   <div>
     <a mat-button [routerLink]="'/global'"> Global </a>
-    <a mat-button [routerLink]="'/login'"> Login </a>
+    <a mat-button *ngIf="!isAuth" [routerLink]="'/login'"> Login </a>
+    <a mat-button [routerLink]="'/register'"> Register </a>
+    <a mat-button *ngIf="isAuth" (click)="logout()"> Logout </a>
   </div>
   <span class="example-spacer"></span>
   <button

@@ -24,4 +24,9 @@ export class SurvivorListComponent implements OnInit {
     this.sService.createRandomSurvivor().subscribe(s => this.survivors = s);
   }
 
+  deleteSurvivor($event:string,survivor:Survivor){
+    this.sService.deleteSurvivor(survivor.id).subscribe(s => this.survivors = s);
+
+  }
+
 }

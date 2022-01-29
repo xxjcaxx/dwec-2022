@@ -1,0 +1,34 @@
+<mat-card color="primary">
+  <mat-card-content>
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+      <h2>Registry</h2>
+      <mat-error *ngIf="!registerValid">
+        The username and password were not correct
+      </mat-error>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Email"
+          [(ngModel)]="username"
+          name="username"
+          required
+        />
+        <mat-error> Please provide a valid email address </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          [(ngModel)]="password"
+          name="password"
+          required
+        />
+        <mat-error> Please provide a valid password </mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary">Register</button>
+      <h2 *ngIf="registerValid">Register Correct</h2>
+      <h2 *ngIf="registerError"><mat-error> Register Error</mat-error></h2>
+    </form>
+  </mat-card-content>
+</mat-card>

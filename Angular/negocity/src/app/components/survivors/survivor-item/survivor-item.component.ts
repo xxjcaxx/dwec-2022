@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Survivor } from '../../../interfaces/survivor';
 
 @Component({
@@ -8,11 +8,18 @@ import { Survivor } from '../../../interfaces/survivor';
 })
 export class SurvivorItemComponent implements OnInit {
 
-  @Input() survivor?: Survivor;
+  @Input() survivor: Survivor = {id:'',name:'undefined',health:0,city:''};
+  @Output() eventDeleteSurvivor = new EventEmitter<string>();
 
-  constructor() { }
+  constructor() {
+
+   }
 
   ngOnInit(): void {
+  }
+
+  deleteSurvivor(){
+    this.eventDeleteSurvivor.emit(this.survivor.id)
   }
 
 }
