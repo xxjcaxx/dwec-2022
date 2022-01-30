@@ -28,6 +28,7 @@ import { CitiesListComponent } from './components/cities/cities-list/cities-list
 import { CitiesItemComponent } from './components/cities/cities-item/cities-item.component';
 import { RegistrerComponent } from './components/registrer/registrer.component';
 import { AuthInterceptorService } from './auth-interceptor.service';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AuthInterceptorService } from './auth-interceptor.service';
     SurvivorItemComponent,
     CitiesListComponent,
     CitiesItemComponent,
-    RegistrerComponent
+    RegistrerComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

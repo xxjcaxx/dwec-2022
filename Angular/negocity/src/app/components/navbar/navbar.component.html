@@ -6,12 +6,12 @@
   >
     <mat-icon>menu</mat-icon>
   </button>
-  <span>Negocity</span>
+  <span [routerLink]="'/home'">Negocity</span>
 
   <div>
     <a mat-button [routerLink]="'/global'"> Global </a>
     <a mat-button *ngIf="!isAuth" [routerLink]="'/login'"> Login </a>
-    <a mat-button [routerLink]="'/register'"> Register </a>
+    <a mat-button *ngIf="!isAuth"  [routerLink]="'/register'"> Register </a>
     <a mat-button *ngIf="isAuth" (click)="logout()"> Logout </a>
   </div>
   <span class="example-spacer"></span>
