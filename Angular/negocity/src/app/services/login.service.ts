@@ -9,7 +9,7 @@ import { User } from '../interfaces/user';
 export class LoginService {
 
   userSubject = new Subject<User>();
-  logued = new BehaviorSubject<boolean>(false);
+  logged = new BehaviorSubject<boolean>(false);
 
   private loginURL = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyACuNiwMT6WhLvr9G6HbMVhV4LfNFnAKzU";
   private registerURL = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyACuNiwMT6WhLvr9G6HbMVhV4LfNFnAKzU"
@@ -21,7 +21,7 @@ export class LoginService {
   };
 
   constructor(private http: HttpClient) {
-    localStorage.getItem('idToken') ? this.logued.next(true) : this.logued.next(false);
+    localStorage.getItem('idToken') ? this.logged.next(true) : this.logged.next(false);
   }
 
 
@@ -32,8 +32,11 @@ export class LoginService {
         map(response => {
           this.userSubject.next(data);
           localStorage.setItem('idToken',response.idToken);
-          this.logued.next(true);
+          this.logged.next(true);
+          console.log(response);
+          
           return data;
+
         }),
         catchError((resp:HttpErrorResponse)=> throwError(()=> new Error(`Error de Login: ${resp.message}`)))
       );
@@ -52,7 +55,7 @@ export class LoginService {
 
   logout(){
     localStorage.removeItem('idToken');
-    this.logued.next(false);
+    this.logged.next(false);
   }
 
 }

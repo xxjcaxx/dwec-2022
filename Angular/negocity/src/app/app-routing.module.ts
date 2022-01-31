@@ -4,9 +4,10 @@ import { GlobalComponent } from './components/global/global.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrerComponent } from './components/registrer/registrer.component';
 import { HomeComponent } from './components/home/home.component';
+import { LoggedGuard } from './guards/logged.guard';
 
 const routes: Routes = [
-  { path: 'global', component: GlobalComponent },
+  { path: 'global', canActivate: [LoggedGuard], component: GlobalComponent },
 
   { path: 'home', component: HomeComponent },
 

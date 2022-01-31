@@ -59,7 +59,7 @@ export class SurvivorsService {
     }
     //console.log(newSurvivor);
 
-    return this.http.post<Survivor>(this.url + `.json?auth=${localStorage.getItem('idToken')}` , JSON.stringify(newSurvivor))
+    return this.http.post<Survivor>(this.url + `.json` , JSON.stringify(newSurvivor))
       .pipe(mergeMap(() => this.getSurvivors()))
 
     // mergeMap espera al primer valor de l'Observable del POST per inicial el Observable que retorna getSurvivors
@@ -73,7 +73,7 @@ export class SurvivorsService {
 
 
   public deleteSurvivor(id: string): Observable<Survivor[]> {
-    return this.http.delete<Survivor>(`${this.url}/${id}.json?auth=${localStorage.getItem('idToken')}`)
+    return this.http.delete<Survivor>(`${this.url}/${id}.json`)
       .pipe(mergeMap(() => this.getSurvivors()))
   }
 
