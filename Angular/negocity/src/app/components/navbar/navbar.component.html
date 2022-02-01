@@ -7,7 +7,9 @@
     <mat-icon>menu</mat-icon>
   </button>
   <span [routerLink]="'/home'">Negocity</span>
-
+  <img
+  [src]="player?.avatar"
+  mat-card-avatar />
   <div>
     <a mat-button [routerLink]="'/global'"> Global </a>
     <a mat-button *ngIf="!isAuth" [routerLink]="'/login'"> Login </a>

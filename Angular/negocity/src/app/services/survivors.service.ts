@@ -18,9 +18,10 @@ export class SurvivorsService {
 
   public getSurvivors(): Observable<Survivor[]> {
     if (localStorage.getItem('idToken')) {
+      const localId = localStorage.getItem('localId');
       //this.httpOptions.headers = this.httpOptions.headers.set('Authorization', localStorage.getItem('idToken')!)
 
-      return this.http.get<{ [key: string]: Survivor }>(this.url + ".json", this.httpOptions)
+      return this.http.get<{ [key: string]: Survivor }>(this.url + `.json?orderBy="player"&equalTo="${localId}"`, this.httpOptions)
         .pipe(
           map(sObjecte => Object.entries(sObjecte)),
           map(sArray => sArray.map(s => { s[1].id = s[0]; return s[1] })));
@@ -56,6 +57,7 @@ export class SurvivorsService {
       image: `/assets/img/survivor${Math.round(Math.random() * 50)}.jpg`,
       health: 50,
       city: '',
+      player: localStorage.getItem('localId')
     }
     //console.log(newSurvivor);
 
