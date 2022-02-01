@@ -11,6 +11,8 @@ export class SurvivorItemComponent implements OnInit {
   @Input() survivor: Survivor = {id:'',name:'undefined',health:0,city:''};
   @Output() eventDeleteSurvivor = new EventEmitter<string>();
 
+  mode: string = 'view';
+
   constructor() {
 
    }
@@ -21,5 +23,14 @@ export class SurvivorItemComponent implements OnInit {
   deleteSurvivor(){
     this.eventDeleteSurvivor.emit(this.survivor.id)
   }
+
+  editSurvivor(){
+    this.mode = 'edit';
+  }
+
+  saveSurvivor(){
+    this.mode = 'view';
+  }
+
 
 }

@@ -18,9 +18,10 @@ export class SurvivorsService {
 
   public getSurvivors(): Observable<Survivor[]> {
     if (localStorage.getItem('idToken')) {
+      const localId = localStorage.getItem('localId');
       //this.httpOptions.headers = this.httpOptions.headers.set('Authorization', localStorage.getItem('idToken')!)
 
-      return this.http.get<{ [key: string]: Survivor }>(this.url + ".json", this.httpOptions)
+      return this.http.get<{ [key: string]: Survivor }>(this.url + `.json?orderBy="player"&equalTo="${localId}"`, this.httpOptions)
         .pipe(
           map(sObjecte => Object.entries(sObjecte)),
           map(sArray => sArray.map(s => { s[1].id = s[0]; return s[1] })));
@@ -56,10 +57,11 @@ export class SurvivorsService {
       image: `/assets/img/survivor${Math.round(Math.random() * 50)}.jpg`,
       health: 50,
       city: '',
+      player: localStorage.getItem('localId')
     }
     //console.log(newSurvivor);
 
-    return this.http.post<Survivor>(this.url + `.json?auth=${localStorage.getItem('idToken')}` , JSON.stringify(newSurvivor))
+    return this.http.post<Survivor>(this.url + `.json` , JSON.stringify(newSurvivor))
       .pipe(mergeMap(() => this.getSurvivors()))
 
     // mergeMap espera al primer valor de l'Observable del POST per inicial el Observable que retorna getSurvivors
@@ -73,7 +75,7 @@ export class SurvivorsService {
 
 
   public deleteSurvivor(id: string): Observable<Survivor[]> {
-    return this.http.delete<Survivor>(`${this.url}/${id}.json?auth=${localStorage.getItem('idToken')}`)
+    return this.http.delete<Survivor>(`${this.url}/${id}.json`)
       .pipe(mergeMap(() => this.getSurvivors()))
   }
 

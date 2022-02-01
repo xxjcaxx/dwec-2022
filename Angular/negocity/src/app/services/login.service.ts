@@ -1,7 +1,8 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, Subject, BehaviorSubject, catchError, throwError } from 'rxjs';
-import { User } from '../interfaces/user';
+import { Observable, map, Subject, BehaviorSubject, catchError, throwError, mergeMap } from 'rxjs';
+import { User, Player } from '../interfaces/user';
+import { PlayersService } from './players.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,10 @@ export class LoginService {
   userSubject = new Subject<User>();
   logued = new BehaviorSubject<boolean>(false);
 
+
   private loginURL = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyACuNiwMT6WhLvr9G6HbMVhV4LfNFnAKzU";
   private registerURL = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyACuNiwMT6WhLvr9G6HbMVhV4LfNFnAKzU"
+
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -20,39 +23,81 @@ export class LoginService {
     })
   };
 
-  constructor(private http: HttpClient) {
-    localStorage.getItem('idToken') ? this.logued.next(true) : this.logued.next(false);
+  constructor(private http: HttpClient, private playerService: PlayersService) {
+    this.isLogged() ? this.logued.next(true) : this.logued.next(false);
+  }
+
+  localstorageLogin(idToken: string, expiresIn: string, localId: string){
+    const now = new Date();
+    const Token = { token: idToken, expiration: now.getTime() + parseInt(expiresIn) * 1000 }
+    localStorage.setItem('idToken', JSON.stringify(Token));
+    localStorage.setItem('localId', localId);
+    this.logued.next(true);
   }
 
 
   login(data: User): Observable<User> {
     let datos = { ...data, returnSecureToken: true };
-    return this.http.post<{ email: string, idToken: string }>(this.loginURL, JSON.stringify(datos),this.httpOptions)
+    return this.http.post<{ email: string, idToken: string, localId: string, expiresIn: string }>(this.loginURL, JSON.stringify(datos), this.httpOptions)
       .pipe(
         map(response => {
           this.userSubject.next(data);
-          localStorage.setItem('idToken',response.idToken);
-          this.logued.next(true);
+          this.localstorageLogin(response.idToken,response.expiresIn, response.localId);
           return data;
         }),
-        catchError((resp:HttpErrorResponse)=> throwError(()=> new Error(`Error de Login: ${resp.message}`)))
+        catchError((resp: HttpErrorResponse) => throwError(() => new Error(`Error de Login: ${resp.message}`)))
       );
   }
 
-  register(data: User): Observable<User>{
+  register(data: User, player: Player): Observable<any> {
     let datos = { ...data, returnSecureToken: true };
-    return this.http.post<{ email: string, idToken: string }>(this.registerURL, JSON.stringify(datos),this.httpOptions)
+    return this.http.post<{ email: string, idToken: string, localId: string, expiresIn: string }>(this.registerURL, JSON.stringify(datos), this.httpOptions)
       .pipe(
-        map(response => {
-          return data;
+        mergeMap(response => {
+          this.localstorageLogin(response.idToken,response.expiresIn,response.localId);
+          let newPlayer: any = {...player};
+          newPlayer.id = response.localId
+          return this.playerService.createPlayer(newPlayer);
+
         }),
-        catchError((resp:HttpErrorResponse)=> throwError(()=> new Error(`Error de registre: ${resp.message}`)))
+        catchError((resp: HttpErrorResponse) => throwError(() => new Error(`Error de registre: ${resp.message}`)))
       );
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('idToken');
+    localStorage.removeItem('localId');
     this.logued.next(false);
+  }
+
+  isLogged(): boolean {
+    const idToken = localStorage.getItem('idToken');
+    if (idToken) {
+      const token: { token: string, expiration: number } = JSON.parse(idToken);
+      const now = new Date();
+      if (token.expiration > now.getTime()) {
+        return true;
+      }
+      else {
+        localStorage.removeItem('isToken');
+        return false;
+      }
+    }
+    else {
+      return false;
+    }
+  }
+
+  getToken():string|null{
+    const idToken = localStorage.getItem('idToken');
+    if (idToken) {
+      const token: { token: string, expiration: number } = JSON.parse(idToken);
+      return token.token;
+    }
+    else {
+      return null;
+    }
+
   }
 
 }

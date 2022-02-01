@@ -9,7 +9,6 @@ export interface User {
 export interface Player {
   id: string;
   nick: string;
-  user: User;
   avatar: string;
   survivors: Survivor[];
 }
