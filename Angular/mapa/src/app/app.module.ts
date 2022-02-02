@@ -11,6 +11,7 @@ import { MenuComponent } from './components/menu/menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FiltreEdificisPipe } from './pipes/filtre-edificis.pipe';
+import { EdificiFormComponent } from './components/edifici-form/edifici-form.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { FiltreEdificisPipe } from './pipes/filtre-edificis.pipe';
     EdificiListComponent,
     MenuComponent,
     HomeComponent,
-    FiltreEdificisPipe
+    FiltreEdificisPipe,
+    EdificiFormComponent
   ],
   imports: [
     BrowserModule,

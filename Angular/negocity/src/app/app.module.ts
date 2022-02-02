@@ -30,6 +30,8 @@ import { RegistrerComponent } from './components/registrer/registrer.component';
 import { AuthInterceptorService } from './auth-interceptor.service';
 import { HomeComponent } from './components/home/home.component';
 import { SurvivorFormComponent } from './components/survivors/survivor-form/survivor-form.component';
+import { CorreuDirective } from './directives/validators/correu.directive';
+import { PasswordDirective } from './directives/validators/password.directive';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { SurvivorFormComponent } from './components/survivors/survivor-form/surv
     CitiesItemComponent,
     RegistrerComponent,
     HomeComponent,
-    SurvivorFormComponent
+    SurvivorFormComponent,
+    CorreuDirective,
+    PasswordDirective
   ],
   imports: [
     BrowserModule,

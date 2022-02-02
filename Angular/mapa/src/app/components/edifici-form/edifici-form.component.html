@@ -1,0 +1,27 @@
+<form #ngForm="ngForm" novalidate>
+  <input
+    type="text"
+    class="form-control"
+    name="descripcio"
+    minlength="5"
+    maxlength="600"
+    required
+    [(ngModel)]="descripcio"
+    #descriptionModel="ngModel"
+    [ngClass]="{
+      'is-valid': descriptionModel.touched && descriptionModel.valid,
+      'is-invalid': descriptionModel.touched && !descriptionModel.valid
+    }"
+  />
+  <div
+    *ngIf="descriptionModel.touched && descriptionModel.invalid"
+    class="alert alert-danger"
+  >
+    Descripción requerida (entre 5 y 60 caracteres)
+  </div>
+</form>
+
+<div>Touched: {{ ngForm.touched }}</div>
+<div>Valid: {{ ngForm.valid }}</div>
+<div>Value: {{ ngForm.value | json }}</div>
+<div>Descripción: {{ ngForm.control.get("descripcio")!.value | json }}</div>

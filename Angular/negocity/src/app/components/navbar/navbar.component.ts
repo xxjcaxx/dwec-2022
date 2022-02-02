@@ -22,7 +22,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAuth = this.login.isLogged() ? true : false;
-    this.login.logued.subscribe(l => { this.isAuth = l;
+    this.login.logged.subscribe(l => { this.isAuth = l;
       if(this.isAuth){
         this.playersService.getPlayer(localStorage.getItem('localId')!).subscribe(p => this.player = p);
       }

@@ -24,7 +24,7 @@ export class LoginService {
   };
 
   constructor(private http: HttpClient, private playerService: PlayersService) {
-    this.isLogged() ? this.logued.next(true) : this.logued.next(false);
+    this.isLogged() ? this.logged.next(true) : this.logged.next(false);
   }
 
   localstorageLogin(idToken: string, expiresIn: string, localId: string){
@@ -32,7 +32,7 @@ export class LoginService {
     const Token = { token: idToken, expiration: now.getTime() + parseInt(expiresIn) * 1000 }
     localStorage.setItem('idToken', JSON.stringify(Token));
     localStorage.setItem('localId', localId);
-    this.logued.next(true);
+    this.logged.next(true);
   }
 
 
@@ -52,7 +52,8 @@ export class LoginService {
 
   register(data: User, player: Player): Observable<any> {
     let datos = { ...data, returnSecureToken: true };
-    return this.http.post<{ email: string, idToken: string, localId: string, expiresIn: string }>(this.registerURL, JSON.stringify(datos), this.httpOptions)
+    return this.http.post<{ email: string, idToken: string, localId: string, expiresIn: string }>
+    (this.registerURL, JSON.stringify(datos), this.httpOptions)
       .pipe(
         mergeMap(response => {
           this.localstorageLogin(response.idToken,response.expiresIn,response.localId);
@@ -68,15 +69,20 @@ export class LoginService {
   logout() {
     localStorage.removeItem('idToken');
     localStorage.removeItem('localId');
-    this.logued.next(false);
+    this.logged.next(false);
   }
+
+  isLogged(){
+    const idToken = localStorage.getItem('idToken');
+    const now = new Date();
     if (idToken) {
       const token: { token: string, expiration: number } = JSON.parse(idToken);
       if (token.expiration > now.getTime()) {
         return true;
       }
       else {
-        localStorage.removeItem('isToken');
+        localStorage.removeItem('idToken');
+        localStorage.removeItem('localId');
         return false;
       }
     }
