@@ -1,27 +1,30 @@
 <form #loginForm="ngForm">
-<mat-card-header>
-  <mat-card-title>
-    <mat-form-field>
-      <input
-        matInput
-        placeholder="Name"
-        [(ngModel)]="survivor.name"
-        name="name"
-        required
-      />
-    </mat-form-field>
-   </mat-card-title>
-  <mat-card-subtitle> </mat-card-subtitle>
-</mat-card-header>
-<img
-  mat-card-image
-  style="width: 150px"
-  [src]="survivor?.image"
-  alt="survivor image"
-/>
-<mat-card-content>
-  <p>
-    {{ survivor?.health }}
-  </p>
-</mat-card-content>
+  <mat-card-header>
+    <mat-card-title>
+      <mat-form-field>
+        <input
+          matInput
+          placeholder="Name"
+          [(ngModel)]="survivor.name"
+          name="name"
+          required
+        />
+      </mat-form-field>
+    </mat-card-title>
+    <mat-card-subtitle> </mat-card-subtitle>
+  </mat-card-header>
+
+  <input type="file" (change)="imageChangeEvent($event)" class="" />
+
+  <img
+    mat-card-image
+    style="width: 150px"
+    [src]="imageBase64"
+    alt="survivor image"
+  />
+  <mat-card-content>
+    <p>
+      {{ survivor?.health }}
+    </p>
+  </mat-card-content>
 </form>

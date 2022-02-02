@@ -1,28 +1,46 @@
 <mat-card class="survivor-card">
   <ng-container *ngIf="mode == 'view'">
+    <mat-card-header>
+      <mat-card-title>{{ survivor?.name }}</mat-card-title>
+      <mat-card-subtitle> </mat-card-subtitle>
+    </mat-card-header>
+    <img
+      mat-card-image
+      style="width: 150px"
+      [src]="survivor?.image"
+      alt="survivor image"
+    />
+    <mat-card-content>
+      <p>
+        {{ survivor?.health }}
+      </p>
+    </mat-card-content>
+  </ng-container>
 
-  <mat-card-header>
-    <mat-card-title>{{ survivor?.name }}</mat-card-title>
-    <mat-card-subtitle> </mat-card-subtitle>
-  </mat-card-header>
-  <img
-    mat-card-image
-    style="width: 150px"
-    [src]="survivor?.image"
-    alt="survivor image"
-  />
-  <mat-card-content>
-    <p>
-      {{ survivor?.health }}
-    </p>
-  </mat-card-content>
-</ng-container>
+  <app-survivor-form
+    *ngIf="mode == 'edit'"
+    [survivor]="survivor"
+  ></app-survivor-form>
 
-<app-survivor-form *ngIf="mode == 'edit'" [survivor]="survivor"></app-survivor-form>
   <mat-card-actions>
-
-    <button mat-raised-button color="primary" (click)="deleteSurvivor()">Delete</button>
-    <button mat-raised-button color="primary" (click)="editSurvivor()" *ngIf="mode == 'view'">Edit</button>
-    <button mat-raised-button color="primary" (click)="saveSurvivor()" *ngIf="mode == 'edit'">Save</button>
+    <button mat-raised-button color="primary" (click)="deleteSurvivor()">
+      Delete
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="editSurvivor()"
+      *ngIf="mode == 'view'"
+    >
+      Edit
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="saveSurvivor()"
+      *ngIf="mode == 'edit'"
+    >
+      Save
+    </button>
   </mat-card-actions>
 </mat-card>
