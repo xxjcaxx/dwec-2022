@@ -1,33 +1,43 @@
-<form [formGroup]="edificiForm" novalidate>
-  <input
-    type="text"
-    formControlName="descripcio"
-    class="form-control"
-    name="descripcio"
-    [ngClass]="descripcioNoValida"
-  />
-  <div class="alert alert-danger" *ngIf="descripcioNoValida == 'is-invalid'">
-    Descripción requerida (entre 5 y 60 caracteres)
+<form [formGroup]="edificiForm">
+  <div class="mb-3">
+    <label for="descripcioInput" class="form-label">Descripcio</label>
+    <input
+      type="text"
+      formControlName="descripcio"
+      class="form-control"
+      id="descripcioInput"
+      [ngClass]="inputValid('descripcio')"
+    />
+    <div
+      class="alert alert-danger"
+      *ngIf="inputValid('descripcio') == 'is-invalid'"
+    >
+      Descripción requerida (entre 5 y 60 caracteres)
+    </div>
   </div>
-  <input
-    type="text"
-    formControlName="pdf"
-    class="form-control"
-    name="pdf"
-    [ngClass]="pdfNoValid"
-  />
-  <div class="alert alert-danger" *ngIf="pdfNoValid == 'is-invalid'">
-    PDF invalid
+  <div class="mb-3">
+    <input
+      type="text"
+      formControlName="pdf"
+      class="form-control"
+      name="pdf"
+      [ngClass]="inputValid('pdf')"
+    />
+    <div class="alert alert-danger" *ngIf="inputValid('pdf') == 'is-invalid'">
+      PDF invalid
+    </div>
   </div>
-  <input
-    type="text"
-    formControlName="foto"
-    class="form-control"
-    name="foto"
-    [ngClass]="fotoNoValida"
-  />
-  <div class="alert alert-danger" *ngIf="fotoNoValida == 'is-invalid'">
-    Foto no valida
+  <div class="mb-3">
+    <input
+      type="text"
+      formControlName="foto"
+      class="form-control"
+      name="foto"
+      [ngClass]="inputValid('foto')"
+    />
+    <div class="alert alert-danger" *ngIf="inputValid('foto') == 'is-invalid'">
+      Foto no valida
+    </div>
   </div>
 </form>
 

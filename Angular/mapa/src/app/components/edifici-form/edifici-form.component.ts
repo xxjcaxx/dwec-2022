@@ -46,35 +46,15 @@ export class EdificiFormComponent implements OnInit {
 
   }
 
-  get descripcioNoValida(){
-    if (this.edificiForm.get('descripcio')?.invalid && this.edificiForm.get('descripcio')?.touched){
+  inputValid(input:string): string{
+    if (this.edificiForm.get(input)?.invalid && this.edificiForm.get(input)?.touched){
       return 'is-invalid';
     }
-    if (this.edificiForm.get('descripcio')?.valid && this.edificiForm.get('descripcio')?.touched){
+    if (this.edificiForm.get(input)?.valid && this.edificiForm.get(input)?.touched){
       return 'is-valid';
     }
     return '';
   }
 
-  get pdfNoValid(){
-    if (this.edificiForm.get('pdf')?.invalid && this.edificiForm.get('pdf')?.touched){
-      return 'is-invalid';
-    }
-    if (this.edificiForm.get('pdf')?.valid && this.edificiForm.get('pdf')?.touched){
-      return 'is-valid';
-    }
-    return '';
-  }
-
-  get fotoNoValida(){
-    if (this.edificiForm.get('foto')?.invalid && this.edificiForm.get('foto')?.touched){
-      return 'is-invalid';
-    }
-    if (this.edificiForm.get('foto')?.valid && this.edificiForm.get('foto')?.touched){
-      return 'is-valid';
-    }
-    return '';
-  }
-     
 
 }
