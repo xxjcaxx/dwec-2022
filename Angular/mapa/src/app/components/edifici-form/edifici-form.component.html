@@ -1,27 +1,36 @@
-<form #ngForm="ngForm" novalidate>
+<form [formGroup]="edificiForm" novalidate>
   <input
     type="text"
+    formControlName="descripcio"
     class="form-control"
     name="descripcio"
-    minlength="5"
-    maxlength="600"
-    required
-    [(ngModel)]="descripcio"
-    #descriptionModel="ngModel"
-    [ngClass]="{
-      'is-valid': descriptionModel.touched && descriptionModel.valid,
-      'is-invalid': descriptionModel.touched && !descriptionModel.valid
-    }"
+    [ngClass]="descripcioNoValida"
   />
-  <div
-    *ngIf="descriptionModel.touched && descriptionModel.invalid"
-    class="alert alert-danger"
-  >
+  <div class="alert alert-danger" *ngIf="descripcioNoValida == 'is-invalid'">
     Descripción requerida (entre 5 y 60 caracteres)
+  </div>
+  <input
+    type="text"
+    formControlName="pdf"
+    class="form-control"
+    name="pdf"
+    [ngClass]="pdfNoValid"
+  />
+  <div class="alert alert-danger" *ngIf="pdfNoValid == 'is-invalid'">
+    PDF invalid
+  </div>
+  <input
+    type="text"
+    formControlName="foto"
+    class="form-control"
+    name="foto"
+    [ngClass]="fotoNoValida"
+  />
+  <div class="alert alert-danger" *ngIf="fotoNoValida == 'is-invalid'">
+    Foto no valida
   </div>
 </form>
 
-<div>Touched: {{ ngForm.touched }}</div>
-<div>Valid: {{ ngForm.valid }}</div>
-<div>Value: {{ ngForm.value | json }}</div>
-<div>Descripción: {{ ngForm.control.get("descripcio")!.value | json }}</div>
+<p>{{ edificiForm.value | json }}</p>
+<p>{{ edificiForm.get("descripcio")?.errors | json }}</p>
+<p>{{ edificiForm.get("pdf")?.errors | json }}</p>
