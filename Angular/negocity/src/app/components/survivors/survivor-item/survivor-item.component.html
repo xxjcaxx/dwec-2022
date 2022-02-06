@@ -5,22 +5,22 @@
       <mat-card-subtitle> </mat-card-subtitle>
     </mat-card-header>
     <img
-      mat-card-image
-      style="width: 150px"
+
+    style="width: 150px; height: 310px; object-fit: cover; "
       [src]="survivor?.image"
       alt="survivor image"
     />
     <mat-card-content>
       <p>
-        {{ survivor?.health }}
+        Health: {{ survivor?.health }}
+      </p>
+      <p>
+        Damage: {{ survivor?.damage }}
+      </p>
+      <p>
+        Shield: {{ survivor?.shield }}
       </p>
     </mat-card-content>
-  </ng-container>
-
-  <app-survivor-form
-    *ngIf="mode == 'edit'"
-    [survivor]="survivor"
-  ></app-survivor-form>
 
   <mat-card-actions>
     <button mat-raised-button color="primary" (click)="deleteSurvivor()">
@@ -30,17 +30,20 @@
       mat-raised-button
       color="primary"
       (click)="editSurvivor()"
-      *ngIf="mode == 'view'"
+
     >
       Edit
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="saveSurvivor()"
-      *ngIf="mode == 'edit'"
-    >
-      Save
-    </button>
+
   </mat-card-actions>
+
+</ng-container>
+
+<app-survivor-form
+  *ngIf="mode == 'edit'"
+  [survivor]="survivor"
+  (changeMode)="changeMode($event)"
+  (updateSurvivor)="updateSurvivor($event)"
+></app-survivor-form>
+
 </mat-card>

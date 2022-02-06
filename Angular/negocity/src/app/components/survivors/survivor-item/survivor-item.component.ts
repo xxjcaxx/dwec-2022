@@ -8,7 +8,7 @@ import { Survivor } from '../../../interfaces/survivor';
 })
 export class SurvivorItemComponent implements OnInit {
 
-  @Input() survivor: Survivor = {id:'',name:'undefined',health:0,city:''};
+  @Input() survivor: Survivor = {id:'',name:'undefined',health:0,damage:0,shield:0,city:''};
   @Output() eventDeleteSurvivor = new EventEmitter<string>();
 
   mode: string = 'view';
@@ -28,8 +28,12 @@ export class SurvivorItemComponent implements OnInit {
     this.mode = 'edit';
   }
 
-  saveSurvivor(){
-    this.mode = 'view';
+  changeMode($event: string){
+    this.mode = $event;
+  }
+
+  updateSurvivor($event:Survivor){
+    this.survivor = $event;
   }
 
 

@@ -11,7 +11,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { GlobalComponent } from './components/global/global.component';
 import { LoginComponent } from './components/login/login.component';
 
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -66,6 +66,7 @@ import { PasswordDirective } from './directives/validators/password.directive';
     MatSelectModule,
     MatOptionModule,
     HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     {

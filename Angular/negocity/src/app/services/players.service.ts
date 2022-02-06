@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable,map, BehaviorSubject, Subject } from 'rxjs';
+import { Observable, map, BehaviorSubject, Subject, catchError, throwError } from 'rxjs';
 import { Player } from '../interfaces/user';
 
 @Injectable({
@@ -23,7 +23,10 @@ export class PlayersService {
 
   getPlayer(id:string):Observable<Player>{
     this.http.get<Player>(`${this.url}/${id}.json`)
-    .pipe(map(s=>{ s.id = id; return s} )).subscribe(
+    .pipe(
+      map(s=>{ s.id = id; return s} ),
+      catchError((resp: HttpErrorResponse) => throwError(() => new Error(`Error de player: ${resp.message}`)))
+      ).subscribe(
       p => this.playerSubject.next(p)
     );
     return this.playerSubject;

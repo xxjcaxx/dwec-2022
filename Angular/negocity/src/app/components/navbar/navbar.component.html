@@ -8,7 +8,7 @@
   </button>
   <span [routerLink]="'/home'">Negocity</span>
   <img
-  [src]="player?.avatar"
+  [src]="player ? player.avatar : '/assets/img/placeholder.png'"
   mat-card-avatar />
   <div>
     <a mat-button [routerLink]="'/global'"> Global </a>

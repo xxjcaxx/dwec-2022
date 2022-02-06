@@ -24,7 +24,13 @@ export class SurvivorsService {
       return this.http.get<{ [key: string]: Survivor }>(this.url + `.json?orderBy="player"&equalTo="${localId}"`, this.httpOptions)
         .pipe(
           map(sObjecte => Object.entries(sObjecte)),
-          map(sArray => sArray.map(s => { s[1].id = s[0]; return s[1] })));
+          map(sArray => sArray.map(s => {
+            s[1].id = s[0];
+            s[1].name = s[1].name ? s[1].name : 'name';
+            s[1].health = s[1].health ? s[1].health : 0;
+            s[1].damage = s[1].damage ? s[1].damage : 0;
+            s[1].shield = s[1].shield ? s[1].shield : 0;
+            return s[1] })));
     }
     else {
       return of([]);
@@ -41,7 +47,13 @@ export class SurvivorsService {
     if (localStorage.getItem('idToken')) {
 
     return this.http.get<Survivor>(`${this.url}/${id}.json`)
-      .pipe(map(s => { s.id = id; return s }));
+      .pipe(map(s => {
+        s.id = id;
+        s.name = s.name ? s.name : 'name';
+        s.health = s.health ? s.health : 0;
+        s.damage = s.damage ? s.damage : 0;
+        s.shield = s.shield ? s.shield : 0;
+        return s }));
     }
     else {
       return of(null);
@@ -55,7 +67,7 @@ export class SurvivorsService {
     let newSurvivor = {
       name: this.generateName(),
       image: `/assets/img/survivor${Math.round(Math.random() * 50)}.jpg`,
-      health: 50,
+      health: 50, damage: 50,shield: 50,
       city: '',
       player: localStorage.getItem('localId')
     }
@@ -73,6 +85,12 @@ export class SurvivorsService {
 
   }
 
+  public updateSurvivor(survivor: Survivor): Observable<Survivor>{
+    let auxSurvivor: any = {...survivor};
+    delete auxSurvivor.id;
+    return this.http.put<Survivor>(`${this.url}/${survivor.id}.json`,JSON.stringify(auxSurvivor))
+    .pipe(map(s=> {s.id = survivor.id; return s}))
+  }
 
   public deleteSurvivor(id: string): Observable<Survivor[]> {
     return this.http.delete<Survivor>(`${this.url}/${id}.json`)
