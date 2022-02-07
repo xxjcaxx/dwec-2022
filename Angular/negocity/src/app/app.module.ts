@@ -32,6 +32,8 @@ import { HomeComponent } from './components/home/home.component';
 import { SurvivorFormComponent } from './components/survivors/survivor-form/survivor-form.component';
 import { CorreuDirective } from './directives/validators/correu.directive';
 import { PasswordDirective } from './directives/validators/password.directive';
+import { PointsComponent } from './components/points/points.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,8 @@ import { PasswordDirective } from './directives/validators/password.directive';
     HomeComponent,
     SurvivorFormComponent,
     CorreuDirective,
-    PasswordDirective
+    PasswordDirective,
+    PointsComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +69,8 @@ import { PasswordDirective } from './directives/validators/password.directive';
     MatSelectModule,
     MatOptionModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxChartsModule
   ],
   providers: [
     {

@@ -49,7 +49,11 @@ export class SurvivorFormComponent implements OnInit {
   saveSurvivor() {
     console.log('save');
 
-    this.survivorsService.updateSurvivor(this.survivorForm.value).subscribe(s=>{ this.updateSurvivor.emit(s); this.changeMode.emit('view');});
+    this.survivorsService.updateSurvivor(this.survivorForm.value).subscribe(
+      s=>{ 
+        this.updateSurvivor.emit(s); 
+        this.changeMode.emit('view');}
+      );
   }
 
 cancel(){
@@ -83,6 +87,10 @@ cancel(){
 
           const imgBase64Path = e.target.result;
           this.imageBase64 = imgBase64Path;
+          this.survivorForm.patchValue({
+            image: imgBase64Path, 
+         
+          });
           this.isImageSaved = true;
           // this.previewImagePath = imgBase64Path;
 
