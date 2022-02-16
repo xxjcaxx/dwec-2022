@@ -16,7 +16,7 @@ export class AnimesService {
     return this.http.get<{ [key: string]: Anime }>(`${this.url}.json?orderBy="$key"&startAt="${start}"&endAt="${start+20}"`)
     .pipe(
       map(aObjecte => Object.entries(aObjecte)),
-      map(Array => Array.map(a => a[1] )));
+      map(Array => Array.map(a => {a[1].id = a[0];  return a[1]} )));
   }
 
   getAnime(id:number):Observable<Anime>{

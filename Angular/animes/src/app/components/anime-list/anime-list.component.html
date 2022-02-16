@@ -19,7 +19,7 @@
     <td><img [src]="anime.thumbnail" class="thumbnail" [alt]="anime.title" srcset=""></td>
     <td>{{anime.title}}</td>
     <td>{{anime.tags | hashtag}}</td>
-    <td><a [routerLink]="['/anime',i + start]">Detalls</a></td>
+    <td><a [routerLink]="['/anime',anime.id]">Detalls</a></td>
   </tr>
 </tbody>
 

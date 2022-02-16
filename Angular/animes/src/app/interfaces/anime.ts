@@ -1,4 +1,5 @@
 export interface Anime {
+  id: string;
 animeSeason: {
   season: string,
   year: number,
