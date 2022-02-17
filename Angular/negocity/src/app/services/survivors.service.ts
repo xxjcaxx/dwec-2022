@@ -66,7 +66,7 @@ export class SurvivorsService {
 
     let newSurvivor = {
       name: this.generateName(),
-      image: `/assets/img/survivor${Math.round(Math.random() * 50)}.jpg`,
+      image: `./assets/img/survivor${Math.round(Math.random() * 50)}.jpg`,
       health: 50, damage: 50,shield: 50,
       city: '',
       player: localStorage.getItem('localId')
@@ -168,3 +168,5 @@ export class SurvivorsService {
 
 
 }
+
+

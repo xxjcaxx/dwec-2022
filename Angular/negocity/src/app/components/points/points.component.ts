@@ -25,7 +25,23 @@ export class PointsComponent implements OnInit {
           {name: '5', value: 25},
           {name: '6', value: 21},
           {name: '7', value: 0},
-          {name: '8', value: 2}
+          {name: '8', value: 2},
+          {name: '9', value: 22},
+        ]
+      },
+      {
+        name: 's2', 
+        series: [
+          
+          {name: '1', value: 29},
+          {name: '2', value: 1},
+          {name: '3', value: 34},
+          {name: '4', value: 20},
+          {name: '5', value: 25},
+          {name: '6', value: 21},
+          {name: '7', value: 56},
+          {name: '8', value: 1},
+          {name: '9', value: 22},
         ]
       }
     ]
