@@ -1,21 +1,54 @@
 document.addEventListener("DOMContentLoaded", () => {
   fetch(
-    "https://apiv3.apifootball.com/?action=get_teams&league_id=302&APIkey=939408fa9747e9295a3083f4748176e7085150a135d08f3441b972cb176c5af1"
+    "equipos.json"
   ).then((teams) => {
     teams.json().then((t) => {
-      console.log(t);
-      let players = t
-        .map((team) =>
-          team.players.map((p) => {
-            return { id: p.player_id, image: p.player_image };
-          })
-        )
-        .flat();
 
-      console.log(players);
-      document.querySelector("#container").innerHTML = players.map(
-        (p) => p.image
-      );
+      console.log(t);
+
+
+      fetch('https://data.mongodb-api.com/app/data-bygmg/endpoint/data/beta/action/insertOne',{
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+          'Access-Control-Allow-Origin':'*',
+          'Access-Control-Request-Headers': '*',
+          'api-key': '9Yu9MBjtMkUA1lCQ692UHvG4eN7ShfWrjcoKj3ldrs6wAT3530MJ09v3rGAW1rJc'
+        },
+        body: `{
+          "dataSource": "Cluster0",
+          "database": "futbol",
+          "collection": "equips",
+          "document": ${JSON.stringify(t[1])}
+      }` 
+        
+        
+      });
+
+/*
+      t.forEach(async team => {
+        if(team){
+
+          await fetch('https://data.mongodb-api.com/app/data-bygmg/endpoint/data/beta/action/insertOne',{
+            method: 'POST',
+            headers: {
+              'Content-type': 'application/json',
+              'Access-Control-Request-Headers': '*',
+              'api-key': '9Yu9MBjtMkUA1lCQ692UHvG4eN7ShfWrjcoKj3ldrs6wAT3530MJ09v3rGAW1rJc'
+            },
+            body: `{
+              "dataSource": "Cluster0",
+              "database": "futbol",
+              "collection": "equips",
+              "document": ${JSON.stringify(team)}
+          }` 
+            
+            
+          });
+
+        }
+      });
+*/
     });
   });
 });

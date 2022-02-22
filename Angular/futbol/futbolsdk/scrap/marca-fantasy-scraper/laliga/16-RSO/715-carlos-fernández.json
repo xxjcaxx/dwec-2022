@@ -1,0 +1,53 @@
+{
+    "playerStats": [],
+    "points": 0,
+    "averagePoints": 0,
+    "images": {
+        "big": {
+            "2048x2225": "https://assets.laliga.com/squad/2021/t188/p176189/2048x2225/p176189_t188_2021_1_001_000.png",
+            "1024x1113": "https://assets.laliga.com/squad/2021/t188/p176189/1024x1113/p176189_t188_2021_1_001_000.png",
+            "512x556": "https://assets.laliga.com/squad/2021/t188/p176189/512x556/p176189_t188_2021_1_001_000.png",
+            "256x278": "https://assets.laliga.com/squad/2021/t188/p176189/256x278/p176189_t188_2021_1_001_000.png",
+            "128x139": "https://assets.laliga.com/squad/2021/t188/p176189/128x139/p176189_t188_2021_1_001_000.png",
+            "64x70": "https://assets.laliga.com/squad/2021/t188/p176189/64x70/p176189_t188_2021_1_001_000.png"
+        },
+        "beat": {
+            "2048x2048": "https://assets.laliga.com/squad/2021/t188/p176189/2048x2048/p176189_t188_2021_1_002_000.jpg",
+            "1024x1024": "https://assets.laliga.com/squad/2021/t188/p176189/1024x1024/p176189_t188_2021_1_002_000.jpg",
+            "512x512": "https://assets.laliga.com/squad/2021/t188/p176189/512x512/p176189_t188_2021_1_002_000.jpg",
+            "256x256": "https://assets.laliga.com/squad/2021/t188/p176189/256x256/p176189_t188_2021_1_002_000.jpg",
+            "128x128": "https://assets.laliga.com/squad/2021/t188/p176189/128x128/p176189_t188_2021_1_002_000.jpg",
+            "64x64": "https://assets.laliga.com/squad/2021/t188/p176189/64x64/p176189_t188_2021_1_002_000.jpg"
+        },
+        "transparent": {
+            "2048x2048": "https://assets.laliga.com/squad/2021/t188/p176189/2048x2048/p176189_t188_2021_1_003_000.png",
+            "1024x1024": "https://assets.laliga.com/squad/2021/t188/p176189/1024x1024/p176189_t188_2021_1_003_000.png",
+            "512x512": "https://assets.laliga.com/squad/2021/t188/p176189/512x512/p176189_t188_2021_1_003_000.png",
+            "256x256": "https://assets.laliga.com/squad/2021/t188/p176189/256x256/p176189_t188_2021_1_003_000.png",
+            "128x128": "https://assets.laliga.com/squad/2021/t188/p176189/128x128/p176189_t188_2021_1_003_000.png",
+            "64x64": "https://assets.laliga.com/squad/2021/t188/p176189/64x64/p176189_t188_2021_1_003_000.png"
+        }
+    },
+    "id": "715",
+    "team": {
+        "badgeColor": "https://assets.laligafantasymarca.com/squad/2021/t16/medium/color/t16_2021_real-sociedad.png",
+        "badgeGray": "https://assets.laligafantasymarca.com/squad/2021/t16/medium/gray/t16_2021_real-sociedad.png",
+        "badgeWhite": "https://assets.laligafantasymarca.com/squad/2021/t16/medium/white/t16_2021_real-sociedad.png",
+        "name": "Real Sociedad",
+        "id": "16",
+        "shortName": "RSO",
+        "slug": "real-sociedad",
+        "dspId": 84
+    },
+    "name": "Carlos Fern\u00e1ndez",
+    "lastSeasonPoints": 40,
+    "nickname": "Carlos Fern\u00e1ndez",
+    "slug": "carlos-fern\u00e1ndez",
+    "positionId": 4,
+    "position": "Delantero",
+    "image30x30": "http://statics.laliga.es/apps/fantasy/fantasy_sin_imagen_30.png",
+    "image250x250": "http://statics.laliga.es/apps/fantasy/fantasy_sin_imagen_320.png",
+    "image96x96": "http://statics.laliga.es/apps/fantasy/fantasy_sin_imagen_96.jpg",
+    "marketValue": 558841,
+    "playerStatus": "injured"
+}
