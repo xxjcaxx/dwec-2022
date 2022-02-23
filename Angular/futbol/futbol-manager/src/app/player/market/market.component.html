@@ -1,0 +1,17 @@
+<div class="overflow-x-auto w-full">
+  <table
+    class="border-collapse border border-slate-400 table-auto w-full table"
+  >
+    <thead>
+      <tr>
+        <td></td>
+        <td>Name</td>
+        <td>Position</td>
+        <td>Level</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr app-player-item *ngFor="let player of players" [player]="player"></tr>
+    </tbody>
+  </table>
+</div>

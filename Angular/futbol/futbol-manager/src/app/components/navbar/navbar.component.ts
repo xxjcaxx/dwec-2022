@@ -14,6 +14,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.logged.subscribe(l=> this.logged = l);
+    this.userService.isLogged();
   }
 
 }

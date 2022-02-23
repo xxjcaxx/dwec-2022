@@ -18,15 +18,27 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
 
-  async login(){
-  const credentials = Realm.Credentials.anonymous();
+  isLogged(){
+    this.app.currentUser?.isLoggedIn
+    if (this.app.currentUser?.isLoggedIn){
+      this.logged.next(true);
+    }
+    else {
+      this.logged.next(false);
+    }
+  }
+
+
+  async login(email:string,pass:string){
+  //const credentials = Realm.Credentials.anonymous();
+  const credentials = Realm.Credentials.emailPassword(email, pass);
   try {
     // Authenticate the user
     const user = await this.app.logIn(credentials);
-    // `App.currentUser` updates to match the logged in user
     this.user = user;
     this.logged.next(true);
-    localStorage.setItem('logged','1');
+    //this.showUserInfo();
+    
   } catch (err) {
     console.error("Failed to log in", err);
   }
@@ -37,4 +49,10 @@ export class UserService {
    
     await this.app.emailPasswordAuth.registerUser({ email, password: pass });
   }
+
+  showUserInfo(){
+    console.log(this.user);
+    
+  }
+
 }

@@ -11,6 +11,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './user/login/login.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { FormsModule } from '@angular/forms';
+import { MarketComponent } from './player/market/market.component';
+import { SanitizerPipe } from './pipes/sanitizer.pipe';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { FormsModule } from '@angular/forms';
     HomeComponent,
     PlayerItemComponent,
     LoginComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    MarketComponent,
+    SanitizerPipe
   ],
   imports: [
     BrowserModule,

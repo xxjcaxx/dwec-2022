@@ -1,1 +1,6 @@
-<p>player-item works!</p>
+<td>
+  <img class="w-7" [src]="player?.imagebase64 | sanitizer" alt="" srcset="" />
+</td>
+<td>{{ player?.name }}</td>
+<td>{{ player?.position }}</td>
+<td>{{ player?.points }}</td>

@@ -37,5 +37,28 @@ export class PlayerService {
   }
 
 
+  async getMarket() {
+
+    if(this.userService.logged.value){
+      let app = this.userService.app;
+      
+     const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
+     const playersdb = mongodb.db("futbol").collection("players");
+     const randomPlayers = await playersdb.aggregate([{ $sample: { size: 20 } }]);
+  
+     
+     this.players.next(randomPlayers);
+     //console.log(randomPlayers);
+     const imgsdb = mongodb.db("futbol").collection("images");
+     randomPlayers.map((p: { id: any; imagebase64: any; name: string})=>{
+       imgsdb.findOne({player: p.id}).then(i => {p.imagebase64 = `data:image/png;base64, ${i.img}`;});
+       this.players.next(randomPlayers);
+     });
+     
+    }
+    
+  }
+
+
 
 }
