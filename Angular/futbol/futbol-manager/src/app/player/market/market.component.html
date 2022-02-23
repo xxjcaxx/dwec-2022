@@ -11,7 +11,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr app-player-item *ngFor="let player of players" [player]="player"></tr>
+      <tr
+        app-player-item
+        *ngFor="let player of players"
+        [player]="player"
+        [mode]="'market'"
+      ></tr>
     </tbody>
   </table>
 </div>

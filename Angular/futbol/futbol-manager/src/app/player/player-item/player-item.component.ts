@@ -8,10 +8,15 @@ import { Component, Input, OnInit } from '@angular/core';
 export class PlayerItemComponent implements OnInit {
 
   @Input() player:any = {};
+  @Input() mode:string =  '';
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  comprar(){
+    
   }
 
 }
