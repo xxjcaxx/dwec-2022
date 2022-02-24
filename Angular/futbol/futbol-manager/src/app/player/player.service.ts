@@ -3,13 +3,14 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import * as Realm from 'realm-web';
 import { UserService } from '../user/user.service';
+import { IPlayer } from './player';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayerService {
 
-  players = new BehaviorSubject<any[]>([]);
+  players = new BehaviorSubject<IPlayer[]>([]);
 
 
   constructor(private http: HttpClient, private userService: UserService) {
@@ -24,14 +25,18 @@ export class PlayerService {
      const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
      const equips = mongodb.db("futbol").collection("lineups");
      //https://docs.mongodb.com/realm/web/mongodb/#insert-a-single-document
-     const result = await equips.findOne({user: '1'});
-     console.log(result);
-     const playersdb = mongodb.db("futbol").collection("players");
-     let playersPromises = result.players.map((p: any)=> playersdb.findOne({id: p}))
-     let playerList: any[] = await Promise.all(playersPromises);
-     console.log(playerList);
-     this.players.next(playerList);
-     
+    
+     try {
+      const result = await equips.findOne({user: app.currentUser!.id});
+      console.log(result);
+      const playersdb = mongodb.db("futbol").collection("players");
+      let playersPromises = result.players.map((p: any)=> playersdb.findOne({id: p}))
+      let playerList: any[] = await Promise.all(playersPromises);
+      console.log(playerList);
+      this.players.next(playerList);
+     }catch (error) {
+       console.log(error);
+     }
     }
     
   }
@@ -57,6 +62,22 @@ export class PlayerService {
      
     }
     
+  }
+
+  async buyplayer(id:string,lineup:any){
+    if(this.userService.logged.value){
+      let app = this.userService.app;
+      
+      const mongodb = app.currentUser!.mongoClient("mongodb-atlas");
+      const playersdb = mongodb.db("futbol").collection("players");
+      const equipsdb = mongodb.db("futbol").collection("lineups");
+
+      const player = await playersdb.findOne({id: id});
+      const newPlayers = [...lineup.players,player]
+      await equipsdb.updateOne({user: lineup.user},{$set: {players: newPlayers}})
+
+
+    }
   }
 
 
