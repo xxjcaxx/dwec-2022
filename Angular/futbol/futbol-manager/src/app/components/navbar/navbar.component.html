@@ -27,7 +27,11 @@
       >
     </a>
     <button
-      (click)="menuResp.classList.contains('hidden') ? menuResp.classList.remove('hidden') : menuResp.classList.add('hidden') "
+      (click)="
+        menuResp.classList.contains('hidden')
+          ? menuResp.classList.remove('hidden')
+          : menuResp.classList.add('hidden')
+      "
       type="button"
       class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
       aria-controls="mobile-menu-2"
@@ -107,7 +111,13 @@
           >
         </li>
 
-        <li *ngIf="logged">User 1</li>
+        <li *ngIf="logged">
+          <a
+            [routerLink]="['user', user.id]"
+            class="block py-2 pr-4 pl-3 text-gray-700 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+            >user {{ user.customData?.email }}</a
+          >
+        </li>
       </ul>
     </div>
   </div>
