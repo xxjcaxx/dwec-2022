@@ -9,10 +9,12 @@ import { IUser } from './user';
 })
 export class UserService {
   logged = new BehaviorSubject(false);
+  // Informació de l'usuari més el que es trau de customData
+  // Les dades de realm estan en app.currentuser
   userSubject = new BehaviorSubject<IUser>({ id: '', email: '', games: [] });
 
   app = new Realm.App({ id: 'futbol-rqxxa' });
-  user: any;
+
 
   constructor(private http: HttpClient) {}
 
@@ -20,13 +22,9 @@ export class UserService {
     this.app.currentUser?.isLoggedIn;
     if (this.app.currentUser?.isLoggedIn) {
       this.logged.next(true);
-      await this.app.currentUser!.refreshCustomData();
+     // await this.app.currentUser!.refreshCustomData();
       //console.log('Custom data', this.app.currentUser.customData);
-      const user = {
-        ...this.userSubject.value,
-        customData: this.app.currentUser.customData,
-      };
-      this.userSubject.next(this.app.currentUser);
+      //this.userSubject.next(this.app.currentUser);
     } else {
       this.logged.next(false);
     }
@@ -38,10 +36,11 @@ export class UserService {
     try {
       // Authenticate the user
       const user = await this.app.logIn(credentials);
-      this.user = user;
+     
       this.logged.next(true);
-      this.userSubject.next(user);
+      
 
+      // Les customData en la base de dades
       if (this.app.currentUser?.isLoggedIn) {
         const mongodb = this.app.currentUser.mongoClient('mongodb-atlas');
         const users = mongodb.db('futbol').collection('users');
@@ -51,10 +50,14 @@ export class UserService {
             id: this.app.currentUser.id,
             email: email,
           });
-          console.log(result);
         }
+        await this.app.currentUser!.refreshCustomData();
+        const userComplet = {
+          ...this.app.currentUser.customData, realm: user
+        };
+        this.userSubject.next(userComplet);
       }
-      //this.showUserInfo();
+     
     } catch (err) {
       console.error('Failed to log in', err);
     }
@@ -67,7 +70,7 @@ export class UserService {
   }
 
   showUserInfo() {
-    console.log(this.user);
+    console.log(this.app.currentUser);
   }
 
   logout() {
