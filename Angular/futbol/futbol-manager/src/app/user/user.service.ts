@@ -1,17 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as Realm from 'realm-web';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { IUser } from './user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+
   logged = new BehaviorSubject(false);
   // Informació de l'usuari més el que es trau de customData
   // Les dades de realm estan en app.currentuser
-  userSubject = new BehaviorSubject<IUser>({ id: '', email: '', games: [] });
+  userSubject = new BehaviorSubject<Realm.User | null>(null);
 
   app = new Realm.App({ id: 'futbol-rqxxa' });
 
@@ -19,16 +20,16 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   async isLogged() {
-    this.app.currentUser?.isLoggedIn;
     if (this.app.currentUser?.isLoggedIn) {
       this.logged.next(true);
-     // await this.app.currentUser!.refreshCustomData();
-      //console.log('Custom data', this.app.currentUser.customData);
-      //this.userSubject.next(this.app.currentUser);
+      await this.app.currentUser!.refreshCustomData();
+      this.userSubject.next(this.app.currentUser);
     } else {
       this.logged.next(false);
     }
   }
+
+
 
   async login(email: string, pass: string) {
     //const credentials = Realm.Credentials.anonymous();
@@ -36,12 +37,10 @@ export class UserService {
     try {
       // Authenticate the user
       const user = await this.app.logIn(credentials);
-     
-      this.logged.next(true);
-      
 
       // Les customData en la base de dades
       if (this.app.currentUser?.isLoggedIn) {
+        this.logged.next(true);
         const mongodb = this.app.currentUser.mongoClient('mongodb-atlas');
         const users = mongodb.db('futbol').collection('users');
         const result = await users.findOne({ id: this.app.currentUser.id });
@@ -52,12 +51,10 @@ export class UserService {
           });
         }
         await this.app.currentUser!.refreshCustomData();
-        const userComplet = {
-          ...this.app.currentUser.customData, realm: user
-        };
-        this.userSubject.next(userComplet);
+
+        this.userSubject.next(this.app.currentUser);
       }
-     
+
     } catch (err) {
       console.error('Failed to log in', err);
     }
