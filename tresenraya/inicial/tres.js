@@ -9,19 +9,21 @@ function translateCell(value) {
 function fillCell(value, cell) {
   cell.innerHTML = translateCell(value);
 }
-function fillBoard(board, data) {
+function fillBoard(data) {
+  const board = document.querySelector("#boardTable");
   Object.entries(data).forEach((position) =>
     fillCell(position[1], board.querySelector(`#${position[0]}`))
   );
 }
-function addEvents(board, state) {
+function addEvents(state) {
+  let board = document.querySelector("#boardTable");
   function clickBoard(event) {
     clickCell(event.target, state);
-    fillBoard(board, state.getGame());
+    fillBoard(state.getGame());
   }
-
   board.addEventListener("click", clickBoard);
 }
+
 function clickCell(cell, state) {
   const turn = state.getTurn();
   const game = state.getGame();
@@ -29,9 +31,13 @@ function clickCell(cell, state) {
   state.setGame(game);
   const winner = state.getWinner();
   if (winner != 0) {
-    console.log({ winner });
+    showWinner(winner);
   }
   state.switchTurn();
+}
+
+function showWinner(winner){
+  document.querySelector('#winner').innerHTML = winner;
 }
 
 //////////// Estado del juego
@@ -41,7 +47,6 @@ function gameState() {
   let turn = 1; // closure para proteger el turno
   // prettier-ignore
   let game = { pos1: 0, pos2: 0, pos3: 0, pos4: 0, pos5: 0, pos6: 0, pos7: 0, pos8: 0, pos9: 0,};
-  console.log("game", game);
   return {
     getTurn() {
       return turn;
@@ -50,7 +55,6 @@ function gameState() {
       turn = t;
     },
     switchTurn() {
-      console.log(turn);
       turn == 1 ? (turn = 2) : (turn = 1);
     },
     getGame() {
@@ -93,10 +97,8 @@ function gameState() {
 }
 
 function reset(state) {
-  const board = document.querySelector("#boardTable");
   state.reset();
-  fillBoard(board, state.getGame());
-  //addEvents(board,state);
+  fillBoard(state.getGame());
   return state;
 }
 
@@ -104,7 +106,8 @@ function reset(state) {
 document.addEventListener("DOMContentLoaded", function initialLoad() {
   // Se hace con declaración de función para rastrear mejor
   const state = gameState();
-  addEvents(document.querySelector("#boardTable"), reset(state));
+  fillBoard(state.getGame());
+  addEvents(state);
   document
     .querySelector("#reset")
     .addEventListener("click", () => reset(state));

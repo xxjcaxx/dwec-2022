@@ -5,10 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tres en raya</title>
-    <script src="tres.js"></script>
-    <link rel="stylesheet" href="styles.css" />
+    
   </head>
   <body>
+
+
+    <div id="tablero">
+      <div>Turno: <span id="turno"></span></div>
+      <div>Ganador: <span id="winner"></span></div>
+      
+
+    </div>
+
+
     <table id="boardTable">
       <tr id="fila1">
         <td id="pos1"></td>
@@ -27,6 +36,7 @@
       </tr>
     </table>
     <button id="reset">Reset</button>
-    <h2 id="winner"></h2>
+    
+    <div id="mocha"></div>
   </body>
 </html>
