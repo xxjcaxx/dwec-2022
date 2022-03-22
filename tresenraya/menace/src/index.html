@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tres en raya</title>
+    
+  </head>
+  <body>
+
+    <div id="container">
+      <div id="juego">
+        <div id="tablero">
+          <div>Turno: <span id="turno"></span></div>
+          <div>Ganador: <span id="winner"></span></div>
+          
+    
+        </div>
+    
+    
+        <table id="boardTable">
+          <tr id="fila1">
+            <td id="pos1"></td>
+            <td id="pos2"></td>
+            <td id="pos3"></td>
+          </tr>
+          <tr id="fila2">
+            <td id="pos4"></td>
+            <td id="pos5"></td>
+            <td id="pos6"></td>
+          </tr>
+          <tr id="fila3">
+            <td id="pos7"></td>
+            <td id="pos8"></td>
+            <td id="pos9"></td>
+          </tr>
+        </table>
+    
+        <div id="log">
+          <div id="menace_wins">
+          <span>
+            Menace
+          </span>
+          <span class="number">0</span>
+        </div>
+          <div id="draws">
+            <span>
+              Empate
+            </span>
+            <span class="number">0</span>
+          </div>
+          <div id="human_wins">
+            <span>
+              Humano
+            </span>
+            <span class="number">0</span>
+          </div>
+          <div id="graph"></div>
+        </div>
+    
+        <button id="reset">Reset</button>
+    
+        <div id="mocha"></div>
+
+      </div>
+      <div id="learning">
+        <div id="ajust"></div>
+      </div>
+    </div>
+
+   
+  </body>
+</html>
