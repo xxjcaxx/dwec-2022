@@ -36,8 +36,8 @@ function clickCell(cell, state) {
   state.switchTurn();
 }
 
-function showWinner(winner){
-  document.querySelector('#winner').innerHTML = winner;
+function showWinner(winner) {
+  document.querySelector("#winner").innerHTML = winner;
 }
 
 //////////// Estado del juego
@@ -61,7 +61,7 @@ function gameState() {
       return { ...game };
     },
     setGame(g) {
-      game = g;
+      game = { ...g };
     },
     getWinner() {
       // prettier-ignore
