@@ -74,20 +74,22 @@ function switchTurn(turn) {
   turn == 1 ? (turn = 2) : (turn = 1);
   return turn;
 }
+// prettier-ignore
+const winCombos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 4, 8], [6, 4, 2], [0, 3, 6], [1, 4, 7], [2, 5, 8]];
+function getPos(combo,game) {
+  // prettier-ignore
+  return [Object.values(game)[combo[0]], Object.values(game)[combo[1]], Object.values(game)[combo[2]],
+  ];
+}
 
 function getWinner(game) {
   // prettier-ignore
-  const winCombos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 4, 8], [6, 4, 2], [0, 3, 6], [1, 4, 7], [2, 5, 8]];
-  function getPos(combo) {
-    // prettier-ignore
-    return [Object.values(game)[combo[0]], Object.values(game)[combo[1]], Object.values(game)[combo[2]],
-    ];
-  }
+
   let winner = 0;
-  if (winCombos.some((combo) => getPos(combo).every((v) => v === 1))) {
+  if (winCombos.some((combo) => getPos(combo,game).every((v) => v === 1))) {
     winner = 1;
   }
-  if (winCombos.some((combo) => getPos(combo).every((v) => v === 2))) {
+  if (winCombos.some((combo) => getPos(combo,game).every((v) => v === 2))) {
     winner = 2;
   }
   return winner;
@@ -162,11 +164,20 @@ function thereAreEqual(allArrays, array) {
   );
 }
 
+function translateCellAdjust(value) {
+  if (isNaN(value)){
+    return {O: "◯", X: "×"}[value]
+  }
+  return value;
+
+}
+
 function allGames() {
+  console.log('allgames');
   // prettier-ignore
   // [0, 0, 0, 0, 0, 0, 0, 0, 0]
   const numbers = [0,1,2]
-  let all = [];
+  let all = [[0,0,0,0,0,0,0,0,0]];
 
   function addNumber(array, n) {
     // Funcion recursiva para hacer todas las combinaciones posibles
@@ -176,12 +187,14 @@ function allGames() {
         sameQuantity(newArray) &&
         contar(newArray, 1) < 4 &&
         contar(newArray, 1) > 0 &&
-        !thereAreEqual(all, newArray)
+        !thereAreEqual(all, newArray) &&
+        ! winCombos.some((combo) => getPos(combo,newArray).every((v) => v === 1)) &&
+        ! winCombos.some((combo) => getPos(combo,newArray).every((v) => v === 2))
       ) {
         // solo interesan las que tienen al menos una jugada y menos de 4 y tienen los mismos 1 que 2
         // Ahora puede ser que en array ya existan jugadas iguales pero con otra rotación.
         // Vamos a buscarlas y, si las encontramos, no insertamos
-        // console.log(all, newArray, thereAreEqual(all, newArray));
+        // tampoco nos sirven jugadas ya ganadoras
 
         all.push(newArray);
       }
@@ -193,8 +206,49 @@ function allGames() {
   }
   numbers.forEach((n) => addNumber([], n));
   console.log(all);
+  console.log('1 jugada',all.filter(p=> contar(p,1)==1));
+  console.log('2 jugada',all.filter(p=> contar(p,1)==2));
+  console.log('3 jugada',all.filter(p=> contar(p,1)==3));
+
+  ///  A continuación hay que llenar todo el tablero con las bolas iniciales
+  // Las partidas pueden tener varias rotaciones iguales. Si son simétricas hay que 
+  // descartar la simetria para que aprenda más ràpido. eso se hace poniedo 0 bolas 
+  // En las partidas de 1 jugada se ponen 4 bolas en los sitios permitidos, de 2: 2 y de 3 una bola
+
+  // Puesto que usaremos números para indicar las bolas, no podemos usarlos para  X O, así que vamos a traducir
+  const allTranslated = all.map(p => p.map(n => [1,'O','X'][n]));
+
+  // Para cada partida vamos a calcular la cantidad de simetrias que tiene
+  const simetrias = allTranslated.map(p => applyRotations(p).reduce((a,b)=> areEquals(b,p) ? a+1 : a,0) )
+  console.log(simetrias);
+  const allSumadas =  allTranslated.map(p => 
+    applyRotations(p)
+    .reduce(
+      (a,b) => areEquals(b,p) ?
+      a.map(
+        (n,index)=> isNaN(n) || isNaN(b[index]) ? n : n+ b[index] ) :a ));
+  
+  console.log(allSumadas);
+
+  /// Esto no funciona
+  // Segun la rotacion que queda igual hay que aplicar los 0 en un sitio concreto. Hay que estudiar todas
+
+  return allTranslated;
 }
 
-allGames();
 
-function generateAdjusts() {}
+function generateAdjusts() {
+  const allBoxes = allGames();
+  const divBoxes = allBoxes.map(b=> `
+  <div class="boardadjust" id="board${b.join('')}">
+  <table>
+  <tr><td>${translateCellAdjust(b[0])}</td><td>${translateCellAdjust(b[1])}</td><td>${translateCellAdjust(b[2])}</td></tr>
+  <tr><td>${translateCellAdjust(b[3])}</td><td>${translateCellAdjust(b[4])}</td><td>${translateCellAdjust(b[5])}</td></tr>
+  <tr><td>${translateCellAdjust(b[6])}</td><td>${translateCellAdjust(b[7])}</td><td>${translateCellAdjust(b[8])}</td></tr>
+  </table>
+  </div>`).join(' ');
+  document.querySelector('#ajust').innerHTML=divBoxes;
+
+}
+
+generateAdjusts()

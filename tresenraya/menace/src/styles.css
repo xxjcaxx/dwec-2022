@@ -96,3 +96,24 @@ td:nth-child(2) {
   background-color: #fff;
   height: 200px;
 }
+
+
+#ajust{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+div.boardadjust{
+  margin: 2px;
+  
+}
+
+div.boardadjust td {
+  padding: 0px;
+  width: 12px;
+  height: 12px;
+  cursor:auto;
+  font-size: 8px;
+  text-align: center;
+  border: 1px solid #000;
+}
