@@ -95,6 +95,10 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector("#mostrarPlayers").addEventListener("click", () => {
     mostrarPlayers();
   });
+
+  document.querySelector("#OdooPlayers").addEventListener("click", () => {
+    OdooPlayers();
+  });
 });
 
 async function mostrarScrap() {
@@ -170,4 +174,44 @@ async function mostrarPlayers() {
   divPlayers.innerHTML = JSON.stringify(
     onlyplayers.map((p) => p.images.transparent["256x256"])
   );
+}
+
+async function OdooPlayers() {
+  let players = await fetch("scrap/marca-fantasy-scraper/laliga/todos.json");
+  players = await players.json();
+  console.log(players);
+
+  let onlyplayers = players.map((p) => {
+    p = { ...p };
+    delete p.team;
+    return p;
+  });
+
+  let divPlayers = document.querySelector("#players");
+
+  let imgs = await fetch("scrap/marca-fantasy-scraper/img/images.json");
+  imgs = await imgs.json();
+  console.log(imgs);
+
+  let playersIMGs = onlyplayers.map((p) => {
+    p.imageB64 = imgs.find((i) =>
+      p.images.transparent["256x256"].includes(i.name)
+    ).img;
+    //console.log(p.imageB64);
+    return p;
+  });
+
+  let playersOdoo = playersIMGs.map(
+    (p) => ` <record id="pdfutbol.player_${p.id}" model="pcfutbol.player">
+  <field name="name">${p.name}</field>
+  <field name="points">${p.points}</field>
+  <field name="position">${p.positionId}</field>
+  <field name="state">${p.playerStatus}</field>
+  <field name="image">${p.imageB64}</field>
+</record>`
+  );
+
+  let odooRecords = "<odoo><data>" + playersOdoo + "</data></odoo>";
+
+  divPlayers.innerText = `${odooRecords}`;
 }
