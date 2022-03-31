@@ -183,7 +183,7 @@ async function OdooPlayers() {
 
   let onlyplayers = players.map((p) => {
     p = { ...p };
-    delete p.team;
+   // delete p.team;
     return p;
   });
 
@@ -201,17 +201,44 @@ async function OdooPlayers() {
     return p;
   });
 
+
+  let teams = players.map(p=> { return {id: p.team.id, name: p.team.name, badge: p.team.badgeColor} });
+  
+  teams = [...new Set(teams.map(t=> t.name))]
+       .map(t=> { 
+         let teamActual = teams.find(T=> T.name === t);
+         return {name: t, badge: teamActual.badge, id: teamActual.id}
+        });
+  
+  let badges = await fetch("scrap/marca-fantasy-scraper/badges.json");
+  badges = await badges.json()
+
+  teams = teams.map(t => {
+   // console.log(t.badge,t.badge.split('/').at(-1));
+    t.badge = badges.find(b => b.name === t.badge.split('/').at(-1)).img;
+    return t;
+  });
+
+  console.log(teams);
+
+  let teamsOdoo = teams.map( (t) => ` <record id="pcfutbol.team_${t.id}" model="pcfutbol.team">
+  <field name="name">${t.name}</field>
+  <field name="shield">${t.badge}</field>
+  
+</record>`)
+
   let playersOdoo = playersIMGs.map(
-    (p) => ` <record id="pdfutbol.player_${p.id}" model="pcfutbol.player">
+    (p) => ` <record id="pcfutbol.player_${p.id}" model="pcfutbol.player">
   <field name="name">${p.name}</field>
   <field name="points">${p.points}</field>
   <field name="position">${p.positionId}</field>
   <field name="state">${p.playerStatus}</field>
   <field name="image">${p.imageB64}</field>
+  <field name="team" ref="pcfutbol.team_${p.team.id}"></field>
 </record>`
   );
 
-  let odooRecords = "<odoo><data>" + playersOdoo + "</data></odoo>";
+  let odooRecords = "<odoo><data>" + teamsOdoo + playersOdoo +  "</data></odoo>";
 
   divPlayers.innerText = `${odooRecords}`;
 }
