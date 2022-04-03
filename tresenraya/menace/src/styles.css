@@ -105,6 +105,7 @@ td:nth-child(2) {
 
 div.boardadjust{
   margin: 2px;
+  font-family: monospace;
   
 }
 
@@ -116,4 +117,15 @@ div.boardadjust td {
   font-size: 8px;
   text-align: center;
   border: 1px solid #000;
+}
+
+div.boardadjust div.hoverNumber {
+  display: none;
+}
+
+div.boardadjust:hover  div.hoverNumber{
+  display: block;
+  position: absolute;
+ 
+  background-color: white;
 }
