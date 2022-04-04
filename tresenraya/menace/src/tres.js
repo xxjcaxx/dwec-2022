@@ -74,9 +74,11 @@ document.addEventListener("DOMContentLoaded", function initialLoad() {
   const clickSubscription = addEvents().subscribe(clickBoard);
   document.querySelector("#reset").addEventListener("click", reset);
 
+  generateAdjusts().subscribe(printDivBoxes);
+
   const IASubscription = stateSubject.subscribe(IATurn)
 
-  generateAdjusts().subscribe(printDivBoxes);
+ 
 });
 
 

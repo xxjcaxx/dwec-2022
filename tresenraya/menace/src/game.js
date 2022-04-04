@@ -19,7 +19,7 @@ import {
 const gameInitial = { pos1: 0, pos2: 0, pos3: 0, pos4: 0, pos5: 0, pos6: 0, pos7: 0, pos8: 0, pos9: 0, };
 
 const stateSubject = new BehaviorSubject({
-  turn: 1,
+  turn: 2,
   // prettier-ignore
   game: { ...gameInitial },
 });
@@ -50,5 +50,5 @@ function getWinner(game) {
 }
 
 function reset(state) {
-  stateSubject.next({ turn: 1, game: { ...gameInitial } });
+  stateSubject.next({ turn: 2, game: { ...gameInitial } });
 }

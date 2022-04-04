@@ -230,26 +230,42 @@ function applyRotations(array) {
   }
   
 
-  function buscarBox(allBoxes,partida){
+  function buscarBox(allBoxes,game){
     function traducirACeros(p){
         return p.map(n=> isNaN(n) ? n : 0);
     }
-    //console.log(applyRotations(traducirACeros(allBoxes[5])));
 
-    return allBoxes.find(box=> 
-        applyRotations(traducirACeros(box)).some(b=>areEquals(b,partida)))
+    
+    
+
+    const boxIndex = allBoxes.findIndex(box=> 
+        applyRotations(traducirACeros(box)).some(b=>areEquals(b,Object.values(game))));
+console.log(boxIndex, Object.values(game), applyRotations(traducirACeros(allBoxes[26])));
+        console.log(Object.values(game), applyRotations(traducirACeros(allBoxes[boxIndex])));
+    const boxRotationIndex = applyRotations(traducirACeros(allBoxes[boxIndex])).findIndex(b =>areEquals(b,Object.values(game)) );
+
+    return {boxIndex, boxRotationIndex};
   }
   
 
   function IATurn(state){
     const turn = state.turn;
     const game = { ...state.game };
+    console.log('IA Turn');
     if (turn == 2) {
         // Detectar la partida del menace que es igual
         const allBoxes = boxesSubject.getValue();
         const partida = buscarBox(allBoxes,game)
 
-        console.log(partida);
+        console.log("Partida IA",partida, allBoxes[partida.boxIndex]);
+
+        const menaceBox = allBoxes[partida.boxIndex];
+
+        const max = menaceBox.findIndex(n => n == Math.max(...menaceBox));
+
+        game["pos"+(max+1)] = 2;
+
+        console.log(game);
 
 
 
@@ -257,9 +273,7 @@ function applyRotations(array) {
 
 
 
-
-
-      stateSubject.next({ turn: switchTurn(turn), game });
+      stateSubject.next({ turn: switchTurn(turn), game: {...game} });
       const winner = getWinner(game);
       if (winner != 0) {
         showWinner(winner);
