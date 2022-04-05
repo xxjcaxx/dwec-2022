@@ -129,3 +129,12 @@ div.boardadjust:hover  div.hoverNumber{
  
   background-color: white;
 }
+
+
+div.destacada {
+  background-color: aqua;
+}
+
+td.seleccionada {
+  background-color: brown;
+}

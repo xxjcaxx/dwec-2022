@@ -3,7 +3,7 @@
 import "./styles.css";
 //import './tests'
 //import { getPartida, setPartida } from "./conexiones";
-import { generateAdjusts, IATurn,printDivBoxes } from "./menace";
+import { generateAdjusts, IATurn,printDivBoxes, moveSubject, printMove } from "./menace";
 import  {getWinner, winCombos, getPos, reset, stateSubject, switchTurn} from './game'
 
 
@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", function initialLoad() {
 
   const IASubscription = stateSubject.subscribe(IATurn)
 
+  moveSubject.subscribe(printMove)
  
 });
 
