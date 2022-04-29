@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { menu } from "./components/menu.js";
 import "bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -8,6 +9,7 @@ import { router } from "./router/router.js";
 
 window.app = {};
 //app.url = "http://10.100.23.100:8069";
+// eslint-disable-next-line no-undef
 app.url = "http://192.168.88.60:8069";
 
 (function autoinvocada() {
@@ -24,7 +26,7 @@ app.url = "http://192.168.88.60:8069";
     router(window.location.hash);
   });
 
- window.addEventListener("hashchange", () => {
+  window.addEventListener("hashchange", () => {
     router(window.location.hash);
   });
 })();

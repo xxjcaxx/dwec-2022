@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { router } from "../router/router";
 
 export { Login };
@@ -63,7 +64,7 @@ class Login {
         localStorage.setItem("user", this.user);
         localStorage.setItem("id", datos.result.id);
         localStorage.setItem("name", datos.result.name);
-        router('#/');
+        router("#/");
       });
   }
 }

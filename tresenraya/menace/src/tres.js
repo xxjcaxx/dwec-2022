@@ -1,11 +1,23 @@
 "use strict";
 
 import "./styles.css";
-//import './tests'
+//import "./tests";
 //import { getPartida, setPartida } from "./conexiones";
-import { generateAdjusts, IATurn,printDivBoxes, moveSubject, printMove } from "./menace";
-import  {getWinner, winCombos, getPos, reset, stateSubject, switchTurn} from './game'
-
+import {
+  generateAdjusts,
+  IATurn,
+  printDivBoxes,
+  moveSubject,
+  printMove,
+} from "./menace";
+import {
+  getWinner,
+  winCombos,
+  getPos,
+  reset,
+  stateSubject,
+  switchTurn,
+} from "./game";
 
 import {
   BehaviorSubject,
@@ -47,22 +59,19 @@ function clickCell(cell) {
   const currentState = stateSubject.getValue();
   const turn = currentState.turn;
   const game = { ...currentState.game };
-  if (game[cell.id] == 0  && turn == 1) {
+  if (game[cell.id] == 0 && turn == 1) {
     game[cell.id] = turn;
     stateSubject.next({ turn: switchTurn(turn), game });
     const winner = getWinner(game);
     if (winner != 0) {
       showWinner(winner);
     }
-
   }
 }
 
 function showWinner(winner) {
   document.querySelector("#winner").innerHTML = translateCell(winner);
 }
-
-
 
 //////// Inicio del juego
 document.addEventListener("DOMContentLoaded", function initialLoad() {
@@ -76,11 +85,7 @@ document.addEventListener("DOMContentLoaded", function initialLoad() {
 
   generateAdjusts().subscribe(printDivBoxes);
 
-  const IASubscription = stateSubject.subscribe(IATurn)
+  const IASubscription = stateSubject.subscribe(IATurn);
 
-  moveSubject.subscribe(printMove)
- 
+  moveSubject.subscribe(printMove);
 });
-
-
-
