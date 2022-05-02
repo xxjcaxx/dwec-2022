@@ -8,14 +8,67 @@
   </head>
   <body>
     <div id="container">
+      https://www.learnrxjs.io/learn-rxjs/concepts/rxjs-primer
       <div id="creation">
         <h2>Operadors de creació</h2>
         Permeten crear un observable a partir de qualsevol cosa.
-        https://www.learnrxjs.io/learn-rxjs/concepts/rxjs-primer
-        <div id="exemple1">
-          <span>0</span>
-          <div style="height: 1000px"></div>
-        </div>
+        
+        <div class="containerExemples">
+          fromEvent():  
+          <div id="exemple1">
+          
+            <div style="height: 1000px"></div>
+          </div>
+          <span id="exemple1info">0</span>
+          <div id="exemple1code" class="code">
+            <pre>
+              const divExemple1 = document.querySelector("#exemple1");
+              fromEvent(divExemple1, "scroll")
+                .pipe
+                (
+                  debounceTime(10)
+                )
+                .subscribe((event) => {
+                  document.querySelector('#exemple1info').innerHTML = event.target.scrollTop;
+                });
+            </pre>
+ 
+          </div>
+        </div>     
+
+        <div class="containerExemples">
+          of();
+          <div id="exemple2">
+            <span id="exemple2info"></span>
+          </div>
+          
+          <div id="exemple2code" class="code">
+            <pre>
+              const source = of(1, 2, 3, 4, 5);
+              const subscribe = source.subscribe(val => 
+                document.querySelector('#exemple2info').innerHTML += val);
+            </pre>
+ 
+          </div>
+        </div>   
+
+
+
+
+        <div class="containerExemples">
+          from(); Transforma qualsevol promesa o iterable en un observable
+          <div id="exemple3">
+            <span id="exemple3info"></span>
+          </div>
+          
+          <div id="exemple3code" class="code">
+            <pre>
+            
+            </pre>
+ 
+          </div>
+        </div>   
+        
       </div>
     </div>
   </body>
