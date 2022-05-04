@@ -110,52 +110,66 @@ Exercici 2
 
 */
 
-
-
-
 document.addEventListener("DOMContentLoaded", () => {
+  //a
 
-  //a 
+  const desp = (array) => [...array.slice(1), array[0]];
 
-const desp = (array) => [...array.slice(1),array[0]];
+  // b
 
-// b
+  const desp2D = (array) =>
+    array
+      .reduce(
+        (anterior, actual) => {
+          console.log(anterior);
+          return [...anterior, desp(anterior.at(-1))];
+        },
+        [desp(array)]
+      )
+      .slice(0, -1);
 
-const desp2D = (array) => array.reduce((anterior,actual)=>{ 
-  return [...anterior, desp(anterior[anterior.length-1])]; 
-  },[desp(array)]).slice(0,-1);
+  // c
 
+  const desp2DString = (string) =>
+    desp2D(string.split("")).map((s) => s.join(""));
 
-// c
-
-const desp2DString = (string) => desp2D(string.split('')).map(s=>s.join(''));
-  mocha.setup('bdd');
+  mocha.setup("bdd");
   mocha.checkLeaks();
 
   const expect = chai.expect;
 
-describe('desp', ()=>{
-  it('desp 4',()=>{
-    expect(desp([1,2,3,4])).to.eql([2,3,4,1]);
+  describe("desp", () => {
+    it("desp 4", () => {
+      expect(desp([1, 2, 3, 4])).to.eql([2, 3, 4, 1]);
+    });
+    it("desp 5", () => {
+      expect(desp([1, 2, 3, 4, 5])).to.eql([2, 3, 4, 5, 1]);
+    });
   });
-  it('desp 5',()=>{
-    expect(desp([1,2,3,4,5])).to.eql([2,3,4,5,1]);
-  });
-});
 
-describe('desp2D', ()=>{
-  it('desp2D 4',()=>{
-    expect(desp2D([1,2,3,4])).to.deep.eql([[2,3,4,1],[3,4,1,2],[4,1,2,3],[1,2,3,4]]);
+  describe("desp2D", () => {
+    it("desp2D 4", () => {
+      expect(desp2D([1, 2, 3, 4])).to.deep.eql([
+        [2, 3, 4, 1],
+        [3, 4, 1, 2],
+        [4, 1, 2, 3],
+        [1, 2, 3, 4],
+      ]);
+    });
   });
-});
 
-describe('desp2DString', ()=>{
-  it('desp2DString',()=>{
-
-    expect(desp2DString('abcdef')).to.deep.eql(['bcdefa','cdefab','defabc','efabcd','fabcde','abcdef']);
+  describe("desp2DString", () => {
+    it("desp2DString", () => {
+      expect(desp2DString("abcdef")).to.deep.eql([
+        "bcdefa",
+        "cdefab",
+        "defabc",
+        "efabcd",
+        "fabcde",
+        "abcdef",
+      ]);
+    });
   });
-});
-  
+
   mocha.run();
- 
 });
