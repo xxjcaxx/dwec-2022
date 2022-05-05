@@ -1,7 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-
 module.exports = {
   //target: 'node',
 
@@ -29,10 +28,11 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-        title: 'Tres en raya',
+        title: 'Tres n raya',
         filename: 'index.html',
         template: 'src/index.html',
     }),
+
     
 ],
 

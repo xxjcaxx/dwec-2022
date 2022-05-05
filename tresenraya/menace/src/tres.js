@@ -1,5 +1,5 @@
 import './styles.css';
-// import "./tests";
+ import "./tests";
 // import { getPartida, setPartida } from "./conexiones";
 import {
   BehaviorSubject,

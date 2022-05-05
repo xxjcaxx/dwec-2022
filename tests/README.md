@@ -58,6 +58,8 @@ No hi ha gran diferència. No obstant, d'aquesta manera no cal fer un HTML amb m
 
 ## Tests en Mocha+Chai+Webpack en el navegador
 
+ATENCIÓ: En 2022 han fet un error en mocha-es2018 i deixa de funcionar en navegadors. L'única alternativa és utilitzar el del CDN. 
+
 Webpack empaqueta fitxers de Javascript i crea un bundle. El bundle, una vegada fet, és difícil d'accedir. Per això, cal fer tests abans o incorporar els tests al bundle.
 
 ```bash
