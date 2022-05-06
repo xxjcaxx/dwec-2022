@@ -21,13 +21,9 @@ body {
     margin: 10px;
 }
 
-.containerExemples div{
-  flex-grow: 1;
-}
 
-.exemplesResum{
+.containerExemples div.exemplesResum{
    width: 100%;
-
 }
 
 #exemple1 {

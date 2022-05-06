@@ -1,26 +1,43 @@
-import { debounceTime, from, fromEvent, of, range, takeUntil } from "rxjs";
+
 import "./style.css";
+import {exemples,categories} from './exemples';
 
 document.addEventListener("DOMContentLoaded", () => {
-  const divExemple1 = document.querySelector("#exemple1");
-  fromEvent(divExemple1, "scroll")
-    .pipe(debounceTime(10))
-    .subscribe((event) => {
-      document.querySelector("#exemple1info").innerHTML =
-        event.target.scrollTop;
-    });
 
-  const source = of(1, 2, 3, 4, 5);
-  const subscribe = source.subscribe(
-    (val) => (document.querySelector("#exemple2info").innerHTML += val)
-  );
+  const categoriesDivs = categories.map(c=> {
+    const catDiv = document.createElement('div');
+    catDiv.id = c.id;
+    catDiv.innerHTML = `
+    <h2>${c.name}</h2>
+    <p>${c.description}</p>
+    `;
+    return catDiv;
+});
+categoriesDivs.forEach(cD => document.querySelector('#container').append(cD));
 
-  const spanExemple3 = document.querySelector("#exemple3info");
-  const promesaClick = new Promise((resolve) =>
-    spanExemple3.addEventListener("click", () => resolve())
-  );
-  from(promesaClick).subscribe(() => (spanExemple3.innerHTML = "Click!"));
 
-  const spanExemple4 = document.querySelector("#exemple4info");
-  range(1, 100).subscribe((n) => (spanExemple4.innerHTML += ` ${n}`));
+  exemples.forEach((exemple)=>{
+    const catDiv = document.querySelector(`#${exemple.category}`);
+    const exempleDiv = document.createElement('div');
+    //exempleDiv.id = exemple.id; 
+    exempleDiv.classList.add('containerExemples')
+    exempleDiv.innerHTML = `
+          <div class="exemplesResum">
+            <h3>${exemple.name}</h3>
+            <p>${exemple.description}</p>
+          </div>
+          ${exemple.htmlExemple}
+          <div id="${exemple.id}code" class="code">
+            ${exemple.htmlCode}
+          </div>
+    `;
+    catDiv.append(exempleDiv);
+    exemple.method();
+  })
+  
+
+
+  
+  
+
 });
