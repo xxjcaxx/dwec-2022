@@ -12,63 +12,144 @@
       <div id="creation">
         <h2>Operadors de creació</h2>
         Permeten crear un observable a partir de qualsevol cosa.
-        
+
         <div class="containerExemples">
-          fromEvent():  
+          <div class="exemplesResum">
+            <h3>fromEvent():</h3>
+            <p>Crea un observable a partir d'un esdeveniment</p>
+          </div>
+
           <div id="exemple1">
-          
             <div style="height: 1000px"></div>
           </div>
           <span id="exemple1info">0</span>
           <div id="exemple1code" class="code">
-            <pre>
-              const divExemple1 = document.querySelector("#exemple1");
-              fromEvent(divExemple1, "scroll")
-                .pipe
-                (
-                  debounceTime(10)
-                )
-                .subscribe((event) => {
-                  document.querySelector('#exemple1info').innerHTML = event.target.scrollTop;
-                });
-            </pre>
- 
+            <!-- HTML generated using hilite.me -->
+            <div
+              style="
+                background: #ffffff;
+                overflow: auto;
+                width: auto;
+                border: solid gray;
+                border-width: 0.1em 0.1em 0.1em 0.8em;
+                padding: 0.2em 0.6em;
+              "
+            >
+              <pre
+                style="margin: 0; line-height: 125%"
+              ><span style="color: #008800; font-weight: bold">const</span> divExemple1 <span style="color: #333333">=</span> <span style="color: #007020">document</span>.querySelector(<span style="background-color: #fff0f0">&quot;#exemple1&quot;</span>);
+  fromEvent(divExemple1, <span style="background-color: #fff0f0">&quot;scroll&quot;</span>)
+  .pipe
+  (
+    debounceTime(<span style="color: #0000DD; font-weight: bold">10</span>)
+  )
+  .subscribe((event) <span style="color: #333333">=&gt;</span> {
+    <span style="color: #007020">document</span>.querySelector(<span style="background-color: #fff0f0">&#39;#exemple1info&#39;</span>).innerHTML <span style="color: #333333">=</span> event.target.scrollTop;
+  });
+</pre>
+            </div>
           </div>
-        </div>     
+        </div>
 
         <div class="containerExemples">
-          of();
+          <div class="exemplesResum">
+            <h3>of():</h3>
+            <p>Crea un observable a partir d'un llista de paràmetres</p>
+          </div>
           <div id="exemple2">
             <span id="exemple2info"></span>
           </div>
-          
+
           <div id="exemple2code" class="code">
-            <pre>
-              const source = of(1, 2, 3, 4, 5);
-              const subscribe = source.subscribe(val => 
-                document.querySelector('#exemple2info').innerHTML += val);
-            </pre>
- 
+            <!-- HTML generated using hilite.me -->
+            <div
+              style="
+                background: #ffffff;
+                overflow: auto;
+                width: auto;
+                border: solid gray;
+                border-width: 0.1em 0.1em 0.1em 0.8em;
+                padding: 0.2em 0.6em;
+              "
+            >
+              <pre
+                style="margin: 0; line-height: 125%"
+              >    <span style="color: #008800; font-weight: bold">const</span> source <span style="color: #333333">=</span> of(<span style="color: #0000DD; font-weight: bold">1</span>, <span style="color: #0000DD; font-weight: bold">2</span>, <span style="color: #0000DD; font-weight: bold">3</span>, <span style="color: #0000DD; font-weight: bold">4</span>, <span style="color: #0000DD; font-weight: bold">5</span>);
+    <span style="color: #008800; font-weight: bold">const</span> subscribe <span style="color: #333333">=</span> source.subscribe(val <span style="color: #333333">=&gt;</span> 
+    <span style="color: #007020">document</span>.querySelector(<span style="background-color: #fff0f0">&#39;#exemple2info&#39;</span>).innerHTML <span style="color: #333333">+=</span> val);
+</pre>
+            </div>
           </div>
-        </div>   
-
-
-
+        </div>
 
         <div class="containerExemples">
-          from(); Transforma qualsevol promesa o iterable en un observable
+          <div class="exemplesResum">
+            <h3>from():</h3>
+            <p>
+              from(); Transforma qualsevol promesa o iterable en un observable
+            </p>
+          </div>
+
           <div id="exemple3">
-            <span id="exemple3info"></span>
+            <span id="exemple3info">0</span>
           </div>
-          
+
           <div id="exemple3code" class="code">
-            <pre>
-            
-            </pre>
- 
+            <!-- HTML generated using hilite.me -->
+            <div
+              style="
+                background: #ffffff;
+                overflow: auto;
+                width: auto;
+                border: solid gray;
+                border-width: 0.1em 0.1em 0.1em 0.8em;
+                padding: 0.2em 0.6em;
+              "
+            >
+              <pre
+                style="margin: 0; line-height: 125%"
+              >  <span style="color: #008800; font-weight: bold">const</span> spanExemple3 <span style="color: #333333">=</span> <span style="color: #007020">document</span>.querySelector(<span style="background-color: #fff0f0">&quot;#exemple3info&quot;</span>);
+  <span style="color: #008800; font-weight: bold">const</span> promesaClick <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Promise((resolve) <span style="color: #333333">=&gt;</span>
+  spanExemple3.addEventListener(<span style="background-color: #fff0f0">&quot;click&quot;</span>, () <span style="color: #333333">=&gt;</span> resolve())
+);
+from(promesaClick).subscribe(() <span style="color: #333333">=&gt;</span> (spanExemple3.innerHTML <span style="color: #333333">=</span> <span style="background-color: #fff0f0">&quot;Click!&quot;</span>));
+</pre>
+            </div>
           </div>
-        </div>   
-        
+        </div>
+
+        <div class="containerExemples">
+          <div class="exemplesResum">
+            <h3>range():</h3>
+            <p>
+              Crea un Observable que dona una serie de números en un interval
+            </p>
+          </div>
+
+          <div id="exemple4">
+            <span id="exemple4info">0</span>
+          </div>
+
+          <div id="exemple4code" class="code">
+            <!-- HTML generated using hilite.me -->
+            <div
+              style="
+                background: #ffffff;
+                overflow: auto;
+                width: auto;
+                border: solid gray;
+                border-width: 0.1em 0.1em 0.1em 0.8em;
+                padding: 0.2em 0.6em;
+              "
+            >
+              <pre
+                style="margin: 0; line-height: 125%"
+              >  <span style="color: #008800; font-weight: bold">const</span> spanExemple4 <span style="color: #333333">=</span> <span style="color: #007020">document</span>.querySelector(<span style="background-color: #fff0f0">&quot;#exemple4info&quot;</span>);
+  range(<span style="color: #0000DD; font-weight: bold">1</span>, <span style="color: #0000DD; font-weight: bold">100</span>).subscribe((n) <span style="color: #333333">=&gt;</span> (spanExemple4.innerHTML <span style="color: #333333">+=</span> <span style="color: #FF0000; background-color: #FFAAAA">`</span> ${n}<span style="color: #FF0000; background-color: #FFAAAA">`</span>));
+</pre>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </body>

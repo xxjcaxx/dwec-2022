@@ -64,14 +64,15 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   // Per treure els elements cada cert temps
-  // source.subscribe((x) => console.log("1 subs", x));
+  source.subscribe((x) => console.log("1 subs", x));
 
   // Per calcular la suma al final
-  source.pipe(
-    // take(8),
-    reduce((x, y) => x + y)
-  );
-  // .subscribe((n) => console.log(n));
+  source
+    .pipe(
+      // take(8),
+      reduce((x, y) => x + y)
+    )
+    .subscribe((n) => console.log(n));
 
   ////////// Observable hot
   const randomObservable = new Observable((observer) => {

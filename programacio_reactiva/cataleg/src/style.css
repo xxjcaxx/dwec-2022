@@ -1,5 +1,33 @@
+body {
+    background-color: #aaa;
+    margin: 0;
+}
+
+#container {
+    width: 80%;
+    margin: auto;
+    background-color: #fff;
+    padding: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
 .containerExemples{
     display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.containerExemples div{
+  flex-grow: 1;
+}
+
+.exemplesResum{
+   width: 100%;
+
 }
 
 #exemple1 {
@@ -9,4 +37,7 @@
     overflow: scroll;
 }
 
+.code{
+    padding: 10px;
+}
 
