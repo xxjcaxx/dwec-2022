@@ -4,5 +4,5 @@ import chai from 'chai';
 
 var expect = chai.expect;*/
 
-mocha.setup('bdd'); 
-mocha.checkLeaks();
+//mocha.setup('bdd'); 
+//mocha.checkLeaks();

@@ -1,5 +1,5 @@
 
-export {getWinner, winCombos, getPos, reset, stateSubject, switchTurn}
+export {getWinner, winCombos, getPos, reset, stateSubject, switchTurn, setCell}
 
 
 
@@ -20,7 +20,6 @@ const gameInitial = { pos1: 0, pos2: 0, pos3: 0, pos4: 0, pos5: 0, pos6: 0, pos7
 
 const stateSubject = new BehaviorSubject({
   turn: 2,
-  // prettier-ignore
   game: { ...gameInitial },
 });
 
@@ -28,6 +27,19 @@ function switchTurn(turn) {
   turn == 1 ? (turn = 2) : (turn = 1);
   return turn;
 }
+
+///// Canvi d'estat
+function setCell(state, pos){
+  const game = {...state.game}
+  if (game[pos] === 0 && state.turn === 1) {
+    game[pos]=state.turn;
+    const nextTurn = switchTurn(state.turn)
+    stateSubject.next({turn: nextTurn, game: game});
+  }
+ 
+}
+
+
 // prettier-ignore
 const winCombos = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 4, 8], [6, 4, 2], [0, 3, 6], [1, 4, 7], [2, 5, 8]];
 function getPos(combo, game) {
