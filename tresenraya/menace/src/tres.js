@@ -25,6 +25,7 @@ import {
   reset,
   stateSubject,
   switchTurn,
+  setCell
 } from './game';
 
 /// //////// Funciones de relleno del tablero y eventos
@@ -53,16 +54,17 @@ function showWinner(winner) {
 
 function clickCell(cell) {
   const currentState = stateSubject.getValue();
-  const { turn } = currentState;
-  const game = { ...currentState.game };
-  if (game[cell.id] === 0 && turn === 1) {
+ // const { turn } = currentState;
+ // const game = { ...currentState.game };
+/*  if (game[cell.id] === 0 && currentState === 1) {
     game[cell.id] = turn;
     stateSubject.next({ turn: switchTurn(turn), game });
     const winner = getWinner(game);
     if (winner !== 0) {
       showWinner(winner);
     }
-  }
+  }*/
+  setCell(currentState,cell.id)
 }
 
 function clickBoard(event) {
