@@ -6,6 +6,7 @@ import { checkUsuario } from "./utils/local_storage.js";
 
 import "./style.css";
 import { router } from "./router/router.js";
+import main from "./img/main.jpg"
 
 window.app = {};
 //app.url = "http://10.100.23.100:8069";

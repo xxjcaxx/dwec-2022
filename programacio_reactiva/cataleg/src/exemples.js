@@ -1,18 +1,73 @@
-import { debounceTime, from, fromEvent, of, range, takeUntil } from "rxjs";
+import { debounceTime, from, fromEvent, Observable, of, range, takeUntil } from "rxjs";
 export const categories = [
+  { id: 'base', name: 'Elements basics de RxJS', description: `Creació d'observables amb constructor i les seues funcions bàsiques` },
+
     { id: 'creation', name: 'Operadors de creació', description: 'Permeten crear un observable a partir de qualsevol cosa. ' },
-    { id: 'operators', name: 'Operadors de creació', description: 'Permeten crear un observable a partir de qualsevol cosa. ' }
+    { id: 'operators', name: 'Operadors de creació', description: 'Permeten crear un observable a partir de qualsevol cosa. ' },
+    
 ];
 
 export const exemples = [
+  {
+    category: 'base',
+    id: 'observable1',
+    name: 'Observable():',
+    description: `Els Observables són coleccions Push 'perezoses' de múltiples valors. `,
+    htmlExemple: `<div id="observable1">
+     Observable fet en un setInterval
+  </div>
+  `,
+    htmlCode: `
+    <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">  <span style="color: #008800; font-weight: bold">const</span> divObservable1 <span style="color: #333333">=</span> <span style="color: #007020">document</span>.querySelector(<span style="background-color: #fff0f0">&quot;#observable1&quot;</span>);
+    <span style="color: #008800; font-weight: bold">const</span> observable <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Observable((observer)<span style="color: #333333">=&gt;</span>{
+      <span style="color: #008800; font-weight: bold">let</span> n <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+      setInterval(()<span style="color: #333333">=&gt;</span> {
+        <span style="color: #008800; font-weight: bold">if</span> (<span style="color: #007020">Math</span>.random() <span style="color: #333333">&lt;</span> <span style="color: #6600EE; font-weight: bold">0.99</span>) observer.next(<span style="color: #333333">++</span>n);
+        <span style="color: #008800; font-weight: bold">else</span> observer.error(<span style="background-color: #fff0f0">&#39;Fallo&#39;</span>);
+        <span style="color: #008800; font-weight: bold">if</span> (n <span style="color: #333333">===</span> <span style="color: #0000DD; font-weight: bold">50</span>) observer.complete(); 
+        
+      },<span style="color: #0000DD; font-weight: bold">100</span>);
+    });
 
+    <span style="color: #008800; font-weight: bold">const</span> observer <span style="color: #333333">=</span> {
+      next<span style="color: #333333">:</span> (n)<span style="color: #333333">=&gt;</span> divObservable1.innerHTML <span style="color: #333333">=</span> n,
+      error<span style="color: #333333">:</span> (e) <span style="color: #333333">=&gt;</span> divObservable1.innerHTML <span style="color: #333333">=</span> e,
+      complete<span style="color: #333333">:</span> () <span style="color: #333333">=&gt;</span> divObservable1.innerHTML <span style="color: #333333">=</span> <span style="background-color: #fff0f0">&#39;Completado&#39;</span>
+            }
+    <span style="color: #008800; font-weight: bold">const</span> subscription <span style="color: #333333">=</span> observable.subscribe(observer);
+    divObservable1.addEventListener(<span style="background-color: #fff0f0">&#39;click&#39;</span>,()<span style="color: #333333">=&gt;</span> subscription.unsubscribe());
+</pre></div>
+
+
+  `,
+    method: () => {
+        const divObservable1 = document.querySelector("#observable1");
+        const observable = new Observable((observer)=>{
+          let n = 0;
+          setInterval(()=> {
+            if (Math.random() < 0.99) observer.next(++n);
+            else observer.error('Fallo');
+            if (n === 50) observer.complete(); 
+            
+          },100);
+        });
+
+        const observer = {
+          next: (n)=> divObservable1.innerHTML = n,
+          error: (e) => divObservable1.innerHTML = e,
+          complete: () => divObservable1.innerHTML = 'Completado'
+                }
+        const subscription = observable.subscribe(observer);
+        divObservable1.addEventListener('click',()=> subscription.unsubscribe());
+    }
+},
     {
         category: 'creation',
         id: 'exemple1',
         name: 'fromEvent():',
         description: `Crea un observable a partir d'un esdeveniment`,
         htmlExemple: `<div id="exemple1">
-        <div style="height: 1000px"></div>
+        <div style="height: 1000px">Fes scroll per provar l'Observable</div>
       </div>
       <span id="exemple1info">0</span>`,
         htmlCode: `
@@ -59,7 +114,7 @@ debounceTime(<span style="color: #0000DD; font-weight: bold">10</span>)
         name: 'of():',
         description: `Crea un observable a partir d'un llista de paràmetres`,
         htmlExemple: ` <div id="exemple2">
-        <span id="exemple2info"></span>
+        <span id="exemple2info">Fes click per provar l'observable</span>
       </div>`,
         htmlCode: `
       <div
@@ -81,10 +136,16 @@ debounceTime(<span style="color: #0000DD; font-weight: bold">10</span>)
     </div>
       `,
         method: () => {
-            const source = of(1, 2, 3, 4, 5);
+          const exemple2info =  document.querySelector("#exemple2info")
+          const source = of(1, 2, 3, 4, 5);
+            
+          exemple2info.addEventListener('click',()=>{  // De moment ho fem així per no mesclar observable.
+            exemple2info.innerHTML = '';
             const subscribe = source.subscribe(
-                (val) => (document.querySelector("#exemple2info").innerHTML += val)
-            );
+              (val) => (exemple2info.innerHTML += val)
+          );
+          })
+           
 
         }
     }
@@ -98,7 +159,7 @@ debounceTime(<span style="color: #0000DD; font-weight: bold">10</span>)
         name: 'from():',
         description: `Transforma qualsevol promesa o iterable en un observable`,
         htmlExemple: `  <div id="exemple3">
-    <span id="exemple3info">0</span>
+    <span id="exemple3info">Fes click</span>
   </div>`,
         htmlCode: `
     <div
