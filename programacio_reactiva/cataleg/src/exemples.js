@@ -1,15 +1,49 @@
-import { debounceTime, filter, skip, delay, scan, take, from, tap, fromEvent, interval, map, of, range, takeUntil, timer, takeWhile, last, takeLast, first, reduce, sampleTime, auditTime, throttleTime, Subject, share, bufferTime } from "rxjs";
+import {
+  debounceTime,
+  filter,
+  skip,
+  delay,
+  scan,
+  take,
+  from,
+  tap,
+  fromEvent,
+  interval,
+  map,
+  of,
+  range,
+  takeUntil,
+  timer,
+  takeWhile,
+  last,
+  takeLast,
+  first,
+  reduce,
+  sampleTime,
+  auditTime,
+  throttleTime,
+  Subject,
+  share,
+  bufferTime,
+} from "rxjs";
 export const categories = [
-  { id: 'creation', name: 'Operadors de creació', description: 'Permeten crear un observable a partir de qualsevol cosa. ' },
-  { id: 'operators', name: 'Operadors bàsics', description: 'Dins dels pipes, podem manipular el fluxe de dades.' }
+  {
+    id: "creation",
+    name: "Operadors de creació",
+    description: "Permeten crear un observable a partir de qualsevol cosa. ",
+  },
+  {
+    id: "operators",
+    name: "Operadors bàsics",
+    description: "Dins dels pipes, podem manipular el fluxe de dades.",
+  },
 ];
 
 export const exemples = [
-
   {
-    category: 'creation',
-    id: 'exemple1',
-    name: 'fromEvent():',
+    category: "creation",
+    id: "exemple1",
+    name: "fromEvent():",
     description: `Crea un observable a partir d'un esdeveniment`,
     htmlExemple: `<div id="exemple1">
         <div style="height: 1000px"></div>
@@ -48,15 +82,13 @@ debounceTime(<span style="color: #0000DD; font-weight: bold">10</span>)
           document.querySelector("#exemple1info").innerHTML =
             event.target.scrollTop;
         });
-    }
+    },
   },
 
-
-
   {
-    category: 'creation',
-    id: 'exemple2',
-    name: 'of():',
+    category: "creation",
+    id: "exemple2",
+    name: "of():",
     description: `Crea un observable a partir d'un llista de paràmetres`,
     htmlExemple: ` <div id="exemple2">
         <span id="exemple2info"></span>
@@ -85,17 +117,13 @@ debounceTime(<span style="color: #0000DD; font-weight: bold">10</span>)
       const subscribe = source.subscribe(
         (val) => (document.querySelector("#exemple2info").innerHTML += val)
       );
-
-    }
-  }
-
-  ,
+    },
+  },
 
   {
-
-    category: 'creation',
-    id: 'exemple3',
-    name: 'from():',
+    category: "creation",
+    id: "exemple3",
+    name: "from():",
     description: `Transforma qualsevol promesa o iterable en un observable`,
     htmlExemple: `  <div id="exemple3">
     <span id="exemple3info">0</span>
@@ -127,16 +155,12 @@ from(promesaClick).subscribe(() <span style="color: #333333">=&gt;</span> (spanE
         spanExemple3.addEventListener("click", () => resolve())
       );
       from(promesaClick).subscribe(() => (spanExemple3.innerHTML = "Click!"));
-
-    }
-  }
-  ,
-
+    },
+  },
   {
-
-    category: 'creation',
-    id: 'exemple4',
-    name: 'range():',
+    category: "creation",
+    id: "exemple4",
+    name: "range():",
     description: ` Crea un Observable que dona una serie de números en un interval`,
     htmlExemple: ` <div id="exemple4">
         <span id="exemple4info">0</span>
@@ -162,16 +186,13 @@ from(promesaClick).subscribe(() <span style="color: #333333">=&gt;</span> (spanE
     method: () => {
       const spanExemple4 = document.querySelector("#exemple4info");
       range(1, 100).subscribe((n) => (spanExemple4.innerHTML += ` ${n}`));
-
-    }
+    },
   },
 
-
   {
-
-    category: 'creation',
-    id: 'interval',
-    name: 'interval() i timer():',
+    category: "creation",
+    id: "interval",
+    name: "interval() i timer():",
     description: ` Crea un observable que va donant números consecutius cada cert temps. Timer dona un valro quan passa un temps.
       En aquest exemple l'utilitzem per a parar l'interval`,
     htmlExemple: ` <div id="interval">
@@ -189,17 +210,16 @@ from(promesaClick).subscribe(() <span style="color: #333333">=&gt;</span> (spanE
 `,
     method: () => {
       const spanExemple = document.querySelector("#interval");
-      const subscription = interval(1000).subscribe((n) => (spanExemple.innerHTML += ` ${n}`));
-      timer(20000).subscribe(() => subscription.unsubscribe())
-    }
-  }
-  ,
-
+      const subscription = interval(1000).subscribe(
+        (n) => (spanExemple.innerHTML += ` ${n}`)
+      );
+      timer(20000).subscribe(() => subscription.unsubscribe());
+    },
+  },
   {
-
-    category: 'operators',
-    id: 'map',
-    name: 'map()',
+    category: "operators",
+    id: "map",
+    name: "map()",
     description: `Aquest operador és molt simple. Sols mapeja un esdeveniment en la funció que li diguem`,
     htmlExemple: ` <div id="map">
       <span id="maptoinfo">0</span>
@@ -218,19 +238,16 @@ from(promesaClick).subscribe(() <span style="color: #333333">=&gt;</span> (spanE
 `,
     method: () => {
       const spanExemple = document.querySelector("#map");
-      const subscription = interval(1000).pipe(
-        map(n => n ** 2)
-      ).subscribe((n) => (spanExemple.innerHTML += ` ${n}`));
-      timer(20000).subscribe(() => subscription.unsubscribe())
-    }
-  }
-  ,
-
+      const subscription = interval(1000)
+        .pipe(map((n) => n ** 2))
+        .subscribe((n) => (spanExemple.innerHTML += ` ${n}`));
+      timer(20000).subscribe(() => subscription.unsubscribe());
+    },
+  },
   {
-
-    category: 'operators',
-    id: 'filter',
-    name: 'filter()',
+    category: "operators",
+    id: "filter",
+    name: "filter()",
     description: `L'operador filter accepta una funció que ha de retornar vertader o fals si passa el filtre`,
     htmlExemple: ` <div id="filter">
       <span id="filterinfo">0</span>
@@ -250,18 +267,17 @@ from(promesaClick).subscribe(() <span style="color: #333333">=&gt;</span> (spanE
 `,
     method: () => {
       const spanExemple = document.querySelector("#filter");
-      const subscription = interval(1000).pipe(
-        filter(n => n % 2 == 0)
-      ).subscribe((n) => (spanExemple.innerHTML += ' ' + n));
-      timer(20000).subscribe(() => subscription.unsubscribe())
-    }
+      const subscription = interval(1000)
+        .pipe(filter((n) => n % 2 == 0))
+        .subscribe((n) => (spanExemple.innerHTML += " " + n));
+      timer(20000).subscribe(() => subscription.unsubscribe());
+    },
   },
 
   {
-
-    category: 'operators',
-    id: 'tap',
-    name: 'tap()',
+    category: "operators",
+    id: "tap",
+    name: "tap()",
     description: `Permet fer efectes col·laterals amb els valors actuals del fluxe de dades. Permet fer console.log o modificar variables o el DOM`,
     htmlExemple: ` <div id="tap">
       <span id="tapinfo">0</span>
@@ -279,20 +295,19 @@ from(promesaClick).subscribe(() <span style="color: #333333">=&gt;</span> (spanE
 `,
     method: () => {
       const spanExemple = document.querySelector("#tap");
-      const subscription = interval(1000).pipe(
+      const subscription = interval(1000)
+        .pipe
         // tap(n => console.log(n))
-      ).subscribe((n) => (spanExemple.innerHTML += ' ' + n));
-      timer(20000).subscribe(() => subscription.unsubscribe())
-    }
-  }
-
-  ,
+        ()
+        .subscribe((n) => (spanExemple.innerHTML += " " + n));
+      timer(20000).subscribe(() => subscription.unsubscribe());
+    },
+  },
 
   {
-
-    category: 'operators',
-    id: 'first',
-    name: 'first(), take(), takeWhile(), last(), takeLast(), skip()',
+    category: "operators",
+    id: "first",
+    name: "first(), take(), takeWhile(), last(), takeLast(), skip()",
     description: `Tots aquests operadors permeten parar l'obsevable quan es rep una quantitat o fins a que s'arriba a una condició o 
     treure els últims una vegada és completat`,
     htmlExemple: ` <div id="first">
@@ -317,27 +332,25 @@ from(promesaClick).subscribe(() <span style="color: #333333">=&gt;</span> (spanE
 `,
     method: () => {
       const spanExemple = document.querySelector("#first");
-      const subscription = interval(1000).pipe(
-        take(10),
-        // tap(n=> console.log(n)),
-        takeWhile(n => n < 9),
-        // tap(n=> console.log(n)),
-        takeLast(8),
-        skip(7),
-        first()
-      ).subscribe((n) => (spanExemple.innerHTML += ' ' + n));
-      timer(20000).subscribe(() => subscription.unsubscribe())
-    }
-  }
-
-
-  ,
+      const subscription = interval(1000)
+        .pipe(
+          take(10),
+          // tap(n=> console.log(n)),
+          takeWhile((n) => n < 9),
+          // tap(n=> console.log(n)),
+          takeLast(8),
+          skip(7),
+          first()
+        )
+        .subscribe((n) => (spanExemple.innerHTML += " " + n));
+      timer(20000).subscribe(() => subscription.unsubscribe());
+    },
+  },
 
   {
-
-    category: 'operators',
-    id: 'reduce',
-    name: 'reduce()',
+    category: "operators",
+    id: "reduce",
+    name: "reduce()",
     description: `A l'igual que el reduce dels arrays, permet fer un càlcul en les dades que arriben.`,
     htmlExemple: ` <div id="reduce">
       
@@ -357,21 +370,20 @@ from(promesaClick).subscribe(() <span style="color: #333333">=&gt;</span> (spanE
 `,
     method: () => {
       const spanExemple = document.querySelector("#reduce");
-      const subscription = interval(100).pipe(
-        take(10),
-        reduce((acumulador, actual) => acumulador + actual)
-      ).subscribe((n) => (spanExemple.innerHTML += ' ' + n));
-      timer(20000).subscribe(() => subscription.unsubscribe())
-    }
-  }
-
-  ,
+      const subscription = interval(100)
+        .pipe(
+          take(10),
+          reduce((acumulador, actual) => acumulador + actual)
+        )
+        .subscribe((n) => (spanExemple.innerHTML += " " + n));
+      timer(20000).subscribe(() => subscription.unsubscribe());
+    },
+  },
 
   {
-
-    category: 'operators',
-    id: 'scan',
-    name: 'scan()',
+    category: "operators",
+    id: "scan",
+    name: "scan()",
     description: `
     Executa una funció amb l'esdeveniment, però té en compte també un històric
     Al contrari de reduce, no espera al final.
@@ -391,22 +403,17 @@ from(promesaClick).subscribe(() <span style="color: #333333">=&gt;</span> (spanE
 `,
     method: () => {
       const spanExemple = document.querySelector("#scan");
-      const subscription = interval(100).pipe(
-
-        scan((acumulador, actual) => acumulador + actual)
-      ).subscribe((n) => (spanExemple.innerHTML += ' ' + n));
-      timer(20000).subscribe(() => subscription.unsubscribe())
-    }
-  }
-
-
-  ,
+      const subscription = interval(100)
+        .pipe(scan((acumulador, actual) => acumulador + actual))
+        .subscribe((n) => (spanExemple.innerHTML += " " + n));
+      timer(20000).subscribe(() => subscription.unsubscribe());
+    },
+  },
 
   {
-
-    category: 'operators',
-    id: 'sampleTime',
-    name: 'sampleTime()',
+    category: "operators",
+    id: "sampleTime",
+    name: "sampleTime()",
     description: `
 Hi ha molts operadors temporals: <br/> 
 sampleTime(): Emet el valor més recent en eixe interval de temps si hi ha nous valors.
@@ -442,25 +449,21 @@ auditTime(): Quan arriba un esdeveniment, espera el temps indicat i emet la most
       const spanExemple = document.querySelector("#sampleTime");
       fromEvent(spanExemple, "scroll")
         .pipe(
-          tap((e) => console.log('[Scroll event]:' + e.target.scrollTop)),
+          tap((e) => console.log("[Scroll event]:" + e.target.scrollTop)),
           throttleTime(100),
-          tap((e) => console.log('[Scroll]: ' + e.target.scrollTop)),
+          tap((e) => console.log("[Scroll]: " + e.target.scrollTop))
         )
         .subscribe((event) => {
           document.querySelector("#sampleTimeinfo").innerHTML =
             event.target.scrollTop;
         });
-    }
-  }
-
-
-  ,
+    },
+  },
 
   {
-
-    category: 'operators',
-    id: 'comparativaTime',
-    name: 'Comparativa entre els diferents operadors temporals',
+    category: "operators",
+    id: "comparativaTime",
+    name: "Comparativa entre els diferents operadors temporals",
     description: `
 La primera línia és cada instant.<br>
 La segona línia són esdeveniments aleatoris als que ens subscribim<br>
@@ -583,107 +586,105 @@ La octava és devonceTime: Espera un temps determinat a partir de l'últim esdev
 
 `,
     method: () => {
-
       const createDiv = (h, s, l, id, container) => {
-        const div = document.createElement('div');
+        const div = document.createElement("div");
         div.id = id;
-        div.style.backgroundColor = 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
-        document.querySelector('#' + container).append(div);
-      }
+        div.style.backgroundColor = "hsl(" + h + ", " + s + "%, " + l + "%)";
+        document.querySelector("#" + container).append(div);
+      };
 
       const printPosition = (initialTime, id, n) => {
         const now = Date.now();
         const position = Math.floor((now - initialTime) / 100) - 1;
-        document.querySelector('#' + id + '' + position).style.backgroundColor = 'hsl(' + n + ', 100%, 50%)';
-      }
+        document.querySelector("#" + id + "" + position).style.backgroundColor =
+          "hsl(" + n + ", 100%, 50%)";
+      };
 
       const createSubscription = (subjectOrigin, operator, id, initialTime) => {
         const subj = new Subject();
         const subs = subjectOrigin.pipe(operator).subscribe(subj);
-        const subs2 = subj.subscribe(n => printPosition(initialTime, id, n))
+        const subs2 = subj.subscribe((n) => printPosition(initialTime, id, n));
         timer(10000).subscribe(() => {
           subs.unsubscribe();
           subs2.unsubscribe();
         });
         return subj;
-      }
-
+      };
 
       for (let n = 0; n < 100; n++) {
-        createDiv(n * 10, 100, 50, 'divAll' + n, 'comparativaTimeAll');
-        createDiv(0, 0, 100, 'divEvent' + n, 'comparativaTimeEvent');
-        createDiv(0, 0, 100, 'divSample' + n, 'comparativaTimeSample');
-        createDiv(0, 0, 100, 'divAudit' + n, 'comparativaTimeAudit');
-        createDiv(0, 0, 100, 'divThr' + n, 'comparativaTimeThr');
-        createDiv(0, 0, 100, 'divDelay' + n, 'comparativaTimeDelay');
-        createDiv(0, 0, 100, 'divBuffer' + n, 'comparativaTimeBuffer');
-        createDiv(0, 0, 100, 'divDebounce' + n, 'comparativaTimeDebounce');
+        createDiv(n * 10, 100, 50, "divAll" + n, "comparativaTimeAll");
+        createDiv(0, 0, 100, "divEvent" + n, "comparativaTimeEvent");
+        createDiv(0, 0, 100, "divSample" + n, "comparativaTimeSample");
+        createDiv(0, 0, 100, "divAudit" + n, "comparativaTimeAudit");
+        createDiv(0, 0, 100, "divThr" + n, "comparativaTimeThr");
+        createDiv(0, 0, 100, "divDelay" + n, "comparativaTimeDelay");
+        createDiv(0, 0, 100, "divBuffer" + n, "comparativaTimeBuffer");
+        createDiv(0, 0, 100, "divDebounce" + n, "comparativaTimeDebounce");
       }
 
       const spanExemple = document.querySelector("#comparativaTime");
       const observable = interval(100).pipe(
-        tap(n => { }),
-        map(n => n * 10)
-
+        tap((n) => {}),
+        map((n) => n * 10)
       );
 
       const initialTime = Date.now();
 
-
       const subjectEvent = createSubscription(
         observable,
-        filter(n => Math.random() > 0.7),
-        'divEvent',
-        initialTime);
+        filter((n) => Math.random() > 0.7),
+        "divEvent",
+        initialTime
+      );
 
       const subjectSample = createSubscription(
         subjectEvent,
         sampleTime(500),
-        'divSample',
-        initialTime);
+        "divSample",
+        initialTime
+      );
 
       const subjectAudit = createSubscription(
         subjectEvent,
         auditTime(500),
-        'divAudit',
-        initialTime);
+        "divAudit",
+        initialTime
+      );
 
       const subjectThr = createSubscription(
         subjectEvent,
         throttleTime(500),
-        'divThr',
-        initialTime);
-
+        "divThr",
+        initialTime
+      );
 
       const subjectDelay = createSubscription(
         subjectEvent,
         delay(500),
-        'divDelay',
-        initialTime);
-
+        "divDelay",
+        initialTime
+      );
 
       const subjectBuffer = createSubscription(
         subjectEvent,
         bufferTime(500),
-        'divBuffer',
-        initialTime);
+        "divBuffer",
+        initialTime
+      );
 
       const subjectDebounce = createSubscription(
         subjectEvent,
         debounceTime(500),
-        'divDebounce',
-        initialTime);
-
-    }
-  }
-
-  ,
+        "divDebounce",
+        initialTime
+      );
+    },
+  },
 
   {
-
-    category: 'operators',
-    id: 'comparativaE',
-    name: 'Comparativa entre els diferents operadors per esperar altres observables',
+    category: "operators",
+    id: "comparativaE",
+    name: "Comparativa entre els diferents operadors per esperar altres observables",
     description: `
 `,
     htmlExemple: ` 
@@ -704,98 +705,91 @@ La octava és devonceTime: Espera un temps determinat a partir de l'últim esdev
    
 `,
     method: () => {
-
       const createDiv = (h, s, l, id, container) => {
-        const div = document.createElement('div');
+        const div = document.createElement("div");
         div.id = id;
-        div.style.backgroundColor = 'hsl(' + h + ', ' + s + '%, ' + l + '%)';
-        document.querySelector('#' + container).append(div);
-      }
+        div.style.backgroundColor = "hsl(" + h + ", " + s + "%, " + l + "%)";
+        document.querySelector("#" + container).append(div);
+      };
 
       const printPosition = (id, n) => {
-       
-        document.querySelector('#' + id + '' + n).style.backgroundColor = 'hsl(' + n + ', 100%, 50%)';
-      }
+        //  document.querySelector('#' + id + '' + n).style.backgroundColor = 'hsl(' + n + ', 100%, 50%)';
+      };
 
-      const createSubscription = (subjectOrigin, operator, id,) => {
+      const createSubscription = (subjectOrigin, operator, id) => {
         const subj = new Subject();
         const subs = subjectOrigin.pipe(operator).subscribe(subj);
-        const subs2 = subj.subscribe(n => printPosition(id, n))
-       /* timer(10000).subscribe(() => {
+        const subs2 = subj.subscribe((n) => printPosition(id, n));
+        /* timer(10000).subscribe(() => {
           subs.unsubscribe();
           subs2.unsubscribe();
         });*/
         return subj;
-      }
-
+      };
 
       for (let n = 0; n < 100; n++) {
-        createDiv(n * 10, 100, 50, 'divAll' + n, 'comparativaAll');
-        createDiv(0, 0, 100, 'divEEvent' + n, 'comparativaEvent');
-        createDiv(0, 0, 100, 'divESample' + n, 'comparativaSample');
-        createDiv(0, 0, 100, 'divEAudit' + n, 'comparativaAudit');
-        createDiv(0, 0, 100, 'divEThr' + n, 'comparativaThr');
-        createDiv(0, 0, 100, 'divEDelay' + n, 'comparativaDelay');
-        createDiv(0, 0, 100, 'divEBuffer' + n, 'comparativaBuffer');
-        createDiv(0, 0, 100, 'divEDebounce' + n, 'comparativaDebounce');
+        createDiv(n * 10, 100, 50, "divAll" + n, "comparativaAll");
+        createDiv(0, 0, 100, "divEEvent" + n, "comparativaEvent");
+        createDiv(0, 0, 100, "divESample" + n, "comparativaSample");
+        createDiv(0, 0, 100, "divEAudit" + n, "comparativaAudit");
+        createDiv(0, 0, 100, "divEThr" + n, "comparativaThr");
+        createDiv(0, 0, 100, "divEDelay" + n, "comparativaDelay");
+        createDiv(0, 0, 100, "divEBuffer" + n, "comparativaBuffer");
+        createDiv(0, 0, 100, "divEDebounce" + n, "comparativaDebounce");
       }
 
       const spanExemple = document.querySelector("#comparativaTime");
-      const observable = fromEvent('click',document.querySelector('#comparativaEButton')).pipe(
-  
-        scan((acumulador,n) => acumulador + 10,0),
-        tap(n => { console.log(n);}),
+      const observable = fromEvent(
+        "click",
+        document.querySelector("#comparativaEButton")
+      ).pipe(
+        scan((acumulador, n) => acumulador + 10, 0),
+        tap((n) => {
+          console.log(n);
+        })
       );
-
-      
-
 
       const subjectEvent = createSubscription(
         observable,
-        filter(n => Math.random() > 0.7),
-        'divEEvent',
-        );
+        filter((n) => Math.random() > 0.7),
+        "divEEvent"
+      );
 
       const subjectSample = createSubscription(
         subjectEvent,
         sampleTime(500),
-        'divESample',
-        );
+        "divESample"
+      );
 
       const subjectAudit = createSubscription(
         subjectEvent,
         auditTime(500),
-        'divEAudit',
-        );
+        "divEAudit"
+      );
 
       const subjectThr = createSubscription(
         subjectEvent,
         throttleTime(500),
-        'divEThr',
-        );
-
+        "divEThr"
+      );
 
       const subjectDelay = createSubscription(
         subjectEvent,
         delay(500),
-        'divEDelay',
-        );
-
+        "divEDelay"
+      );
 
       const subjectBuffer = createSubscription(
         subjectEvent,
         bufferTime(500),
-        'divEBuffer',
-        );
+        "divEBuffer"
+      );
 
       const subjectDebounce = createSubscription(
         subjectEvent,
         debounceTime(500),
-        'divEDebounce',
-        );
-
-    }
-  }
-
+        "divEDebounce"
+      );
+    },
+  },
 ];
-
