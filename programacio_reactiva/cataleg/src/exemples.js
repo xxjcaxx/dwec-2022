@@ -40,6 +40,30 @@ export const categories = [
 ];
 
 export const exemples = [
+<<<<<<< HEAD
+=======
+  {
+    category: 'base',
+    id: 'observable1',
+    name: 'Observable():',
+    description: `Els Observables són coleccions Push 'perezoses' de múltiples valors. `,
+    htmlExemple: `<div id="observable1">
+     Observable fet en un setInterval
+  </div>
+  `,
+    htmlCode: `
+    <!-- HTML generated using hilite.me --><div style="background: #ffffff; overflow:auto;width:auto;border:solid gray;border-width:.1em .1em .1em .8em;padding:.2em .6em;"><pre style="margin: 0; line-height: 125%">  <span style="color: #008800; font-weight: bold">const</span> divObservable1 <span style="color: #333333">=</span> <span style="color: #007020">document</span>.querySelector(<span style="background-color: #fff0f0">&quot;#observable1&quot;</span>);
+    <span style="color: #008800; font-weight: bold">const</span> observable <span style="color: #333333">=</span> <span style="color: #008800; font-weight: bold">new</span> Observable((observer)<span style="color: #333333">=&gt;</span>{
+      <span style="color: #008800; font-weight: bold">let</span> n <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>;
+      setInterval(()<span style="color: #333333">=&gt;</span> {
+        <span style="color: #008800; font-weight: bold">if</span> (<span style="color: #007020">Math</span>.random() <span style="color: #333333">&lt;</span> <span style="color: #6600EE; font-weight: bold">0.99</span>) observer.next(<span style="color: #333333">++</span>n);
+        <span style="color: #008800; font-weight: bold">else</span> observer.error(<span style="background-color: #fff0f0">&#39;Fallo&#39;</span>);
+        <span style="color: #008800; font-weight: bold">if</span> (n <span style="color: #333333">===</span> <span style="color: #0000DD; font-weight: bold">50</span>) observer.complete(); 
+        
+      },<span style="color: #0000DD; font-weight: bold">100</span>);
+    });
+
+>>>>>>> a4934feab3f9013cbfb4cc8dbf7493a54981a6bc
   {
     category: "creation",
     id: "exemple1",
