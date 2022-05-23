@@ -1,4 +1,5 @@
 import {
+  audit,
   debounceTime,
   filter,
   skip,
@@ -21,10 +22,12 @@ import {
   reduce,
   sampleTime,
   auditTime,
-  throttleTime,
+  throttleTime, throttle,
   Subject,
   share,
-  bufferTime,
+  bufferTime, buffer, debounce,
+  sample,
+  
 } from "rxjs";
 export const categories = [
   {
@@ -686,10 +689,19 @@ La octava és devonceTime: Espera un temps determinat a partir de l'últim esdev
     id: "comparativaE",
     name: "Comparativa entre els diferents operadors per esperar altres observables",
     description: `
+    La segona línia són els esdeveniments que van arribant, filtrats aleatoriament.
+    La tercera mostra un sample si polsem sample.
+    La quarta és audit, aquesta espera un temps determinat per mostrar l'últim esdeveniment.
+    La quinta és Throttle, que espera un temps per mostrar el valor en el següent esdeveniment.
+    La sexta està buida 
+    La septima és buffer, que espera un temps per llaçar un array dels esdeveniments que han arrivat.
+    L'última és debounce, que espera un temps sense esdeveniments per mostrar el següent.
 `,
     htmlExemple: ` 
     <div id="comparativaE">
     <button id="comparativaEButton">Pulsar</button>
+    <button id="comparativaEButtonSample">Sample</button>
+   
       <div id="comparativaAll"></div>
       <div id="comparativaEvent"></div>
       <div id="comparativaSample"></div>
@@ -713,19 +725,26 @@ La octava és devonceTime: Espera un temps determinat a partir de l'últim esdev
       };
 
       const printPosition = (id, n) => {
-        //  console.log(id);
-        // document.querySelector("#" + id + "" + n).style.backgroundColor =
-        //   "hsl(" + n + ", 100%, 50%)";
-      };
+        let pos = n;
+        if(Array.isArray(n)) {
+          for (let p of n) {
+           
+            document.querySelector("#" + id + "" + p).style.backgroundColor = "hsl(" + p*10 + ", 100%, 50%)";
+ 
+          } 
+        }
+        else
+        document.querySelector("#" + id + "" + pos).style.backgroundColor = "hsl(" + pos*10 + ", 100%, 50%)";
+ 
+        
+        
+              };
 
       const createSubscription = (subjectOrigin, operator, id) => {
         const subj = new Subject();
         const subs = subjectOrigin.pipe(operator).subscribe(subj);
         const subs2 = subj.subscribe((n) => printPosition(id, n));
-        /* timer(10000).subscribe(() => {
-          subs.unsubscribe();
-          subs2.unsubscribe();
-        });*/
+   
         return subj;
       };
 
@@ -745,7 +764,7 @@ La octava és devonceTime: Espera un temps determinat a partir de l'últim esdev
         document.querySelector("#comparativaEButton"),
         "click"
       ).pipe(
-        scan((acumulador, n) => acumulador + 10, 0)
+        scan((acumulador, n) => acumulador + 1, 0)
         /*  tap((n) => {
           console.log(n);
         })*/
@@ -753,45 +772,41 @@ La octava és devonceTime: Espera un temps determinat a partir de l'últim esdev
 
       const subjectEvent = createSubscription(
         observable,
-        filter((n) => Math.random() > 0.7),
+        filter((n) => Math.random() > 0.1),
         "divEEvent"
       );
 
-      /*  const subjectSample = createSubscription(
+      const subjectSample = createSubscription(
         subjectEvent,
-        sampleTime(500),
+        sample(fromEvent(document.querySelector('#comparativaEButtonSample'), "click")),
         "divESample"
       );
 
       const subjectAudit = createSubscription(
         subjectEvent,
-        auditTime(500),
+        audit(()=> interval(2000)),
         "divEAudit"
       );
 
       const subjectThr = createSubscription(
         subjectEvent,
-        throttleTime(500),
+        throttle(()=> interval(2000)),
         "divEThr"
       );
 
-      const subjectDelay = createSubscription(
-        subjectEvent,
-        delay(500),
-        "divEDelay"
-      );
+ 
 
       const subjectBuffer = createSubscription(
         subjectEvent,
-        bufferTime(500),
+        buffer(interval(2000)),
         "divEBuffer"
       );
 
       const subjectDebounce = createSubscription(
         subjectEvent,
-        debounceTime(500),
+        debounce(()=> interval(2000)),
         "divEDebounce"
-      );*/
+      );
     },
   },
 ];
