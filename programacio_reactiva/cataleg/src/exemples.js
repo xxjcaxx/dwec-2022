@@ -1073,13 +1073,106 @@ La octava és devonceTime: Espera un temps determinat a partir de l'últim esdev
    
 `,
     method: () => {
-      function fakeFetch() {
+      function fakeFetch(n) {
         return new Promise((resolve) =>
-          setTimeout(() => 10, Math.random() * 1000)
+          setTimeout(() => resolve(n), Math.random() * 1000)
         );
       }
-
+      from([1,2,3,4,5,6,7,8])
+      .pipe(map(n=> from(fakeFetch(n))))
+      .pipe(mergeAll())
+      .subscribe(n => 
+        document.querySelector('#divMergeAll').innerHTML += n+", "
+        )
       const highOrderObservable = interval();
+    },
+  },
+
+
+
+  {
+    category: "HHO",
+    id: "mergeMap",
+    name: "mergeMap() ",
+    description: `Mapeja en observables interns i transforma en externs`,
+    htmlExemple: ` 
+    <div id="divMergeMap">
+ 
+      </div>
+    `,
+    htmlCode: `
+   
+`,
+    method: () => {
+      function fakeFetch(n) {
+        return new Promise((resolve) =>
+          setTimeout(() => resolve(n), Math.random() * 1000)
+        );
+      }
+      of([1,2,3,4,5,6,7,8])
+      .pipe(
+        mergeMap(n=> from(n)),
+        mergeMap(n=> fakeFetch(n))
+      )
+      .subscribe(n => document.querySelector('#divMergeMap').innerHTML += n+", ")
+ 
+    },
+  },
+
+
+
+
+  {
+    category: "HHO",
+    id: "switchMap",
+    name: "switchMap() ",
+    description: `Com mergeMap però cancelant l'intern si arriven nous externs`,
+    htmlExemple: ` 
+    <div id="divswitchMap">
+ 
+      </div>
+    `,
+    htmlCode: `
+   
+`,
+    method: () => {
+      function fakeFetch(n) {
+        return new Promise((resolve) =>
+          setTimeout(() => resolve(n), Math.random() * 1000)
+        );
+      }
+      interval(500)
+      .pipe(take(10), switchMap(n=> from(fakeFetch(n))))
+      .subscribe(n => document.querySelector('#divswitchMap').innerHTML += n+", ")
+    
+    },
+  },
+
+
+
+  {
+    category: "HHO",
+    id: "concatMap",
+    name: "concatMap() ",
+    description: `Com mergeMap però ordenat`,
+    htmlExemple: ` 
+    <div id="divconcatMap">
+ 
+      </div>
+    `,
+    htmlCode: `
+   
+`,
+    method: () => {
+      function fakeFetch(n) {
+        return new Promise((resolve) =>
+          setTimeout(() => resolve(n), Math.random() * 1000)
+        );
+      }
+      from([1,2,3,4,5,6,7,8])
+      .pipe( concatMap(n=> from(fakeFetch(n))))
+      .subscribe(n => document.querySelector('#divconcatMap').innerHTML += n+", ")
+   
     },
   },
 ];
