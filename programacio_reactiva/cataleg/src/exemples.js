@@ -22,14 +22,24 @@ import {
   reduce,
   sampleTime,
   auditTime,
-  throttleTime, throttle,
+  throttleTime,
+  throttle,
   Subject,
   share,
-  bufferTime, buffer, debounce,
+  bufferTime,
+  buffer,
+  debounce,
   sample,
   zip,
-  merge, concat, forkJoin, combineLatest, withLatestFrom
-  
+  merge,
+  concat,
+  forkJoin,
+  combineLatest,
+  withLatestFrom,
+  mergeAll,
+  mergeMap,
+  switchMap,
+  concatMap,
 } from "rxjs";
 export const categories = [
   {
@@ -45,7 +55,13 @@ export const categories = [
   {
     id: "combinators",
     name: "Combinació d'observables",
-    description: "Funcions que retornen observables mesclant altres observables",
+    description:
+      "Funcions que retornen observables mesclant altres observables",
+  },
+  {
+    id: "HHO",
+    name: "High Order Observables HOO",
+    description: "Observables que emeten observables",
   },
 ];
 
@@ -733,25 +749,21 @@ La octava és devonceTime: Espera un temps determinat a partir de l'últim esdev
 
       const printPosition = (id, n) => {
         let pos = n;
-        if(Array.isArray(n)) {
+        if (Array.isArray(n)) {
           for (let p of n) {
-           
-            document.querySelector("#" + id + "" + p).style.backgroundColor = "hsl(" + p*10 + ", 100%, 50%)";
- 
-          } 
-        }
-        else
-        document.querySelector("#" + id + "" + pos).style.backgroundColor = "hsl(" + pos*10 + ", 100%, 50%)";
- 
-        
-        
-              };
+            document.querySelector("#" + id + "" + p).style.backgroundColor =
+              "hsl(" + p * 10 + ", 100%, 50%)";
+          }
+        } else
+          document.querySelector("#" + id + "" + pos).style.backgroundColor =
+            "hsl(" + pos * 10 + ", 100%, 50%)";
+      };
 
       const createSubscription = (subjectOrigin, operator, id) => {
         const subj = new Subject();
         const subs = subjectOrigin.pipe(operator).subscribe(subj);
         const subs2 = subj.subscribe((n) => printPosition(id, n));
-   
+
         return subj;
       };
 
@@ -785,23 +797,26 @@ La octava és devonceTime: Espera un temps determinat a partir de l'últim esdev
 
       const subjectSample = createSubscription(
         subjectEvent,
-        sample(fromEvent(document.querySelector('#comparativaEButtonSample'), "click")),
+        sample(
+          fromEvent(
+            document.querySelector("#comparativaEButtonSample"),
+            "click"
+          )
+        ),
         "divESample"
       );
 
       const subjectAudit = createSubscription(
         subjectEvent,
-        audit(()=> interval(2000)),
+        audit(() => interval(2000)),
         "divEAudit"
       );
 
       const subjectThr = createSubscription(
         subjectEvent,
-        throttle(()=> interval(2000)),
+        throttle(() => interval(2000)),
         "divEThr"
       );
-
- 
 
       const subjectBuffer = createSubscription(
         subjectEvent,
@@ -811,12 +826,11 @@ La octava és devonceTime: Espera un temps determinat a partir de l'últim esdev
 
       const subjectDebounce = createSubscription(
         subjectEvent,
-        debounce(()=> interval(2000)),
+        debounce(() => interval(2000)),
         "divEDebounce"
       );
     },
   },
-
 
   {
     category: "combinators",
@@ -835,17 +849,20 @@ La octava és devonceTime: Espera un temps determinat a partir de l'últim esdev
    
 `,
     method: () => {
-     const observableC1 = fromEvent(document.querySelector('#zipClik1'),"click").pipe(
-       map(c => 1)
-     );
-     const observableC2 = fromEvent(document.querySelector('#zipClik2'),"click").pipe(
-      map(c => 2)
-    );
+      const observableC1 = fromEvent(
+        document.querySelector("#zipClik1"),
+        "click"
+      ).pipe(map((c) => 1));
+      const observableC2 = fromEvent(
+        document.querySelector("#zipClik2"),
+        "click"
+      ).pipe(map((c) => 2));
 
-     zip(observableC1,observableC2).subscribe((a)=> document.querySelector('#divZip span').innerHTML += a+" ")
+      zip(observableC1, observableC2).subscribe(
+        (a) => (document.querySelector("#divZip span").innerHTML += a + " ")
+      );
     },
   },
-
 
   {
     category: "combinators",
@@ -864,19 +881,20 @@ La octava és devonceTime: Espera un temps determinat a partir de l'últim esdev
    
 `,
     method: () => {
-     const observableC1 = fromEvent(document.querySelector('#mergeClik1'),"click").pipe(
-       map(c => 1)
-     );
-     const observableC2 = fromEvent(document.querySelector('#mergeClik2'),"click").pipe(
-      map(c => 2)
-    );
+      const observableC1 = fromEvent(
+        document.querySelector("#mergeClik1"),
+        "click"
+      ).pipe(map((c) => 1));
+      const observableC2 = fromEvent(
+        document.querySelector("#mergeClik2"),
+        "click"
+      ).pipe(map((c) => 2));
 
-     merge(observableC1,observableC2).subscribe((a)=> document.querySelector('#divMerge span').innerHTML += a+" ")
+      merge(observableC1, observableC2).subscribe(
+        (a) => (document.querySelector("#divMerge span").innerHTML += a + " ")
+      );
     },
   },
-
-
-
 
   {
     category: "combinators",
@@ -896,17 +914,172 @@ La octava és devonceTime: Espera un temps determinat a partir de l'últim esdev
    
 `,
     method: () => {
-     const observableC1 = fromEvent(document.querySelector('#concatClik1'),"click").pipe(
-       map(c => 1),
-       takeUntil(fromEvent(document.querySelector('#endClik1'),"click"))
-     );
-     const observableC2 = fromEvent(document.querySelector('#concatClik2'),"click").pipe(
-      map(c => 2)
-    );
+      const observableC1 = fromEvent(
+        document.querySelector("#concatClik1"),
+        "click"
+      ).pipe(
+        map((c) => 1),
+        takeUntil(fromEvent(document.querySelector("#endClik1"), "click"))
+      );
+      const observableC2 = fromEvent(
+        document.querySelector("#concatClik2"),
+        "click"
+      ).pipe(map((c) => 2));
 
-    
+      concat(observableC1, observableC2).subscribe(
+        (a) => (document.querySelector("#divConcat span").innerHTML += a + " ")
+      );
+    },
+  },
 
-     concat(observableC1,observableC2).subscribe((a)=> document.querySelector('#divConcat span').innerHTML += a+" ")
+  {
+    category: "combinators",
+    id: "forkjoin",
+    name: "forkJoin() ",
+    description: `Espera a tots els observables i retorna un array en els últims valors. Es diferència de zip en que no guarda els valors anteriors i que espera a que acaben tots
+   `,
+    htmlExemple: ` 
+    <div id="divfJ">
+    <button id="fJClik1">Click 1</button>
+    <button id="fJClik2">Click 2</button>
+    <button id="endfJClik1">end 1</button>
+    <span></span>
+      </div>
+    `,
+    htmlCode: `
+   
+`,
+    method: () => {
+      const observableC1 = fromEvent(
+        document.querySelector("#fJClik1"),
+        "click"
+      ).pipe(
+        scan((c, n) => ++c, 0),
+        takeUntil(fromEvent(document.querySelector("#endfJClik1"), "click"))
+      );
+      const observableC2 = fromEvent(
+        document.querySelector("#fJClik2"),
+        "click"
+      ).pipe(
+        scan((c, n) => ++c, 0),
+        takeUntil(fromEvent(document.querySelector("#endfJClik1"), "click"))
+      );
+
+      forkJoin(observableC1, observableC2).subscribe(
+        (a) => (document.querySelector("#divfJ span").innerHTML += a + " ")
+      );
+    },
+  },
+
+  {
+    category: "combinators",
+    id: "combineLatest",
+    name: "combineLatest() ",
+    description: `Retorna l'últim valor de cada observable. 
+   `,
+    htmlExemple: ` 
+    <div id="divCL">
+    <button id="combineLatestClik1">Click 1</button>
+    <button id="combineLatestClik2">Click 2</button>
+    <button id="endcombineLatestClik1">end 1</button>
+    <span></span>
+      </div>
+    `,
+    htmlCode: `
+   
+`,
+    method: () => {
+      const observableC1 = fromEvent(
+        document.querySelector("#combineLatestClik1"),
+        "click"
+      ).pipe(
+        scan((c, n) => ++c, 0),
+        takeUntil(
+          fromEvent(document.querySelector("#endcombineLatestClik1"), "click")
+        )
+      );
+      const observableC2 = fromEvent(
+        document.querySelector("#combineLatestClik2"),
+        "click"
+      ).pipe(
+        scan((c, n) => ++c, 0),
+        takeUntil(
+          fromEvent(document.querySelector("#endcombineLatestClik1"), "click")
+        )
+      );
+
+      combineLatest([observableC1, observableC2]).subscribe(
+        (a) => (document.querySelector("#divCL span").innerHTML += a + " ")
+      );
+    },
+  },
+
+  {
+    category: "combinators",
+    id: "withLatestFrom",
+    name: "withLatestFrom() ",
+    description: `Com combineLatest, però és un poerador que s'executa en un pipe. 
+   `,
+    htmlExemple: ` 
+    <div id="divWLF">
+    <button id="withLatestFromClik1">Click 1</button>
+    <button id="withLatestFromClik2">Click 2</button>
+    <button id="endwithLatestFromClik1">end 1</button>
+    <span></span>
+      </div>
+    `,
+    htmlCode: `
+   
+`,
+    method: () => {
+      const observableC1 = fromEvent(
+        document.querySelector("#withLatestFromClik1"),
+        "click"
+      ).pipe(
+        scan((c, n) => ++c, 0),
+        takeUntil(
+          fromEvent(document.querySelector("#endwithLatestFromClik1"), "click")
+        )
+      );
+      const observableC2 = fromEvent(
+        document.querySelector("#withLatestFromClik2"),
+        "click"
+      ).pipe(
+        scan((c, n) => ++c, 0),
+        takeUntil(
+          fromEvent(document.querySelector("#endwithLatestFromClik1"), "click")
+        )
+      );
+
+      observableC1
+        .pipe(withLatestFrom(observableC2))
+        .subscribe(
+          (a) => (document.querySelector("#divWLF span").innerHTML += a + " ")
+        );
+    },
+  },
+
+  {
+    category: "HHO",
+    id: "mergeAll",
+    name: "mergeAll() ",
+    description: `Transforma observables interns en externs. És a dir, mescla tots els observables que retorna un altre observable`,
+    htmlExemple: ` 
+    <div id="divMergeAll">
+ 
+      </div>
+    `,
+    htmlCode: `
+   
+`,
+    method: () => {
+      function fakeFetch() {
+        return new Promise((resolve) =>
+          setTimeout(() => 10, Math.random() * 1000)
+        );
+      }
+
+      const highOrderObservable = interval();
     },
   },
 ];
