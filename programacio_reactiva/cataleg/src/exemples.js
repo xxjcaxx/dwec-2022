@@ -27,6 +27,8 @@ import {
   share,
   bufferTime, buffer, debounce,
   sample,
+  zip,
+  merge, concat, forkJoin, combineLatest, withLatestFrom
   
 } from "rxjs";
 export const categories = [
@@ -39,6 +41,11 @@ export const categories = [
     id: "operators",
     name: "Operadors bàsics",
     description: "Dins dels pipes, podem manipular el fluxe de dades.",
+  },
+  {
+    id: "combinators",
+    name: "Combinació d'observables",
+    description: "Funcions que retornen observables mesclant altres observables",
   },
 ];
 
@@ -689,13 +696,13 @@ La octava és devonceTime: Espera un temps determinat a partir de l'últim esdev
     id: "comparativaE",
     name: "Comparativa entre els diferents operadors per esperar altres observables",
     description: `
-    La segona línia són els esdeveniments que van arribant, filtrats aleatoriament.
-    La tercera mostra un sample si polsem sample.
-    La quarta és audit, aquesta espera un temps determinat per mostrar l'últim esdeveniment.
-    La quinta és Throttle, que espera un temps per mostrar el valor en el següent esdeveniment.
-    La sexta està buida 
-    La septima és buffer, que espera un temps per llaçar un array dels esdeveniments que han arrivat.
-    L'última és debounce, que espera un temps sense esdeveniments per mostrar el següent.
+    La segona línia són els esdeveniments que van arribant, filtrats aleatoriament.<br>
+    La tercera mostra un sample si polsem sample.<br>
+    La quarta és audit, aquesta espera un temps determinat per mostrar l'últim esdeveniment.<br>
+    La quinta és Throttle, que espera un temps per mostrar el valor en el següent esdeveniment.<br>
+    La sexta està buida <br>
+    La septima és buffer, que espera un temps per llaçar un array dels esdeveniments que han arrivat.<br>
+    L'última és debounce, que espera un temps sense esdeveniments per mostrar el següent.<br>
 `,
     htmlExemple: ` 
     <div id="comparativaE">
@@ -807,6 +814,99 @@ La octava és devonceTime: Espera un temps determinat a partir de l'últim esdev
         debounce(()=> interval(2000)),
         "divEDebounce"
       );
+    },
+  },
+
+
+  {
+    category: "combinators",
+    id: "zip",
+    name: "zip () ",
+    description: `Mescla en un array l'eixida de varis observables, espera a tindre valors nous de tots
+   `,
+    htmlExemple: ` 
+    <div id="divZip">
+    <button id="zipClik1">Click 1</button>
+    <button id="zipClik2">Click 2</button>
+    <span></span>
+      </div>
+    `,
+    htmlCode: `
+   
+`,
+    method: () => {
+     const observableC1 = fromEvent(document.querySelector('#zipClik1'),"click").pipe(
+       map(c => 1)
+     );
+     const observableC2 = fromEvent(document.querySelector('#zipClik2'),"click").pipe(
+      map(c => 2)
+    );
+
+     zip(observableC1,observableC2).subscribe((a)=> document.querySelector('#divZip span').innerHTML += a+" ")
+    },
+  },
+
+
+  {
+    category: "combinators",
+    id: "merge",
+    name: "merge() ",
+    description: `fa un observable de varis i els trau conforme van eixint.
+   `,
+    htmlExemple: ` 
+    <div id="divMerge">
+    <button id="mergeClik1">Click 1</button>
+    <button id="mergeClik2">Click 2</button>
+    <span></span>
+      </div>
+    `,
+    htmlCode: `
+   
+`,
+    method: () => {
+     const observableC1 = fromEvent(document.querySelector('#mergeClik1'),"click").pipe(
+       map(c => 1)
+     );
+     const observableC2 = fromEvent(document.querySelector('#mergeClik2'),"click").pipe(
+      map(c => 2)
+    );
+
+     merge(observableC1,observableC2).subscribe((a)=> document.querySelector('#divMerge span').innerHTML += a+" ")
+    },
+  },
+
+
+
+
+  {
+    category: "combinators",
+    id: "concat",
+    name: "concat() ",
+    description: `Espera a que un observable acabe abans de continuar en el següent.
+   `,
+    htmlExemple: ` 
+    <div id="divConcat">
+    <button id="concatClik1">Click 1</button>
+    <button id="concatClik2">Click 2</button>
+    <button id="endClik1">end 1</button>
+    <span></span>
+      </div>
+    `,
+    htmlCode: `
+   
+`,
+    method: () => {
+     const observableC1 = fromEvent(document.querySelector('#concatClik1'),"click").pipe(
+       map(c => 1),
+       takeUntil(fromEvent(document.querySelector('#endClik1'),"click"))
+     );
+     const observableC2 = fromEvent(document.querySelector('#concatClik2'),"click").pipe(
+      map(c => 2)
+    );
+
+    
+
+     concat(observableC1,observableC2).subscribe((a)=> document.querySelector('#divConcat span').innerHTML += a+" ")
     },
   },
 ];
