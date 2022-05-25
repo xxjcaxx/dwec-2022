@@ -291,11 +291,11 @@ function IATurn(state) {
 
 
 
-    stateSubject.next({ turn: switchTurn(turn), game: [ ...game ] });
+ /*   stateSubject.next({ turn: switchTurn(turn), game: [ ...game ] });
     const winner = getWinner(game);
     if (winner != 0) {
       showWinner(winner);
-    }
+    }*/
 
   }
 }
