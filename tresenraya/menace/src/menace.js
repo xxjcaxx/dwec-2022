@@ -1,6 +1,6 @@
 
-export { generateAdjusts, IATurn, printDivBoxes, moveSubject, printMove };
-import { BehaviorSubject } from 'rxjs';
+export { generateAdjusts, IATurn, printDivBoxes, moveSubject, printMove, IAClick };
+import { BehaviorSubject, Subject } from 'rxjs';
 import { getWinner, winCombos, getPos, reset, stateSubject, switchTurn } from './game'
 
 function applyRotations(array) {
@@ -248,10 +248,11 @@ function buscarBox(allBoxes, game) {
 
 
 const moveSubject = new BehaviorSubject([]);
+const IAClick = new BehaviorSubject(1);
 
 function IATurn(state) {
   const turn = state.turn;
-  const game = { ...state.game };
+  const game = [ ...state.game ];
   console.log('IA Turn');
   if (turn == 2) {
     // Detectar la partida del menace que es igual
@@ -280,7 +281,8 @@ function IATurn(state) {
 
   //  console.log('rotation menace', rotationsMenaceBox, partida.boxRotationIndex, max);
 
-    game["pos" + (max + 1)] = 2;   // LA decisió del menace
+    game[(max)] = 2;   // LA decisió del menace
+    IAClick.next(max);
 
    // console.log(game);
 
@@ -289,7 +291,7 @@ function IATurn(state) {
 
 
 
-    stateSubject.next({ turn: switchTurn(turn), game: { ...game } });
+    stateSubject.next({ turn: switchTurn(turn), game: [ ...game ] });
     const winner = getWinner(game);
     if (winner != 0) {
       showWinner(winner);
