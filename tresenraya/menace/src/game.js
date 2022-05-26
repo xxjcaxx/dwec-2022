@@ -31,12 +31,15 @@ function switchTurn(turn) {
 ///// Canvi d'estat
 function setCell(state, pos,turn){
   const game = [...state.game];
- // console.log(game,pos);
   if (game[pos] === 0 /* && state.turn === 1*/) {
+    console.log("Set state game: ",game,"Pos: ",pos,"Turn:",turn);
     game[pos]=turn;
     const nextTurn = switchTurn(state.turn)
-    stateSubject.next({turn: nextTurn, game: game});
+   // stateSubject.next({turn: nextTurn, game: game});
+    return({turn: nextTurn, game: game});
   }
+  else 
+  return state;
  
 }
 

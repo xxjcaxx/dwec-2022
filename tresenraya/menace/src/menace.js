@@ -47,6 +47,10 @@ function translateCellAdjust(value) { // si es un numero lo deja, si es O o X re
   return value;
 }
 
+function translateBoxAdjust(arrayGame){
+  return arrayGame.map(translateCellAdjust);
+}
+
 function allGames() {
 
   const numbers = [0, 1, 2]; // numeros para hacer combinaciones
@@ -108,7 +112,7 @@ function allGames() {
   // En las partidas de 1 jugada se ponen 4 bolas en los sitios permitidos, de 2: 2 y de 3 una bola
 
   // Puesto que usaremos números para indicar las bolas, no podemos usarlos para  X O, así que vamos a traducir
-  const allTranslated = all.map((p) => p.map((n) => [1, "O", "X"][n]));
+  const allTranslated = all.map((p) => p.map((n) => [1, "◯", "×"][n]));
 
   // Para cada partida vamos a calcular la cantidad de simetrias que tiene
   /* const simetrias = allTranslated.map((p) =>
@@ -150,9 +154,10 @@ function allGames() {
             _ 0 _    _ x _   _ 0 _
             _ _ _    _ _ _   _ _ x
             */
-            // console.log('caso 1',i, p);
+          //   console.log('caso 1',i, p);
             //p = [p[0], p[1] === 1 ? 0 : p[1], p[2] === 1 ? 0 : p[2], p[3], p[4], p[5] === 1 ? 0 : p[5], p[6], p[7], p[8]];
             p = ponerCeros(p, [1, 0, 0, 1, 1, 0, 1, 1, 1]);
+           // console.log(p);
             break;
           case 2:
             // en la rotacion de 90º solo coincide el centro, no puede ser ninguna
@@ -187,13 +192,14 @@ function allGames() {
         }
       }
     });
+   // console.log(p);
     return p;
   }
   );
 
   console.log('Simetrias Aplicadas', simetriasAplicadas);
   // Si es de 1 4 granos, si es de 2, 2 y de 3, 1
-  const granosColocados = simetriasAplicadas.map(p => p.map(tic => tic === 1 ? [0, 4, 2, 1][contar(p, 'X')] : tic))  // Pone los granos iniciales dependiendo de la jugada
+  const granosColocados = simetriasAplicadas.map(p => p.map(tic => tic === 1 ? [0, 4, 2, 1][contar(p, '×')] : tic))  // Pone los granos iniciales dependiendo de la jugada
   console.log('Granos Colocados', granosColocados);
 
   return [[0, 0, 0, 0, 8, 0, 0, 8, 8], ...granosColocados];  // Añadimos la situacion 0, que es especial
@@ -209,20 +215,15 @@ function generateAdjusts() {
 
 function printDivBoxes(allBoxes) {
   const divBoxes = allBoxes
+  //  .map(translateBoxAdjust)
     .map(
       (b, i) => `
   <div class="boardadjust" id="board${b.join("")}">
   <div class="hoverNumber">${i}</div>
   <table>
-  <tr><td class="td0">${translateCellAdjust(b[0])}</td><td class="td1">${translateCellAdjust(
-        b[1]
-      )}</td><td class="td2">${translateCellAdjust(b[2])}</td></tr>
-  <tr><td class="td3">${translateCellAdjust(b[3])}</td><td class="td4">${translateCellAdjust(
-        b[4]
-      )}</td><td class="td5">${translateCellAdjust(b[5])}</td></tr>
-  <tr><td class="td6">${translateCellAdjust(b[6])}</td><td class="td7">${translateCellAdjust(
-        b[7]
-      )}</td><td class="td8">${translateCellAdjust(b[8])}</td></tr>
+  <tr><td class="td0">${b[0]}</td><td class="td1">${b[1]}</td><td class="td2">${b[2]}</td></tr>
+  <tr><td class="td3">${b[3]}</td><td class="td4">${b[4]}</td><td class="td5">${b[5]}</td></tr>
+  <tr><td class="td6">${b[6]}</td><td class="td7">${b[7]}</td><td class="td8">${b[8]}</td></tr>
   </table>
   </div>`
     )
@@ -233,28 +234,26 @@ function printDivBoxes(allBoxes) {
 
 function buscarBox(allBoxes, game) {
   function traducirACeros(p) {
-    return p.map(n => isNaN(n) ? { O: 1, X: 2 }[n] : 0);
+    return p.map(n => isNaN(n) ? { "◯": 1, "×": 2 }[n] : 0);
   }  // Traducir de menace al juego
-
 
   const boxIndex = allBoxes.findIndex(box =>
     applyRotations(traducirACeros(box)).some(b => areEquals(b, Object.values(game))));
  // console.log(boxIndex, Object.values(game), applyRotations(traducirACeros(allBoxes[26])));
  // console.log(Object.values(game), applyRotations(traducirACeros(allBoxes[boxIndex])));
   const boxRotationIndex = applyRotations(traducirACeros(allBoxes[boxIndex])).findIndex(b => areEquals(b, Object.values(game)));
-
   return { boxIndex, boxRotationIndex };
 }
 
 
 const moveSubject = new BehaviorSubject([]);
-const IAClick = new BehaviorSubject(1);
+const IAClick = new Subject();
 
 function IATurn(state) {
   const turn = state.turn;
   const game = [ ...state.game ];
-  console.log('IA Turn');
-  if (turn == 2) {
+  console.log('IA Turn',turn);
+  if (turn == 2) { 
     // Detectar la partida del menace que es igual
     const allBoxes = boxesSubject.getValue();
     const partida = buscarBox(allBoxes, game)
@@ -265,37 +264,20 @@ function IATurn(state) {
 
     const rotationsMenaceBox = applyRotations(menaceBox)[partida.boxRotationIndex];
     /// el box que és igual rotat
+    //console.log("Rotations menace box",rotationsMenaceBox);
     
-    // Aquesst max sempre serà el mateix, però cal fer una decisió més aleatoria
-   // const max = rotationsMenaceBox.findIndex(n => n == Math.max(...rotationsMenaceBox.filter(n=> !isNaN(n))));
-
     const beans = rotationsMenaceBox.map((n,i)=> isNaN(n) ? [] :  new Array(n).fill(i)).flat();
    // Aquest max és millor per ser aleatori amb proporcions
     const max = beans[Math.floor(Math.random()*beans.length)]
-   // console.log('Beans',beans)
-
+  
    // Ara cal guardar el box i la posició que ha triat
-
    moveSubject.next([...moveSubject.getValue(),   /// Falta aplicar la rotació al max
     {max: max, boardId: `#board${menaceBox.join('')}` }]);
 
-  //  console.log('rotation menace', rotationsMenaceBox, partida.boxRotationIndex, max);
+   // console.log('rotation menace', rotationsMenaceBox, partida.boxRotationIndex, max);
 
     game[(max)] = 2;   // LA decisió del menace
     IAClick.next(max);
-
-   // console.log(game);
-
-
-
-
-
-
- /*   stateSubject.next({ turn: switchTurn(turn), game: [ ...game ] });
-    const winner = getWinner(game);
-    if (winner != 0) {
-      showWinner(winner);
-    }*/
 
   }
 }
@@ -303,11 +285,11 @@ function IATurn(state) {
 
 
 function printMove(moves){
-  console.log('print move');
+  console.log('print move',moves);
   for (let move of moves){
    // console.log(move);
-    let boardDiv = document.querySelector(move.boardId);
-   // console.log(boardDiv);
+  let boardDiv = document.querySelector(move.boardId);
+    console.log(boardDiv);
    boardDiv.classList.add('destacada');
    let moveTd = boardDiv.querySelector('.td'+move.max);
    moveTd.classList.add('seleccionada')

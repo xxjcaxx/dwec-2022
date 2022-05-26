@@ -14,7 +14,10 @@ import {
   merge,
   tap,
   zip,
-  combineLatest
+  combineLatest,
+  withLatestFrom,
+  skip,
+  filter
 } from 'rxjs';
 import {
   generateAdjusts,
@@ -61,45 +64,22 @@ function showWinner(winner) {
   document.querySelector('#winner').innerHTML = translateCell(winner);
 }
 
-function clickCell(cell) {
-  //console.log(cell);
-  const currentState = stateSubject.getValue();
-  // const { turn } = currentState;
-  // const game = { ...currentState.game };
-  /*  if (game[cell.id] === 0 && currentState === 1) {
-      game[cell.id] = turn;
-      stateSubject.next({ turn: switchTurn(turn), game });
-      const winner = getWinner(game);
-      if (winner !== 0) {
-        showWinner(winner);
-      }
-    }*/
-  setCell(currentState, cell.id.split("").at(-1), 1)
-}
-
-function clickBoard(event) {
-  clickCell(event.target);
-}
 
 
 
 /// ///// Inicio del juego
 document.addEventListener('DOMContentLoaded', () => {
-  // Se hace con declaración de función para rastrear mejor
-   const stateSubscription = stateSubject.subscribe((state) => {
-     fillBoard(state.game);
-     document.querySelector('#turno').innerHTML = translateCell(state.turn);
-   });
-  // const clickSubscription = addEvents().subscribe(clickBoard);
+
+  // Ara cal crear totes les subscripcions
+  // Botó de reset
   document.querySelector('#reset').addEventListener('click', reset);
-
+  // Generar ajustos de Menace i subscripcio a la funció de pintar els ajustos
   generateAdjusts().subscribe(printDivBoxes);
-
-  const IASubscription = stateSubject.subscribe(IATurn);
-
+  /// Quan es produeix un moviment, es dibuixa la memòria del menace
   moveSubject.subscribe(printMove);
 
-
+  ///////////// Capturar els moviments dels players, en el cas de l'humà és un clik 
+  /// En el cas de la màquina és la IA la que provoca el click
   const userClickObservable = addEvents().pipe(
     map(e => e.target.id.split('').at(-1)),
     map(t => { return { turn: 1, target: parseInt(t) } })
@@ -107,33 +87,23 @@ document.addEventListener('DOMContentLoaded', () => {
   const menaceClickObservable = IAClick.pipe(
     map(t => { return { turn: 2, target: parseInt(t) } })
   );
-
-  const playersClickObsevable = merge(userClickObservable, menaceClickObservable)
+  const playersClickObservable = merge(userClickObservable, menaceClickObservable)
     .pipe(
       tap(a => console.log("CLICKCCCCCC", a))
     );
-
-  const gameObservable = combineLatest([playersClickObsevable, stateSubject]).pipe(
-    tap(a => console.log("gameeeee", a))
-  );
-
-  /*gameObservable.subscribe(([click, state]) => {
-    setCell(state, click.target, click.turn);
+   /// Per als clicks canviem l'estat 
+  playersClickObservable
+    .pipe(withLatestFrom(stateSubject))
+    .subscribe(([click, state]) => {
+      console.log("Game & Click", click, state);
+      stateSubject.next(setCell(state, click.target, click.turn));
+    })
+    /// LA IA es suscriu a l'estat quan li toca i emet un click
+  const IASubscription = stateSubject.pipe(filter(state => state.turn === 2)).subscribe(IATurn);
+  // L'interficie es subscriu a l'estat també.
+  const stateSubscription = stateSubject.subscribe((state) => {
     fillBoard(state.game);
-    document.querySelector('#turno').innerHTML = translateCell(click.turn);
-  })*/
-
-  playersClickObsevable.subscribe(click => {
-    const currentState = stateSubject.getValue();
-    setCell(currentState,click.target,click.turn);
-  } );
-
-
-
-
-
-
-
-
+    document.querySelector('#turno').innerHTML = translateCell(state.turn);
+  });
 
 });
