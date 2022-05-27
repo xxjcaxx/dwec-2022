@@ -1,23 +1,23 @@
 
-export {getWinner, winCombos, getPos, reset, stateSubject, switchTurn, setCell}
+export { getWinner, winCombos, getPos, reset, stateSubject, switchTurn, setCell }
 
 
 
 import {
-    BehaviorSubject,
-    count,
-    from,
-    fromEvent,
-    interval,
-    mergeMap,
-    of,
-    Subject,
-  } from "rxjs";
+  BehaviorSubject,
+  count,
+  from,
+  fromEvent,
+  interval,
+  mergeMap,
+  of,
+  Subject,
+} from "rxjs";
 //////////// Estado del juego
 /// Utilizaremos un Subject para mantener el estado
 // prettier-ignore
 // const gameInitial = { pos1: 0, pos2: 0, pos3: 0, pos4: 0, pos5: 0, pos6: 0, pos7: 0, pos8: 0, pos9: 0, };
-const gameInitial = [0,0,0, 0,0,0, 0,0,0];
+const gameInitial = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 const stateSubject = new BehaviorSubject({
   turn: 2,
   game: [...gameInitial],
@@ -29,18 +29,18 @@ function switchTurn(turn) {
 }
 
 ///// Canvi d'estat
-function setCell(state, pos,turn){
+function setCell(state, pos, turn) {
   const game = [...state.game];
   if (game[pos] === 0 /* && state.turn === 1*/) {
-    console.log("Set state game: ",game,"Pos: ",pos,"Turn:",turn);
-    game[pos]=turn;
+    console.log("Set state game: ", game, "Pos: ", pos, "Turn:", turn);
+    game[pos] = turn;
     const nextTurn = switchTurn(state.turn)
-   // stateSubject.next({turn: nextTurn, game: game});
-    return({turn: nextTurn, game: game});
+    // stateSubject.next({turn: nextTurn, game: game});
+    return ({ turn: nextTurn, game: game });
   }
-  else 
-  return state;
- 
+  else
+    return state;
+
 }
 
 
@@ -50,6 +50,11 @@ function getPos(combo, game) {
   // prettier-ignore
   return [game[combo[0]], game[combo[1]], game[combo[2]],
   ];
+}
+
+
+function full(game){
+  return !game.includes(0);
 }
 
 function getWinner(game) {
@@ -62,9 +67,10 @@ function getWinner(game) {
   if (winCombos.some((combo) => getPos(combo, game).every((v) => v === 2))) {
     winner = 2;
   }
+  if (winner == 0 && full(game)) { winner = -1; }
   return winner;
 }
 
 function reset(state) {
-  stateSubject.next({ turn: 2, game: [ ...gameInitial] });
+  stateSubject.next({ turn: 2, game: [...gameInitial] });
 }

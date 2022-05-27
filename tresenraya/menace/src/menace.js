@@ -1,22 +1,30 @@
 
-export { generateAdjusts, IATurn, printDivBoxes, moveSubject, printMove, IAClick };
+export { generateAdjusts, IATurn, printDivBoxes, moveSubject, printMove, IAClick, informWinner,resetMenace };
 import { BehaviorSubject, Subject } from 'rxjs';
 import { getWinner, winCombos, getPos, reset, stateSubject, switchTurn } from './game'
 
+// prettier-ignore
+const rotations = [
+  [0, 1, 2, 3, 4, 5, 6, 7, 8],   // 0 Normal
+  [0, 3, 6, 1, 4, 7, 2, 5, 8],   // 1 filas <--> columnas
+  [6, 3, 0, 7, 4, 1, 8, 5, 2],   // 2 rotacion 90 
+  [6, 7, 8, 3, 4, 5, 0, 1, 2],   // Espejo horizontal
+  [8, 7, 6, 5, 4, 3, 2, 1, 0],   // Espejo horizontal y luego vertical
+  [8, 5, 2, 7, 4, 1, 6, 3, 0],   // rotacion -90 y espejo vertical
+  [2, 5, 8, 1, 4, 7, 0, 3, 6],   // rotacion -90
+  [2, 1, 0, 5, 4, 3, 8, 7, 6]    // Espejo vertical
+]
+
+
+///// Rotacions a arrays
 function applyRotations(array) {
-  // prettier-ignore
-  const rotations = [
-    [0, 1, 2, 3, 4, 5, 6, 7, 8],   // 0 Normal
-    [0, 3, 6, 1, 4, 7, 2, 5, 8],   // 1 filas <--> columnas
-    [6, 3, 0, 7, 4, 1, 8, 5, 2],   // 2 rotacion 90 
-    [6, 7, 8, 3, 4, 5, 0, 1, 2],   // Espejo horizontal
-    [8, 7, 6, 5, 4, 3, 2, 1, 0],   // Espejo horizontal y luego vertical
-    [8, 5, 2, 7, 4, 1, 6, 3, 0],   // rotacion -90 y espejo vertical
-    [2, 5, 8, 1, 4, 7, 0, 3, 6],   // rotacion -90
-    [2, 1, 0, 5, 4, 3, 8, 7, 6]    // Espejo vertical
-  ]
   return rotations.map((R) => R.map((r) => array[r]));
 }
+///// Rotacions a posicions concretes
+function applyRotationPosition(position, rotationIndex) {
+  return rotations[rotationIndex][position];
+}
+
 
 
 function contar(array, n) {  // ocurrencias de un numero en un array
@@ -47,7 +55,7 @@ function translateCellAdjust(value) { // si es un numero lo deja, si es O o X re
   return value;
 }
 
-function translateBoxAdjust(arrayGame){
+function translateBoxAdjust(arrayGame) {
   return arrayGame.map(translateCellAdjust);
 }
 
@@ -154,10 +162,10 @@ function allGames() {
             _ 0 _    _ x _   _ 0 _
             _ _ _    _ _ _   _ _ x
             */
-          //   console.log('caso 1',i, p);
+            //   console.log('caso 1',i, p);
             //p = [p[0], p[1] === 1 ? 0 : p[1], p[2] === 1 ? 0 : p[2], p[3], p[4], p[5] === 1 ? 0 : p[5], p[6], p[7], p[8]];
             p = ponerCeros(p, [1, 0, 0, 1, 1, 0, 1, 1, 1]);
-           // console.log(p);
+            // console.log(p);
             break;
           case 2:
             // en la rotacion de 90º solo coincide el centro, no puede ser ninguna
@@ -192,7 +200,7 @@ function allGames() {
         }
       }
     });
-   // console.log(p);
+    // console.log(p);
     return p;
   }
   );
@@ -215,7 +223,7 @@ function generateAdjusts() {
 
 function printDivBoxes(allBoxes) {
   const divBoxes = allBoxes
-  //  .map(translateBoxAdjust)
+    //  .map(translateBoxAdjust)
     .map(
       (b, i) => `
   <div class="boardadjust" id="board${b.join("")}">
@@ -233,14 +241,22 @@ function printDivBoxes(allBoxes) {
 
 
 function buscarBox(allBoxes, game) {
+
+
+  console.log('Contar', contar(game, 0), game);
+
+  if (contar(game, 0) == 1) {
+    return { boxIndex: -1, boxRotationIndex: -1 };
+  }
+
   function traducirACeros(p) {
     return p.map(n => isNaN(n) ? { "◯": 1, "×": 2 }[n] : 0);
   }  // Traducir de menace al juego
 
   const boxIndex = allBoxes.findIndex(box =>
     applyRotations(traducirACeros(box)).some(b => areEquals(b, Object.values(game))));
- // console.log(boxIndex, Object.values(game), applyRotations(traducirACeros(allBoxes[26])));
- // console.log(Object.values(game), applyRotations(traducirACeros(allBoxes[boxIndex])));
+  // console.log(boxIndex, Object.values(game), applyRotations(traducirACeros(allBoxes[26])));
+  // console.log(Object.values(game), applyRotations(traducirACeros(allBoxes[boxIndex])));
   const boxRotationIndex = applyRotations(traducirACeros(allBoxes[boxIndex])).findIndex(b => areEquals(b, Object.values(game)));
   return { boxIndex, boxRotationIndex };
 }
@@ -251,47 +267,78 @@ const IAClick = new Subject();
 
 function IATurn(state) {
   const turn = state.turn;
-  const game = [ ...state.game ];
-  console.log('IA Turn',turn);
-  if (turn == 2) { 
+  const game = [...state.game];
+  console.log('IA Turn', turn);
+  if (turn == 2) {
     // Detectar la partida del menace que es igual
     const allBoxes = boxesSubject.getValue();
-    const partida = buscarBox(allBoxes, game)
+    const partida = buscarBox(allBoxes, game);
 
-    //console.log("Partida IA", partida, allBoxes[partida.boxIndex]);
+    console.log('%c' + "Partida IA", 'background-color: #248857; padding: 5px', partida, allBoxes[partida.boxIndex]);
 
-    const menaceBox = allBoxes[partida.boxIndex];   // el box que ésigual
 
-    const rotationsMenaceBox = applyRotations(menaceBox)[partida.boxRotationIndex];
-    /// el box que és igual rotat
-    //console.log("Rotations menace box",rotationsMenaceBox);
-    
-    const beans = rotationsMenaceBox.map((n,i)=> isNaN(n) ? [] :  new Array(n).fill(i)).flat();
-   // Aquest max és millor per ser aleatori amb proporcions
-    const max = beans[Math.floor(Math.random()*beans.length)]
-  
-   // Ara cal guardar el box i la posició que ha triat
-   moveSubject.next([...moveSubject.getValue(),   /// Falta aplicar la rotació al max
-    {max: max, boardId: `#board${menaceBox.join('')}` }]);
+    if (partida.boxIndex === -1) { // Ja sols queda una opció
+      const max = game.findIndex(e => e === 0);
+      IAClick.next(max);
+    }
+    else {
+      const menaceBox = allBoxes[partida.boxIndex];   // el box que és igual encara que rotat
 
-   // console.log('rotation menace', rotationsMenaceBox, partida.boxRotationIndex, max);
+      const rotationsMenaceBox = applyRotations(menaceBox)[partida.boxRotationIndex];
+      /// el box que és igual rotat per a que siga igual
+      //console.log("Rotations menace box",rotationsMenaceBox);resetMenace
+      //// Traguem un array de beans que representen les posicions possibles a triar
+      //// Aquest array els beans que indica el número per a que siguen més probables 
+      const beans = rotationsMenaceBox.map((n, i) => isNaN(n) ? [] : new Array(n).fill(i)).flat();
+      // Aquest max és millor per ser aleatori amb proporcions
+      const max = beans[Math.floor(Math.random() * beans.length)]
 
-    game[(max)] = 2;   // LA decisió del menace
-    IAClick.next(max);
+      // Ara cal guardar el box i la posició que ha triat
+      // Primer "rotem" el max:
+      const rotatedMax = applyRotationPosition(max, partida.boxRotationIndex);
+      moveSubject.next([...moveSubject.getValue(), 
+      { max: rotatedMax, boardId: `#board${menaceBox.join('')}`, index: partida.boxIndex}]);
 
+      // console.log('rotation menace', rotationsMenaceBox, partida.boxRotationIndex, max);
+
+      //game[max] = 2;   // LA decisió del menace
+      IAClick.next(max);
+    }
   }
 }
 
 
+function informWinner(winner){
+  if(winner == 2){ /// IA Winner
+    console.log('%c' + "IA is the Winner !!!", 'background-color: #248857; padding: 5px');
+    ////////// Si guanya la IA, ha de augmentar en un els beans dels boxes triats
+    let moves = moveSubject.getValue();
+    let allBoxes = boxesSubject.getValue();
+    for(let move of moves){
+      allBoxes[move.index][move.max] +=1;
+      move.boardId = `#board${allBoxes[move.index].join('')}`;
+    }
+    boxesSubject.next(allBoxes);
+    moveSubject.next(moves);
+  }
+}
 
-function printMove(moves){
-  console.log('print move',moves);
-  for (let move of moves){
-   // console.log(move);
-  let boardDiv = document.querySelector(move.boardId);
-    console.log(boardDiv);
-   boardDiv.classList.add('destacada');
-   let moveTd = boardDiv.querySelector('.td'+move.max);
-   moveTd.classList.add('seleccionada')
+
+function resetMenace(){
+  moveSubject.next([]);
+  boxesSubject.next(boxesSubject.getValue());
+
+}
+
+
+function printMove(moves) {
+  // console.log('print move',moves);
+  for (let move of moves) {
+     console.log(move);
+    let boardDiv = document.querySelector(move.boardId);
+    //  console.log(boardDiv);
+    boardDiv.classList.add('destacada');
+    let moveTd = boardDiv.querySelector('.td' + move.max);
+    moveTd.classList.add('seleccionada')
   }
 }
