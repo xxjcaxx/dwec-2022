@@ -21,6 +21,7 @@ const gameInitial = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 const stateSubject = new BehaviorSubject({
   turn: 2,
   game: [...gameInitial],
+  winner: 0
 });
 
 function switchTurn(turn) {
@@ -36,7 +37,7 @@ function setCell(state, pos, turn) {
     game[pos] = turn;
     const nextTurn = switchTurn(state.turn)
     // stateSubject.next({turn: nextTurn, game: game});
-    return ({ turn: nextTurn, game: game });
+    return ({ turn: nextTurn, game: game, winner: getWinner(game) });
   }
   else
     return state;
@@ -72,5 +73,5 @@ function getWinner(game) {
 }
 
 function reset(state) {
-  stateSubject.next({ turn: 2, game: [...gameInitial] });
+  stateSubject.next({ turn: 2, game: [...gameInitial], winner: 0 });
 }

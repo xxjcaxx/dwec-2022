@@ -76,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Botó de reset
   document.querySelector('#reset').addEventListener('click', ()=> {
     reset(); // reset el juego
-    winnerSubject.next(0);
     resetMenace();
   });
   // Generar ajustos de Menace i subscripcio a la funció de pintar els ajustos
@@ -105,8 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
       stateSubject.next(setCell(state, click.target, click.turn));
     })
 
-    const winnerSubject = new BehaviorSubject(0);
-
+  
   ///// Pintar l'estat és un efecte col·lateral i el fiquem en un tap()
   const stateSubscriptors = stateSubject.pipe(
     tap(state => {
@@ -115,25 +113,16 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log('Canvi estat',state);
     }),
     filter(state => state.turn === 2),
-    withLatestFrom(winnerSubject),
-    tap(a=> console.log('Li toca a IA',a)),
-    filter(([state,winner])=> winner == 0),
-    tap(a=> console.log('Li toca a IA',a)),
-    map(([state,winner])=> state)
+    filter(state=> state.winner == 0),
   ).subscribe(IATurn);
 
   //////////// Saber el guanyador
 
-  stateSubject.subscribe(state => {
-    let winner = getWinner(state.game);
-    if(winner != 0) {
-      winnerSubject.next(winner);
-      informWinner(winner);
-    }
+  stateSubject.pipe( filter(state=> state.winner != 0),).subscribe(state => {
+   
+      informWinner(state.winner);
+      showWinner(state.winner);
   });
-
-
-  winnerSubject.subscribe(showWinner);
 
 
   /// LA IA es suscriu a l'estat quan li toca i emet un click

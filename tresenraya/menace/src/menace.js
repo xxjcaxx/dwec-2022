@@ -334,7 +334,7 @@ function resetMenace(){
 function printMove(moves) {
   // console.log('print move',moves);
   for (let move of moves) {
-     console.log(move);
+//     console.log(move);
     let boardDiv = document.querySelector(move.boardId);
     //  console.log(boardDiv);
     boardDiv.classList.add('destacada');
