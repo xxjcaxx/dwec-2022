@@ -1,4 +1,4 @@
-var expect = chai.expect;
+let expect = chai.expect;
 
 import { fibonacci } from "./scripts.js";
 
